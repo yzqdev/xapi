@@ -1,13 +1,14 @@
 package middleware
 
 import (
-	"xapimanager/application/Services"
-	"xapimanager/application/common"
-	"xapimanager/config"
 	"github.com/gin-gonic/gin"
+	"github.com/gookit/color"
 	"net/http"
 	"regexp"
 	"strconv"
+	"xapimanager/application/Services"
+	"xapimanager/application/common"
+	"xapimanager/config"
 )
 
 /**
@@ -43,6 +44,7 @@ func ApiAuthCheck() gin.HandlerFunc {
 		project := Services.GetUserProject(uid)
 		flag := false
 		for _, v := range project {
+			color.Danger.Println(proid,"项目id",v.Id)
 			if proid == v.Id {
 				flag = true
 			}
