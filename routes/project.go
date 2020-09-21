@@ -12,7 +12,7 @@ func projectRouter(router *gin.Engine) {
 
 	basicRouter := router.Group("")
 	{
-		basicRouter.POST("/userlogin", requests.LoginVerify(), controllers.AjaxLogin)
+		basicRouter.POST("/userlogin", controllers.AjaxLogin)
 		basicRouter.GET("/logout", controllers.Logout)
 		basicRouter.POST("/register", controllers.AjaxRegister)
 		//注册验证

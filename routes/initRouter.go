@@ -16,7 +16,15 @@ import (
 func InitRouter() *gin.Engine {
 
 	router := gin.New()
-	router.Use(cors.Default())
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"*"},
+		AllowHeaders:     []string{"*"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		 
+		MaxAge: 12 * time.Hour,
+	}))
 	router.StaticFS("/assets", http.Dir(config.GetGlobal().AssetsPath))
 	router.StaticFS("/upload", http.Dir(config.GetGlobal().UploadPath))
 

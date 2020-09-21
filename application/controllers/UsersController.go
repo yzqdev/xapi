@@ -12,6 +12,10 @@ import (
 
 var encryptKey = "9hUxqaGelNnCZaCW"
 
+type ReqLogin struct {
+	User string `json:"user"`
+	Pass string `json:"pass"`
+}
 func Login(c *gin.Context) {
 
 	c.HTML(http.StatusOK, "login.html", gin.H{
@@ -23,9 +27,16 @@ func Login(c *gin.Context) {
 func AjaxLogin(c *gin.Context) {
 
 	var avatar string
+	var loginJson ReqLogin
+	if err := c.ShouldBindJSON(&loginJson); err != nil {
+		// 返回错误信息
+		// gin.H封装了生成json数据的工具
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	session := sessions.Default(c)
-	info := c.PostForm("user")
-	pass := c.PostForm("pass")
+	info := loginJson.User
+	pass := loginJson.Pass
 
 	userinfo := models.LoginUserInfo(info)
 	if userinfo.Uid > 0 {

@@ -1,16 +1,53 @@
 package controllers
 
 import (
-	"xapimanager/application/Services"
-	"xapimanager/application/models"
-	_ "xapimanager/application/utils"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/gookit/color"
 	"net/http"
 	"strconv"
 	"strings"
+	"xapimanager/application/Services"
+	"xapimanager/application/models"
+	_ "xapimanager/application/utils"
 )
 
+func Indexpage(c *gin.Context) {
+
+	//日志记录示例
+	//data := map[string]interface{}{
+	//	"filename": "routes",
+	//	"size":     10,
+	//	"username": c.PostForm("username"),
+	//	"passwd":   c.PostForm("passwd"),
+	//	"token":    c.Request.Header.Get("Authorization"),
+	//}
+	//token := c.Request.Header.Get("Authorization")
+	//utils.Log.WithFields(data).Info("路由文件记录")
+	//获取用户信息
+	userInfo, _ := c.Get("user")
+	//查询用户组及该组的功能权限
+	uid := userInfo.(map[string]interface{})["uid"].(int)
+	gid := models.GetUserGroup(uid)
+
+	var menu []models.Allmenu
+	if gid == 1 {
+		menu = models.GetMenu(1, 0)
+	} else {
+		rules := []string{"1", "2", "3", "4", "5", "7", "8", "9", "10", "14", "15", "16", "17", "18"}
+		menu = models.GetManagerMenu(1, 0, rules)
+	}
+	color.Danger.Println(menu, "这是菜单")
+	session := sessions.Default(c)
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"website": Services.GetWebsite(),
+		"menu":    menu,
+		"userinfo": map[string]interface{}{
+			"username": session.Get("username"),
+			"avatar":   session.Get("avatar"),
+		},
+	})
+}
 func Index(c *gin.Context) {
 
 	//日志记录示例
@@ -36,16 +73,19 @@ func Index(c *gin.Context) {
 		rules := []string{"1", "2", "3", "4", "5", "7", "8", "9", "10", "14", "15", "16", "17", "18"}
 		menu = models.GetManagerMenu(1, 0, rules)
 	}
-
+	color.Danger.Println(menu, "这是菜单")
 	session := sessions.Default(c)
-	c.HTML(http.StatusOK, "index.html", gin.H{
+	data := map[string]interface{}{
 		"website": Services.GetWebsite(),
 		"menu":    menu,
 		"userinfo": map[string]interface{}{
 			"username": session.Get("username"),
 			"avatar":   session.Get("avatar"),
 		},
-	})
+	}
+
+	c.JSON(http.StatusOK, data)
+
 }
 
 func Manager(c *gin.Context) {

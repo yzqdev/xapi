@@ -28,35 +28,41 @@ if($("#loginForm").length>0){
             $(".login-submit").attr('disabled',true);
             var user = $('input[name="user"]').val();
             var pass = $('input[name="pass"]').val();
-            $.ajax({
-                cache: false,
-                type: "POST",
-                url: "/userlogin",
-                data:{
-                    user: user,
-                    pass: md5(pass),
-                    sliderNum: sliderNum
-                },
-                headers: {
-                    'X-CSRF-TOKEN': ''
-                },
-                dataType: 'json',
-                success: function(res) {
-                    $(".login-submit").attr('disabled',false);
-                    if(res.status==200){
-                        //swal("登录成功", "即将跳转到首页","success");
+            axios.post('/userlogin',{  user: user,
+                pass: md5(pass),
+                sliderNum: sliderNum}).then((res)=>{
+                    if (res.status==200){
                         setTimeout(function(){
                             window.location.href="/main";
                         }, 500);
-                    }else{
-                        swal("请求出错", res.message, "error")
                     }
-                },
-                error: function(request) {
-                    $(".login-submit").attr('disabled',false);
-                    swal("网络错误", "请稍后重试！","error")
-                }
-            });
+            })
+            // $.ajax({
+            //     type: "POST",
+            //     url: "/userlogin",
+            //     data:JSON.stringify({
+            //         user: user,
+            //         pass: md5(pass),
+            //         sliderNum: sliderNum
+            //     }),
+            //
+            //     dataType: 'json',
+            //     success: function(res) {
+            //         $(".login-submit").attr('disabled',false);
+            //         if(res.status==200){
+            //             //swal("登录成功", "即将跳转到首页","success");
+            //             setTimeout(function(){
+            //                 window.location.href="/main";
+            //             }, 500);
+            //         }else{
+            //             swal("请求出错", res.message, "error")
+            //         }
+            //     },
+            //     error: function(request) {
+            //         $(".login-submit").attr('disabled',false);
+            //         swal("网络错误", "请稍后重试！","error")
+            //     }
+            // });
         },
         rules:{
             user:{

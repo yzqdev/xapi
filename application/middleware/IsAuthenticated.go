@@ -2,7 +2,6 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func Auth() gin.HandlerFunc {
@@ -36,14 +35,16 @@ func Auth() gin.HandlerFunc {
 		//}
 
 		//获取用户信息
+		//header:=c.Request.Header
+		//color.Info.Println(header,"头部")
 		userInfo, _ := c.Get("user")
 		uid := userInfo.(map[string]interface{})["uid"].(int)
 		username := userInfo.(map[string]interface{})["username"].(string)
-
+//color.Danger.Println(username,"中间件")
 		//未登录用户直接跳转到登录页
 		if uid == 0 || username == "" {
-			c.Redirect(http.StatusFound, "/login")
-			c.Abort()
+			//c.Redirect(http.StatusFound, "/login")
+			//c.Abort()
 			return
 		} else {
 			c.Set("user", map[string]interface{}{
