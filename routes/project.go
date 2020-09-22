@@ -8,13 +8,24 @@ import (
 	"xapimanager/application/requests"
 )
 
+type login struct {
+	Username string `form:"username" json:"username" binding:"required"`
+	Password string `form:"password" json:"password" binding:"required"`
+}
+
+var identityKey = "id"
+
 func projectRouter(router *gin.Engine) {
+	// the jwt middleware
+
+
 
 	basicRouter := router.Group("")
 	{
-		basicRouter.POST("/userlogin", controllers.CreateJwt)
+		basicRouter.POST("/userlogin", controllers.FetchLogin)
 		basicRouter.GET("/logout", controllers.Logout)
 		basicRouter.POST("/register", controllers.AjaxRegister)
+
 		//注册验证
 		basicRouter.POST("/register/check", controllers.RegisterCheck)
 	}

@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -51,11 +52,12 @@ func JwtHandler() gin.HandlerFunc {
 		}
 
 		// 校验token
-		rs, err := parseToken(auth)
-		color.Danger.Println(rs,"token 安琥用")
+		qyUser, err := parseToken(auth)
+		context.Set("user", qyUser)
+
 		if err != nil {
 			context.Abort()
-			result.Message = "token 过期" + err.Error()
+			result.Message = err.Error()
 			context.JSON(http.StatusUnauthorized, gin.H{
 				"result": result,
 			})
@@ -65,16 +67,102 @@ func JwtHandler() gin.HandlerFunc {
 		context.Next()
 	}
 }
-func parseToken(token string) (*controllers.NewJwtClaims, error) {
-	jwtToken, err := jwt.ParseWithClaims(token, &controllers.NewJwtClaims{}, func(token *jwt.Token) (i interface{}, e error) {
-		return []byte(controllers.SecretKey), nil
-	})
-
-	if err == nil && jwtToken != nil {
-		if claim, ok := jwtToken.Claims.(*controllers.NewJwtClaims); ok && jwtToken.Valid {
-			color.Danger.Println("骷髅付款方",claim.Username)
-			return claim, nil
+func parseToken(yourToken string) (models.QyUser, error) {
+	claims := controllers.NewJwtClaims{}
+	_, err := jwt.ParseWithClaims(yourToken, &claims, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 		}
+		// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
+		return controllers.SecretKey, nil
+
+	})
+	if err != nil {
+		color.Danger.Println("token值为空")
+
 	}
-	return nil, err
+color.Danger.Println(claims.QyUser,"编译token")
+	return *claims.QyUser, err
+
 }
+
+//func AuthMiddle() gin.HandlerFunc{
+//	return func(context *gin.Context) {
+//
+//		authMiddleware, err := jwt.New(&jwt.GinJWTMiddleware{
+//			Realm:       "test zone",
+//			Key:         []byte("secret key"),
+//			Timeout:     time.Hour,
+//			MaxRefresh:  time.Hour,
+//			IdentityKey: identityKey,
+//			PayloadFunc: func(data interface{}) jwt.MapClaims {
+//				if v, ok := data.(*models.QyUser); ok {
+//					return jwt.MapClaims{
+//						identityKey: v.Username,
+//					}
+//				}
+//				return jwt.MapClaims{}
+//			},
+//			IdentityHandler: func(c *gin.Context) interface{} {
+//				claims := jwt.ExtractClaims(c)
+//				return &models.QyUser{
+//					Username: claims[identityKey].(string),
+//				}
+//			},
+//			Authenticator: func(c *gin.Context) (interface{}, error) {
+//				var loginVals models.QyUser
+//				if err := c.ShouldBind(&loginVals); err != nil {
+//					return "ddddd", jwt.ErrMissingLoginValues
+//				}
+//
+//				u := loginVals.QueryByUsername()
+//				if u.Password == loginVals.Password {
+//					return loginVals, nil
+//				}
+//
+//				return nil, jwt.ErrFailedAuthentication
+//			},
+//			Authorizator: func(data interface{}, c *gin.Context) bool {
+//				if _, ok := data.(*models.QyUser); ok   {
+//					return true
+//				}
+//
+//				return false
+//			},
+//			Unauthorized: func(c *gin.Context, code int, message string) {
+//				c.JSON(code, gin.H{
+//					"code":    code,
+//					"message": message,
+//				})
+//			},
+//			// TokenLookup is a string in the form of "<source>:<name>" that is used
+//			// to extract token from the request.
+//			// Optional. Default value "header:Authorization".
+//			// Possible values:
+//			// - "header:<name>"
+//			// - "query:<name>"
+//			// - "cookie:<name>"
+//			// - "param:<name>"
+//			TokenLookup: "header: Authorization, query: token, cookie: jwt",
+//			// TokenLookup: "query:token",
+//			// TokenLookup: "cookie:token",
+//
+//			// TokenHeadName is a string in the header. Default value is "Bearer"
+//			TokenHeadName: "Bearer",
+//
+//			// TimeFunc provides the current time. You can override it to use another time value. This is useful for testing or if your server uses a different time zone than your tokens.
+//			TimeFunc: time.Now,
+//		})
+//
+//		if err != nil {
+//			log.Fatal("JWT Error:" + err.Error())
+//		}
+//
+//		errInit := authMiddleware.MiddlewareInit()
+//
+//		if errInit != nil {
+//			log.Fatal("authMiddleware.MiddlewareInit() Error:" + errInit.Error())
+//		}
+//		context.Next()
+//	}
+//}

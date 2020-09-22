@@ -17,7 +17,8 @@ func ProjectList(c *gin.Context)  {
 	//var data string
 	//var err error
 	var projects []models.QyProject
-	userInfo, _ := c.Get("user")
+	userInfo, _ := c.Get("puser")
+color.Danger.Println(userInfo,"list获取")
 
 
 	uid := userInfo.(map[string]interface{})["uid"].(int)

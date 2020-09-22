@@ -168,11 +168,14 @@ func GetUserInfo(uid int) (result UserInfo) {
 	return
 }
 
-func (user QyUser)  QueryByUsername() QyUser {
+func QueryByUsername(username string) (result QyUser) {
+	defer Db.Close()
 	Db = Connect()
-	Db.Hander.First(&user,user.Uid)
-	return user
+	Db.Hander.Where("username = ?", username).First(&result)
+	return
+
 }
+
 //通过获取用户信息,多条件查询
 func GetUserDetail(data map[string]interface{}) (result QyUser) {
 

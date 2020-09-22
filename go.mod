@@ -3,7 +3,6 @@ module xapimanager
 go 1.15
 
 require (
-	github.com/appleboy/gin-jwt/v2 v2.6.4
 	github.com/cosmtrek/air v1.12.4 // indirect
 	github.com/creack/pty v1.1.11 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
