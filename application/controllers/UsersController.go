@@ -1,26 +1,81 @@
 package controllers
 
 import (
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"github.com/gookit/color"
 	"net/http"
 	"strconv"
+	"time"
 	"xapimanager/application/Services"
 	"xapimanager/application/common"
 	"xapimanager/application/models"
 )
 
-var encryptKey = "9hUxqaGelNnCZaCW"
+var SecretKey = "9hUxqaGelNnCZaCW"
 
 type ReqLogin struct {
 	User string `json:"user"`
 	Pass string `json:"pass"`
 }
+
 func Login(c *gin.Context) {
 
 	c.HTML(http.StatusOK, "login.html", gin.H{
 		"website": Services.GetWebsite(),
 	})
+}
+func CreateJwt(c *gin.Context) {
+	user := &models.QyUser{}
+	result := &models.Result{
+		Code:    200,
+		Message: "登录成功n",
+		Data:    nil,
+	}
+	if err := c.BindJSON(&user); err != nil {
+		color.Cyan.Println("hhh")
+		result.Message = "数据绑定失败"
+		result.Code = http.StatusUnauthorized
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"result": result,
+		})
+	}
+	u := user.QueryByUsername()
+	color.Danger.Println(u.Password,"==",user.Password,"获取的用户")
+	if u.Password == user.Password {
+		expiresTime := time.Now().Unix() + int64(60*60*24)
+		claims := jwt.StandardClaims{
+			Audience:  user.Username,          // 受众
+			ExpiresAt: expiresTime,            // 失效时间
+			Id:        string(rune(user.Uid)), // 编号
+			IssuedAt:  time.Now().Unix(),      // 签发时间
+			Issuer:    "gin hello",            // 签发人
+			NotBefore: time.Now().Unix(),      // 生效时间
+			Subject:   "login",                // 主题
+		}
+		var jwtSecret = []byte(SecretKey)
+		tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+		if token, err := tokenClaims.SignedString(jwtSecret); err == nil {
+			result.Message = "登录成功"
+			result.Data =   token
+			result.Code = http.StatusOK
+			color.Danger.Println("最大的撒地方的")
+			c.JSON(result.Code, result)
+		} else {
+			result.Message = "登录失败"
+			result.Code = http.StatusOK
+			c.JSON(result.Code, gin.H{
+				"result": result,
+			})
+		}
+	} else {
+		result.Message = "登录失败"
+		result.Code = http.StatusOK
+		c.JSON(result.Code, gin.H{
+			"result": result,
+		})
+	}
 }
 
 //ajax 登录
@@ -39,6 +94,7 @@ func AjaxLogin(c *gin.Context) {
 	pass := loginJson.Pass
 
 	userinfo := models.LoginUserInfo(info)
+
 	if userinfo.Uid > 0 {
 		salt := userinfo.Salt
 
@@ -49,6 +105,7 @@ func AjaxLogin(c *gin.Context) {
 			} else {
 				avatar = "/assets/img/avatar.png"
 			}
+			color.Danger.Println(userinfo.Uid, userinfo.Username, "session 设置user")
 			session.Set("uid", userinfo.Uid)
 			session.Set("username", userinfo.Username)
 			session.Set("avatar", avatar)
@@ -194,6 +251,10 @@ func AjaxUserList(c *gin.Context) {
 		"message": "成功",
 		"data":    result,
 	})
+}
+
+func GetUserByUsername(c *gin.Context) string {
+	return ""
 }
 
 //用户详情

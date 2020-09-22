@@ -19,10 +19,10 @@ func ProjectList(c *gin.Context)  {
 	var projects []models.QyProject
 	userInfo, _ := c.Get("user")
 
-	color.Danger.Println(userInfo,"尼玛")
+
 	uid := userInfo.(map[string]interface{})["uid"].(int)
 	oid := userInfo.(map[string]interface{})["oid"].(int)
-
+	color.Danger.Println(oid,uid,"尼玛")
 //	Cache := models.CacheConnect()
 //	key := "qy_user_project_list#" + strconv.Itoa(uid)
 //color.Danger.Println(userInfo,"用户")

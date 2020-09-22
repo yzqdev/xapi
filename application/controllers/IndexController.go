@@ -37,7 +37,6 @@ func Indexpage(c *gin.Context) {
 		rules := []string{"1", "2", "3", "4", "5", "7", "8", "9", "10", "14", "15", "16", "17", "18"}
 		menu = models.GetManagerMenu(1, 0, rules)
 	}
-	color.Danger.Println(menu, "这是菜单")
 	session := sessions.Default(c)
 	c.HTML(http.StatusOK, "index.html", gin.H{
 		"website": Services.GetWebsite(),
@@ -65,7 +64,7 @@ func Index(c *gin.Context) {
 	//查询用户组及该组的功能权限
 	uid := userInfo.(map[string]interface{})["uid"].(int)
 	gid := models.GetUserGroup(uid)
-
+color.Danger.Println(userInfo,"用户xxx")
 	var menu []models.Allmenu
 	if gid == 1 {
 		menu = models.GetMenu(1, 0)
@@ -73,7 +72,6 @@ func Index(c *gin.Context) {
 		rules := []string{"1", "2", "3", "4", "5", "7", "8", "9", "10", "14", "15", "16", "17", "18"}
 		menu = models.GetManagerMenu(1, 0, rules)
 	}
-	color.Danger.Println(menu, "这是菜单")
 	session := sessions.Default(c)
 	data := map[string]interface{}{
 		"website": Services.GetWebsite(),

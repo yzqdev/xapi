@@ -9,14 +9,17 @@ import (
 
 func webRouter(router *gin.Engine) {
 
+
+
+
 	basicRouter := router.Group("")
 	{
 		//页面路由
 		basicRouter.GET("/", middleware.Auth(), controllers.Indexpage)
 		basicRouter.GET("/main", middleware.Auth(), controllers.Indexpage)
-		basicRouter.GET("/login", controllers.Login)
+		basicRouter.GET("/login",controllers.AjaxLogin )
 		basicRouter.GET("/register", controllers.Register)
-		basicRouter.GET("/getIndex", middleware.Auth(), controllers.Index)
+		basicRouter.GET("/getIndex", middleware.JwtHandler(), controllers.Index)
 		//manager 主页
 		basicRouter.GET("/manager/:proid", middleware.Auth(), controllers.Manager)
 		//mock 测试

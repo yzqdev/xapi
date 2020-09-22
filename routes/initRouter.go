@@ -41,7 +41,7 @@ func InitRouter() *gin.Engine {
 	})
 	router.Use(sessions.Sessions("xapi", store))
 
-	router.Use(middleware.Handler())
+	router.Use(middleware.GlobalHandle())
 	router.Use(gin.Logger())
 
 	router.NoRoute(func(c *gin.Context) {
