@@ -17,7 +17,7 @@ func webRouter(router *gin.Engine) {
 		//页面路由
 		basicRouter.GET("/", middleware.Auth(), controllers.Indexpage)
 		basicRouter.GET("/main", middleware.Auth(), controllers.Indexpage)
-		basicRouter.GET("/login",controllers.AjaxLogin )
+		basicRouter.GET("/login",controllers.Login)
 		basicRouter.GET("/register", controllers.Register)
 		basicRouter.GET("/getIndex", middleware.JwtHandler(), controllers.Index)
 		//manager 主页

@@ -43,7 +43,6 @@ func JwtHandler() gin.HandlerFunc {
 			Data:    nil,
 		}
 		auth := context.Request.Header.Get("Authorization")
-		color.Danger.Println(auth,"token")
 		if len(auth) == 0 {
 			context.Abort()
 			context.JSON(http.StatusUnauthorized, gin.H{
@@ -66,12 +65,14 @@ func JwtHandler() gin.HandlerFunc {
 		context.Next()
 	}
 }
-func parseToken(token string) (*jwt.StandardClaims, error) {
-	jwtToken, err := jwt.ParseWithClaims(token, &jwt.StandardClaims{}, func(token *jwt.Token) (i interface{}, e error) {
+func parseToken(token string) (*controllers.NewJwtClaims, error) {
+	jwtToken, err := jwt.ParseWithClaims(token, &controllers.NewJwtClaims{}, func(token *jwt.Token) (i interface{}, e error) {
 		return []byte(controllers.SecretKey), nil
 	})
+
 	if err == nil && jwtToken != nil {
-		if claim, ok := jwtToken.Claims.(*jwt.StandardClaims); ok && jwtToken.Valid {
+		if claim, ok := jwtToken.Claims.(*controllers.NewJwtClaims); ok && jwtToken.Valid {
+			color.Danger.Println("骷髅付款方",claim.Username)
 			return claim, nil
 		}
 	}

@@ -19,7 +19,12 @@ type ReqLogin struct {
 	User string `json:"user"`
 	Pass string `json:"pass"`
 }
+type NewJwtClaims struct {
+	jwt.StandardClaims
+	Username string `json:"username"`
+	Uid string `json:"uid"`
 
+}
 func Login(c *gin.Context) {
 
 	c.HTML(http.StatusOK, "login.html", gin.H{
@@ -45,22 +50,25 @@ func CreateJwt(c *gin.Context) {
 	color.Danger.Println(u.Password,"==",user.Password,"获取的用户")
 	if u.Password == user.Password {
 		expiresTime := time.Now().Unix() + int64(60*60*24)
-		claims := jwt.StandardClaims{
-			Audience:  user.Username,          // 受众
-			ExpiresAt: expiresTime,            // 失效时间
-			Id:        string(rune(user.Uid)), // 编号
-			IssuedAt:  time.Now().Unix(),      // 签发时间
-			Issuer:    "gin hello",            // 签发人
-			NotBefore: time.Now().Unix(),      // 生效时间
-			Subject:   "login",                // 主题
+		//claims := jwt.StandardClaims{
+		//	Audience:  user.Username,          // 受众
+		//	ExpiresAt: expiresTime,            // 失效时间
+		//	Id:        string(rune(user.Uid)), // 编号
+		//	IssuedAt:  time.Now().Unix(),      // 签发时间
+		//	Issuer:    u.Username,            // 签发人
+		//	NotBefore: time.Now().Unix(),      // 生效时间
+		//	Subject:   "login",                // 主题
+		//}
+		newClaims:=NewJwtClaims{
+			Username: u.Username,
 		}
+		newClaims.ExpiresAt=expiresTime
 		var jwtSecret = []byte(SecretKey)
-		tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+		tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, newClaims)
 		if token, err := tokenClaims.SignedString(jwtSecret); err == nil {
 			result.Message = "登录成功"
 			result.Data =   token
 			result.Code = http.StatusOK
-			color.Danger.Println("最大的撒地方的")
 			c.JSON(result.Code, result)
 		} else {
 			result.Message = "登录失败"
