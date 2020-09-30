@@ -10,6 +10,12 @@ import (
 )
 
 //控制台
+// @Summary
+// @Description 描述信息
+// @Tags dashborad
+// @Accept  json
+// @Produce  json
+// @Router /dashboard [get]
 func Dashboard(c *gin.Context) {
 
 	proid, _ := strconv.Atoi(c.Param("proid"))

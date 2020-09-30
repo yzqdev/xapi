@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"xapimanager/application/Services"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -22,7 +23,14 @@ func AppsTransform(c *gin.Context) {
 }
 
 //json格式化、压缩
+// @Summary json 格式化
+// @Description 描述信息
+// @Tags app
+// @Accept  json
+// @Produce  json
+// @Router /json [get]
 func AppsJson(c *gin.Context) {
+	fmt.Println("节点 1")
 	c.HTML(http.StatusOK, "apps_json.html", gin.H{
 		"website": Services.GetWebsite(),
 	})

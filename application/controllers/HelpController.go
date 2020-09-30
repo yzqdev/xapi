@@ -1,17 +1,25 @@
 package controllers
 
 import (
-	"xapimanager/application/Services"
-	"xapimanager/application/common"
-	"xapimanager/application/models"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"html/template"
 	"net/http"
 	"regexp"
 	"time"
+	"xapimanager/application/Services"
+	"xapimanager/application/common"
+	"xapimanager/application/models"
 )
 
 //帮助中心页
+// @Tags help
+// @Summary
+// @Description 描述信息
+// @Tags accounts
+// @Accept  json
+// @Produce  json
+// @Router /help  [get]
 func HelpList(c *gin.Context) {
 	c.HTML(http.StatusOK, "help_list.html", gin.H{
 		"website": Services.GetWebsite(),
@@ -19,6 +27,12 @@ func HelpList(c *gin.Context) {
 }
 
 //帮组中心Api
+// @Summary 显示网站信息
+// @Description 描述信息
+// @Tags accounts
+// @Accept  json
+// @Produce  json
+// @Router /sss [get]
 func AjaxHelpList(c *gin.Context) {
 
 	//用户自己的组织信息
@@ -54,9 +68,16 @@ func AjaxHelpList(c *gin.Context) {
 }
 
 //帮助中心详情
+// @Summary 显示网站信息
+// @Description 描述信息
+// @Tags accounts
+// @Accept  json
+// @Produce  json
+// @Router /annnnnnnn [get]
 func HelpDetail(c *gin.Context) {
-
+fmt.Println("hhddf")
 	//用户自己的组织信息
+	fmt.Println("kdskf")
 	userInfo, _ := c.Get("user")
 	oid := userInfo.(map[string]interface{})["oid"].(int)
 	hid := common.StringToInt(c.Param("hid"))
@@ -77,8 +98,14 @@ func HelpDetail(c *gin.Context) {
 }
 
 //帮助中心操作
+// @Summary 显示网站信息
+// @Description 描述信息
+// @Tags accounts
+// @Accept  json
+// @Produce  json
+// @Router /configaaaaa [get]
 func HelpOperate(c *gin.Context) {
-
+fmt.Println("hhh")
 	//用户自己的组织信息
 	userInfo, _ := c.Get("user")
 	oid := userInfo.(map[string]interface{})["oid"].(int)

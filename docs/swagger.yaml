@@ -1,0 +1,64 @@
+info:
+  contact: {}
+  license: {}
+paths:
+  /annnnnnnn:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 显示网站信息
+      tags:
+      - accounts
+  /configaaaaa:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 显示网站信息
+      tags:
+      - accounts
+  /dashboard:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      tags:
+      - dashborad
+  /help:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      tags:
+      - help
+      - accounts
+  /json:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: json 格式化
+      tags:
+      - app
+  /sss:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 显示网站信息
+      tags:
+      - accounts
+swagger: "2.0"

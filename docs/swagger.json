@@ -1,0 +1,98 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {},
+        "license": {}
+    },
+    "paths": {
+        "/annnnnnnn": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "显示网站信息"
+            }
+        },
+        "/configaaaaa": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "显示网站信息"
+            }
+        },
+        "/dashboard": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "dashborad"
+                ]
+            }
+        },
+        "/help": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "help",
+                    "accounts"
+                ]
+            }
+        },
+        "/json": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "app"
+                ],
+                "summary": "json 格式化"
+            }
+        },
+        "/sss": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "显示网站信息"
+            }
+        }
+    }
+}
