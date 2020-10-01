@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -13,12 +14,7 @@ import (
 )
 
 func Run() {
-	docs.SwaggerInfo.Title = "Swagger Example API"
-	docs.SwaggerInfo.Description = "This is a sample server Petstore server."
-	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = "localhost:6300"
-	docs.SwaggerInfo.BasePath = "/"
-	docs.SwaggerInfo.Schemes = []string{"http", "https"}
+
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	sysconfig := config.GetGlobal()
@@ -34,11 +30,19 @@ func Run() {
 	router.Run(":" + sysconfig.ServerPort)
 
 	common.Open(sysconfig.ServerWebsite)
+	swaggerUrl:="http://localhost:"+sysconfig.ServerPort+"/swagger/index.html"
+	fmt.Printf("%s\n",swaggerUrl)
 }
 func main() {
 	// programatically set swagger info
 	cmd := exec.Command("swag", "init")
 	cmd.Run()
+	docs.SwaggerInfo.Title = "Swagger Example API"
+	docs.SwaggerInfo.Description = "xapi的帮助文档."
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Host = "localhost:6300"
+	docs.SwaggerInfo.BasePath = "/"
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 	   Run()
 
 }
