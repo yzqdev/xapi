@@ -1,10 +1,10 @@
 package models
 
 import (
-	"xapimanager/application/common"
 	"github.com/pkg/errors"
 	"strconv"
 	"time"
+	"xapimanager/application/common"
 )
 
 type QyOrganize struct {
@@ -147,7 +147,7 @@ func OrganizeQuit(uid int, organize int) (err error) {
 }
 
 //修改组织信息
-func OrganizeSave(organizeId int, data map[string]interface{}) (err error) {
+func OrganizeSave(organizeId int, data interface{}) (err error) {
 
 	defer Db.Close()
 	Db = Connect()

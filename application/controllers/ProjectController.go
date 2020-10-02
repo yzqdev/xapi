@@ -12,54 +12,54 @@ import (
 	"xapimanager/config"
 )
 
-func ProjectList(c *gin.Context)  {
+func ProjectList(c *gin.Context) {
 	//获取用户信息
 	//var data string
 	//var err error
 	var projects []models.QyProject
 	userInfo, _ := c.Get("puser")
-color.Danger.Println(userInfo,"list获取")
-
+	color.Danger.Println(userInfo, "list获取")
 
 	uid := userInfo.(map[string]interface{})["uid"].(int)
 	oid := userInfo.(map[string]interface{})["oid"].(int)
-	color.Danger.Println(oid,uid,"尼玛")
-//	Cache := models.CacheConnect()
-//	key := "qy_user_project_list#" + strconv.Itoa(uid)
-//color.Danger.Println(userInfo,"用户")
-//	if Cache.Hander != nil {
-//		data, err = Cache.Hander.Get(key).Result()
-//		if err == nil {
-//			json.Unmarshal([]byte(data), &projects)
-//		}
-//	}
-//	if Cache.Hander == nil || err != nil {
-//		organizeIds := models.GetOrganizeIds(uid)
-//		//查询用户组私有项目id
-//		groupIds := models.GetGroupIds(uid)
-//		proids := models.GetGroupProject(groupIds)
-//		//查询用户的项目
-//		projects = models.GetUserProject(organizeIds, proids)
-//		data, _ := json.Marshal(projects)
-//		if Cache.Hander != nil {
-//			Cache.Hander.Set(key, data,
-//				time.Second*time.Duration(config.GetGlobal().UserCache))
-//		}
-//
-//	}
+	color.Danger.Println(oid, uid, "尼玛")
+	//	Cache := models.CacheConnect()
+	//	key := "qy_user_project_list#" + strconv.Itoa(uid)
+	//color.Danger.Println(userInfo,"用户")
+	//	if Cache.Hander != nil {
+	//		data, err = Cache.Hander.Get(key).Result()
+	//		if err == nil {
+	//			json.Unmarshal([]byte(data), &projects)
+	//		}
+	//	}
+	//	if Cache.Hander == nil || err != nil {
+	//		organizeIds := models.GetOrganizeIds(uid)
+	//		//查询用户组私有项目id
+	//		groupIds := models.GetGroupIds(uid)
+	//		proids := models.GetGroupProject(groupIds)
+	//		//查询用户的项目
+	//		projects = models.GetUserProject(organizeIds, proids)
+	//		data, _ := json.Marshal(projects)
+	//		if Cache.Hander != nil {
+	//			Cache.Hander.Set(key, data,
+	//				time.Second*time.Duration(config.GetGlobal().UserCache))
+	//		}
+	//
+	//	}
 
 	//检查用户是否创建权限组
 	authNum := models.GetOrganizeGroup(oid)
-	result:= map[string]interface{}{
+	result := map[string]interface{}{
 		"website":  Services.GetWebsite(),
 		"organize": oid,
 		"project":  projects,
 		"authNum":  len(authNum),
 		"uid":      uid,
 	}
-	c.JSON(http.StatusOK,result)
+	c.JSON(http.StatusOK, result)
 
 }
+
 //获取项目列表
 func ProjectListPage(c *gin.Context) {
 

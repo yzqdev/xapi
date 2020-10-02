@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/gookit/color"
 	"net/http"
 	"strconv"
 	"xapimanager/application/Services"
@@ -19,14 +20,30 @@ type UserOrganize struct {
 	Invite   string
 }
 
-//获取项目列表
+//
+// @Summary 获取项目列表
+// @Description 描述信息
+// @Tags accounts
+// @Accept  json
+// @Produce  json
+// @Router /organize/list [get]
 func OrganizeList(c *gin.Context) {
 
 	//获取用户信息
-	userInfo, _ := c.Get("user")
+	userContext, exist := c.Get("user")
+	if !exist {
+		color.Danger.Println("失败了")
+	}
+	//查询用户组及该组的功能权限
+	user, ok := userContext.(models.QyUser)
+	if ok {
+		color.Danger.Println("成功获取用户信息")
+		color.Danger.Println(ok)
+	} else {
+		color.Danger.Println("断言失败")
+	}
+	uid := user.Uid
 
-	//查询用户的组织及用户组
-	uid := userInfo.(map[string]interface{})["uid"].(int)
 	//查询用户自己的团队信息
 	self := models.GetUserOrganize(uid)
 	if self.Id == 0 {
@@ -57,7 +74,7 @@ func OrganizeList(c *gin.Context) {
 		}
 	}
 
-	c.HTML(http.StatusOK, "organize.html", gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"website":    Services.GetWebsite(),
 		"OrganizeNo": OrganizeNo,
 		"data":       data,
@@ -85,15 +102,32 @@ func Search(c *gin.Context) {
 
 }
 
-//加入组织
+//
+// @Summary 加入组织
+// @Description 描述信息
+// @Tags organize
+// @Accept  json
+// @Produce  json
+// @Router /organize/join [post]
 func OrganizeJoin(c *gin.Context) {
 
 	identify := c.Param("identify")
 	org := models.GetOrganizeOne(identify)
 
-	//获取用户信息
-	userInfo, _ := c.Get("user")
-	uid := userInfo.(map[string]interface{})["uid"].(int)
+	userContext, exist := c.Get("user")
+	if !exist {
+		color.Danger.Println("失败了")
+	}
+	//查询用户组及该组的功能权限
+	user, ok := userContext.(models.QyUser)
+	if ok {
+		color.Danger.Println("成功获取用户信息")
+		color.Danger.Println(ok)
+	} else {
+		color.Danger.Println("断言失败")
+	}
+	uid := user.Uid
+
 	err := models.OrganizeJoin(uid, org.Id, 2)
 
 	if err == nil {
@@ -135,7 +169,13 @@ func OrganizeQuit(c *gin.Context) {
 	}
 }
 
-//组织详情
+//
+// @Summary 组织详情
+// @Description 描述信息
+// @Tags organize
+// @Accept  json
+// @Produce  json
+// @Router /organize/detail/:oid [get]
 func OrganizeDetail(c *gin.Context) {
 
 	//组织id
@@ -149,22 +189,33 @@ func OrganizeDetail(c *gin.Context) {
 	} else {
 		orginfo = models.QyOrganize{}
 	}
-	c.HTML(http.StatusOK, "organize_detail.html", gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"website": Services.GetWebsite(),
 		"org":     orginfo,
 	})
 }
 
-//保存修改信息
+type OrgRequest struct {
+	OrganizeName string `form:"organize_name" binding:"required" validate:"required,max=20,min=2"`
+	OrganizeDesc string `form:"organize_desc" binding:"required" validate:"required,max=100,min=2"`
+}
+
+//
+// @Summary 保存修改信息
+// @Description 描述信息
+// @Tags organize
+// @Accept  json
+// @Produce  json
+// @Router /organize/detail/:oid [get]
 func OrganizeSave(c *gin.Context) {
 
 	//组织id
 	oid := c.Param("oid")
 	organizeId, _ := strconv.Atoi(oid)
 
-	data := map[string]interface{}{
-		"name": c.PostForm("organize_name"),
-		"desc": c.PostForm("organize_desc"),
+	data := OrgRequest{}
+	if err := c.ShouldBindJSON(&data); err != nil {
+		color.Red.Println("绑定组织失败")
 	}
 	err := models.OrganizeSave(organizeId, data)
 	if err == nil {

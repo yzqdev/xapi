@@ -95,7 +95,7 @@ var doc = `{
                 "tags": [
                     "help"
                 ],
-                "summary": "显示网站信息"
+                "summary": "显示帮助详情"
             }
         },
         "/help/operate": {
@@ -108,9 +108,32 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "accounts"
+                    "help"
                 ],
                 "summary": "显示网站信息"
+            }
+        },
+        "/help/store": {
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "新增帮助保存",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.CreateHelpReq"
+                        }
+                    }
+                }
             }
         },
         "/json": {
@@ -141,6 +164,51 @@ var doc = `{
                     "accounts"
                 ],
                 "summary": "退出登录"
+            }
+        },
+        "/organize/detail/:oid": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "organize"
+                ],
+                "summary": "保存修改信息"
+            }
+        },
+        "/organize/join": {
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "organize"
+                ],
+                "summary": "加入组织"
+            }
+        },
+        "/organize/list": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "获取项目列表"
             }
         },
         "/person": {
@@ -243,9 +311,53 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/users/detail/:userid": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "用户详情"
+            }
+        },
+        "/users/list": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "获取用户列表页（组织成员）"
+            }
         }
     },
     "definitions": {
+        "controllers.CreateHelpReq": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "hid": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
         "controllers.ReqLogin": {
             "type": "object",
             "properties": {

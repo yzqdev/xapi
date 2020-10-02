@@ -132,7 +132,7 @@ func HelpDetail(c *gin.Context) {
 //帮助中心删除
 // @Summary 显示网站信息
 // @Description 描述信息
-// @Tags accounts
+// @Tags help
 // @Accept  json
 // @Produce  json
 // @Router /help/operate [post]
@@ -168,7 +168,12 @@ func HelpDelete(c *gin.Context) {
 	}
 }
 
-//新增帮助
+// @Summary 显示帮助详情
+// @Description 描述信息
+// @Tags help
+// @Accept  json
+// @Produce  json
+// @Router /help/detail/:hid [get]
 func HelpInfo(c *gin.Context) {
 
 	//用户自己的组织信息
@@ -204,7 +209,14 @@ type CreateHelpReq struct {
 	Title   string `json:"title"`
 }
 
-//新增帮助保存
+//
+// @Summary 新增帮助保存
+// @Description 描述信息
+// @Tags accounts
+// @Success 200 {object} CreateHelpReq model.Setting
+// @Accept  json
+// @Produce  json
+// @Router /help/store [post]
 func HelpStore(c *gin.Context) {
 
 	//用户自己的组织信息

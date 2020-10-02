@@ -85,14 +85,14 @@ func webRouter(router *gin.Engine) {
 	organizeRouter := router.Group("/organize", middleware.Auth())
 	{
 		//组织信息
-		organizeRouter.GET("", controllers.OrganizeList)
+		organizeRouter.GET("/list", controllers.OrganizeList)
 		//组织详情
 		organizeRouter.GET("/detail/:oid", controllers.OrganizeDetail)
 	}
-	userRouter := router.Group("/users", middleware.Auth())
+	userRouter := router.Group("/users", middleware.JwtHandler())
 	{
 		//用户列表
-		userRouter.GET("", controllers.UserList)
+		userRouter.GET("/list", controllers.UserList)
 		//用户详情
 		userRouter.GET("/detail/:userid", controllers.UserDetail)
 		//个人中心

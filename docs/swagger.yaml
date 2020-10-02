@@ -1,4 +1,13 @@
 definitions:
+  controllers.CreateHelpReq:
+    properties:
+      content:
+        type: string
+      hid:
+        type: integer
+      title:
+        type: string
+    type: object
   controllers.ReqLogin:
     properties:
       password:
@@ -82,7 +91,7 @@ paths:
       description: 描述信息
       produces:
       - application/json
-      summary: 显示网站信息
+      summary: 显示帮助详情
       tags:
       - help
   /help/operate:
@@ -93,6 +102,21 @@ paths:
       produces:
       - application/json
       summary: 显示网站信息
+      tags:
+      - help
+  /help/store:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/controllers.CreateHelpReq'
+      summary: 新增帮助保存
       tags:
       - accounts
   /json:
@@ -113,6 +137,36 @@ paths:
       produces:
       - application/json
       summary: 退出登录
+      tags:
+      - accounts
+  /organize/detail/:oid:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 保存修改信息
+      tags:
+      - organize
+  /organize/join:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 加入组织
+      tags:
+      - organize
+  /organize/list:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 获取项目列表
       tags:
       - accounts
   /person:
@@ -179,6 +233,26 @@ paths:
           schema:
             $ref: '#/definitions/models.Result'
       summary: 登陆
+      tags:
+      - accounts
+  /users/detail/:userid:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 用户详情
+      tags:
+      - accounts
+  /users/list:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 获取用户列表页（组织成员）
       tags:
       - accounts
 swagger: "2.0"

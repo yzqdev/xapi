@@ -69,11 +69,11 @@ func projectRouter(router *gin.Engine) {
 		//组织搜索
 		organizeRouter.GET("/search/:identify", controllers.Search)
 		//加入组织
-		organizeRouter.POST("/addition/:identify", controllers.OrganizeJoin)
+		organizeRouter.POST("/join/:identify", controllers.OrganizeJoin)
 		//退出组织
 		organizeRouter.POST("/quit/:oid", controllers.OrganizeQuit)
 		//编辑组织信息
-		organizeRouter.POST("/detail/:oid", requests.OrganizeVerify(), controllers.OrganizeSave)
+		organizeRouter.POST("/detail/:oid", controllers.OrganizeSave)
 	}
 	userRouter := router.Group("/users", middleware.Auth())
 	{

@@ -37,10 +37,6 @@ func Login(c *gin.Context) {
 	})
 }
 
-func GenJwt(m *models.QyUser) {
-
-}
-
 // @Summary 登陆
 // @Description 描述信息
 // @Tags accounts
@@ -251,13 +247,19 @@ func RegisterCheck(c *gin.Context) {
 
 }
 
-//获取用户列表页（组织成员）
+//
+// @Summary 获取用户列表页（组织成员）
+// @Description 描述信息
+// @Tags accounts
+// @Accept  json
+// @Produce  json
+// @Router /users/list [get]
 func UserList(c *gin.Context) {
 
 	//查询用户的组织及用户组
 	group := models.GetUserPermissionGroup()
 
-	c.HTML(http.StatusOK, "users.html", gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"website": Services.GetWebsite(),
 		"group":   group,
 		"userStatus": map[int]string{
@@ -293,12 +295,30 @@ func AjaxUserList(c *gin.Context) {
 	})
 }
 
-//用户详情
+//
+// @Summary 用户详情
+// @Description 描述信息
+// @Tags accounts
+// @Accept  json
+// @Produce  json
+// @Router /users/detail/:userid [get]
 func UserDetail(c *gin.Context) {
 
 	//获取用户信息
-	userInfo, _ := c.Get("user")
-	oid := userInfo.(map[string]interface{})["oid"].(int)
+	userContext, exist := c.Get("user")
+	if !exist {
+		color.Danger.Println("失败了")
+	}
+	//查询用户组及该组的功能权限
+	user, ok := userContext.(models.QyUser)
+	if ok {
+		color.Danger.Println("成功获取用户信息")
+		color.Danger.Println(ok)
+	} else {
+		color.Danger.Println("断言失败")
+	}
+	oid := user.Uid
+
 	//获取组织下的权限组
 	group := models.GetUserPermissionGroup()
 
@@ -309,7 +329,7 @@ func UserDetail(c *gin.Context) {
 	//组织下的用户信息
 	info := models.GetOrganizeUserInfo(oid, userid)
 
-	c.HTML(http.StatusOK, "users_detail.html", gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"website": Services.GetWebsite(),
 		"group":   group,
 		"userStatus": map[string]string{
@@ -370,8 +390,19 @@ func UserPerson(c *gin.Context) {
 
 	session := sessions.Default(c)
 	//获取用户信息
-	userInfo, _ := c.Get("user")
-	uid := userInfo.(map[string]interface{})["uid"].(int)
+	userContext, exist := c.Get("user")
+	if !exist {
+		color.Danger.Println("失败了")
+	}
+	//查询用户组及该组的功能权限
+	user, ok := userContext.(models.QyUser)
+	if ok {
+		color.Danger.Println("成功获取用户信息")
+		color.Danger.Println(ok)
+	} else {
+		color.Danger.Println("断言失败")
+	}
+	uid := user.Uid
 
 	info := models.GetUserInfo(uid)
 	c.JSON(http.StatusOK, gin.H{
@@ -391,9 +422,19 @@ func UserPerson(c *gin.Context) {
 func UserPersonStore(c *gin.Context) {
 
 	//获取用户信息
-	userInfo, _ := c.Get("user")
-	uid := userInfo.(map[string]interface{})["uid"].(int)
-
+	userContext, exist := c.Get("user")
+	if !exist {
+		color.Danger.Println("失败了")
+	}
+	//查询用户组及该组的功能权限
+	user, ok := userContext.(models.QyUser)
+	if ok {
+		color.Danger.Println("成功获取用户信息")
+		color.Danger.Println(ok)
+	} else {
+		color.Danger.Println("断言失败")
+	}
+	uid := user.Uid
 	salt := common.GetRandomString(4)
 	data := map[string]interface{}{}
 	field := []string{"username", "phone", "email", "intro"}
