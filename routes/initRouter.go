@@ -22,7 +22,7 @@ func InitRouter() *gin.Engine {
 		AllowHeaders:     []string{"*"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
-		 
+
 		MaxAge: 12 * time.Hour,
 	}))
 	router.StaticFS("/assets", http.Dir(config.GetGlobal().AssetsPath))

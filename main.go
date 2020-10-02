@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/gookit/color"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"os/exec"
@@ -24,25 +25,28 @@ func Run() {
 	} else {
 		gin.SetMode(gin.ReleaseMode)
 	}
-
+	cmd := exec.Command("swag", "init")
+	err := cmd.Run()
+	if err != nil {
+		color.Red.Print("发生错误")
+	}
 	router := routes.InitRouter()
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	router.Run(":" + sysconfig.ServerPort)
 
 	common.Open(sysconfig.ServerWebsite)
-	swaggerUrl:="http://localhost:"+sysconfig.ServerPort+"/swagger/index.html"
-	fmt.Printf("%s\n",swaggerUrl)
+	swaggerUrl := "http://localhost:" + sysconfig.ServerPort + "/swagger/index.html"
+	fmt.Printf("%s\n", swaggerUrl)
 }
 func main() {
 	// programatically set swagger info
-	cmd := exec.Command("swag", "init")
-	cmd.Run()
+
 	docs.SwaggerInfo.Title = "Swagger Example API"
 	docs.SwaggerInfo.Description = "xapi的帮助文档."
 	docs.SwaggerInfo.Version = "1.0"
 	docs.SwaggerInfo.Host = "localhost:6300"
 	docs.SwaggerInfo.BasePath = "/"
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
-	   Run()
+	Run()
 
 }

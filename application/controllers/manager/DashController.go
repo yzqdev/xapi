@@ -1,23 +1,24 @@
 package manager
 
 import (
-	"xapimanager/application/Services"
-	"xapimanager/application/models"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"math/rand"
 	"net/http"
 	"strconv"
+	"xapimanager/application/Services"
+	"xapimanager/application/models"
 )
 
 //控制台
 // @Summary
 // @Description 描述信息
-// @Tags dashborad
+// @Tags dashboard
 // @Accept  json
 // @Produce  json
 // @Router /dashboard [get]
 func Dashboard(c *gin.Context) {
-
+	fmt.Print("dashboard")
 	proid, _ := strconv.Atoi(c.Param("proid"))
 
 	c.HTML(http.StatusOK, "manager_dash.html", gin.H{

@@ -37,10 +37,20 @@ func Login(c *gin.Context) {
 	})
 }
 
-func GenJwt(m *models.QyUser){
+func GenJwt(m *models.QyUser) {
 
 }
+
+// @Summary 登陆
+// @Description 描述信息
+// @Tags accounts
+// @Success 200 {object} models.Result
+// @Accept  json
+// @Param account body ReqLogin true "login"
+// @Produce  json
+// @Router /userlogin [post]
 func FetchLogin(c *gin.Context) {
+	color.Red.Print("qqq")
 	user := &ReqLogin{}
 	result := &models.Result{
 		Code:    200,
@@ -69,20 +79,19 @@ func FetchLogin(c *gin.Context) {
 		//	NotBefore: time.Now().Unix(),      // 生效时间
 		//	Subject:   "login",                // 主题
 		//}
-		stdClaims:=jwt.StandardClaims{
+		stdClaims := jwt.StandardClaims{
 
 			Audience:  "啊啊啊",             // 受众
 			ExpiresAt: expiresTime,       // 失效时间
 			Id:        "id",              // 编号
 			IssuedAt:  time.Now().Unix(), // 签发时间
-			Issuer:    " sqlU.Username",     // 签发人
+			Issuer:    " sqlU.Username",  // 签发人
 			NotBefore: time.Now().Unix(), // 生效时间
 			Subject:   "login",           // 主题
 		}
 		newClaims := NewJwtClaims{
-			 QyUser:&sqlU,
-			 StandardClaims:stdClaims,
-
+			QyUser:         &sqlU,
+			StandardClaims: stdClaims,
 		}
 		tokenClaims := jwt.NewWithClaims(jwt.SigningMethodHS256, newClaims)
 		if token, err := tokenClaims.SignedString(SecretKey); err == nil {
@@ -283,8 +292,6 @@ func AjaxUserList(c *gin.Context) {
 		"data":    result,
 	})
 }
-
-
 
 //用户详情
 func UserDetail(c *gin.Context) {

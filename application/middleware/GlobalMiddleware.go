@@ -37,6 +37,7 @@ func GlobalHandle() gin.HandlerFunc {
 	}
 }
 func JwtHandler() gin.HandlerFunc {
+	//@Security ApiKeyAuth
 	return func(context *gin.Context) {
 		result := models.Result{
 			Code:    http.StatusUnauthorized,
@@ -81,7 +82,7 @@ func parseToken(yourToken string) (models.QyUser, error) {
 		color.Danger.Println("token值为空")
 
 	}
-color.Danger.Println(claims.QyUser,"编译token")
+	color.Danger.Println(claims.QyUser, "编译token")
 	return *claims.QyUser, err
 
 }

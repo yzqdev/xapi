@@ -1,3 +1,22 @@
+definitions:
+  controllers.ReqLogin:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.Result:
+    properties:
+      code:
+        example: 0
+        type: integer
+      data:
+        type: object
+      message:
+        example: 请求信息
+        type: string
+    type: object
 info:
   contact: {}
   license: {}
@@ -30,7 +49,18 @@ paths:
       produces:
       - application/json
       tags:
-      - dashborad
+      - dashboard
+  /getIndex:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      responses: {}
+      summary: 获取首页信息
+      tags:
+      - index
   /help:
     get:
       consumes:
@@ -59,6 +89,28 @@ paths:
       produces:
       - application/json
       summary: 显示网站信息
+      tags:
+      - accounts
+  /userlogin:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      parameters:
+      - description: login
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ReqLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Result'
+      summary: 登陆
       tags:
       - accounts
 swagger: "2.0"
