@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"xapimanager/application/Services"
 	"xapimanager/application/common"
+	"xapimanager/application/models"
 	"xapimanager/config"
 )
 
@@ -21,10 +22,19 @@ func ApiAuthCheck() gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 		//获取用户信息
-		userInfo, _ := c.Get("user")
-		uid := userInfo.(map[string]interface{})["uid"].(int)
-		username := userInfo.(map[string]interface{})["username"].(string)
+		userContext, exist := c.Get("user")
+		if !exist {
+			color.Danger.Println("失败了")
+		}
+		//查询用户组及该组的功能权限
+		user, ok := userContext.(models.QyUser) //这个是类型推断,判断接口是什么类型
+		color.Danger.Println(user, "getIndex获取用户信息")
+		if !ok {
 
+			color.Danger.Println("断言失败")
+		}
+		uid := user.Uid
+		username := user.Username
 		//未登录用户直接跳转到登录页
 		if uid == 0 || username == "" {
 			c.Redirect(http.StatusFound, "/login")
@@ -44,7 +54,7 @@ func ApiAuthCheck() gin.HandlerFunc {
 		project := Services.GetUserProject(uid)
 		flag := false
 		for _, v := range project {
-			color.Danger.Println(proid,"项目id",v.Id)
+			color.Danger.Println(proid, "项目id", v.Id)
 			if proid == v.Id {
 				flag = true
 			}

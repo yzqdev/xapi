@@ -88,20 +88,19 @@ func GetUserPermissionGroup() (group []PermissionGroup) {
 	return
 }
 
-//为用户自己创建团队
 func OrganizeCreate(uid int, data map[string]interface{}) (orgId int) {
 
 	defer Db.Close()
 	Db = Connect()
-	time := time.Now().Unix()
+	ctime := time.Now().Unix()
 	org := QyOrganize{
 		0,
 		uid,
-		"梦之队" + strconv.Itoa(uid),
-		common.MD5(strconv.Itoa(uid) + string(time)),
+		data["name"].(string),
+		common.MD5(strconv.Itoa(uid) + strconv.FormatInt(ctime, 10)),
 		"",
-		"我就是我，不一样的烟火！",
-		int(time),
+		data["description"].(string),
+		int(ctime),
 	}
 	organize := Db.Hander.Create(&org).Value
 	return organize.(*QyOrganize).Id

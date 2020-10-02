@@ -21,7 +21,7 @@ func Dashboard(c *gin.Context) {
 	fmt.Print("dashboard")
 	proid, _ := strconv.Atoi(c.Param("proid"))
 
-	c.HTML(http.StatusOK, "manager_dash.html", gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"website": Services.GetWebsite(),
 		"proid":   proid,
 	})

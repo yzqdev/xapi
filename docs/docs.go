@@ -277,6 +277,21 @@ var doc = `{
                 "summary": "获取未读消息数"
             }
         },
+        "/organize/create": {
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "organize"
+                ],
+                "summary": "新建组织"
+            }
+        },
         "/organize/detail/:oid": {
             "get": {
                 "description": "描述信息",
@@ -289,7 +304,7 @@ var doc = `{
                 "tags": [
                     "organize"
                 ],
-                "summary": "保存修改信息"
+                "summary": "修改组织信息"
             }
         },
         "/organize/join": {
@@ -387,6 +402,51 @@ var doc = `{
                         }
                     }
                 ]
+            }
+        },
+        "/project/info": {
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "project"
+                ],
+                "summary": "保存项目"
+            }
+        },
+        "/project/list": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "project"
+                ],
+                "summary": "项目列表"
+            }
+        },
+        "/register": {
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "注册api"
             }
         },
         "/user/all": {

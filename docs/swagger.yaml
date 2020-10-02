@@ -212,6 +212,16 @@ paths:
       summary: 获取未读消息数
       tags:
       - message
+  /organize/create:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 新建组织
+      tags:
+      - organize
   /organize/detail/:oid:
     get:
       consumes:
@@ -219,7 +229,7 @@ paths:
       description: 描述信息
       produces:
       - application/json
-      summary: 保存修改信息
+      summary: 修改组织信息
       tags:
       - organize
   /organize/join:
@@ -284,6 +294,36 @@ paths:
       produces:
       - application/json
       summary: 个人资料修改
+      tags:
+      - accounts
+  /project/info:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 保存项目
+      tags:
+      - project
+  /project/list:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 项目列表
+      tags:
+      - project
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 注册api
       tags:
       - accounts
   /user/all:

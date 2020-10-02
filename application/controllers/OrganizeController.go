@@ -120,10 +120,8 @@ func OrganizeJoin(c *gin.Context) {
 	}
 	//查询用户组及该组的功能权限
 	user, ok := userContext.(models.QyUser)
-	if ok {
-		color.Danger.Println("成功获取用户信息")
-		color.Danger.Println(ok)
-	} else {
+	if !ok {
+
 		color.Danger.Println("断言失败")
 	}
 	uid := user.Uid
@@ -148,9 +146,17 @@ func OrganizeJoin(c *gin.Context) {
 func OrganizeQuit(c *gin.Context) {
 
 	//获取用户信息
-	userInfo, _ := c.Get("user")
-	uid := userInfo.(map[string]interface{})["uid"].(int)
+	userContext, exist := c.Get("user")
+	if !exist {
+		color.Danger.Println("失败了")
+	}
+	//查询用户组及该组的功能权限
+	user, ok := userContext.(models.QyUser)
+	if !ok {
 
+		color.Danger.Println("断言失败")
+	}
+	uid := user.Uid
 	//组织id
 	oid := c.Param("oid")
 	organizeId, _ := strconv.Atoi(oid)
@@ -201,13 +207,13 @@ type OrgRequest struct {
 }
 
 //
-// @Summary 保存修改信息
+// @Summary  修改组织信息
 // @Description 描述信息
 // @Tags organize
 // @Accept  json
 // @Produce  json
 // @Router /organize/detail/:oid [get]
-func OrganizeSave(c *gin.Context) {
+func OrganizeUpate(c *gin.Context) {
 
 	//组织id
 	oid := c.Param("oid")
@@ -229,4 +235,44 @@ func OrganizeSave(c *gin.Context) {
 			"message": "保存失败",
 		})
 	}
+}
+
+type OrgCreate struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
+
+//
+// @Summary  新建组织
+// @Description 描述信息
+// @Tags organize
+// @Accept  json
+// @Produce  json
+// @Router /organize/create [post]
+func OrganizeCreate(c *gin.Context) {
+
+	req := OrgCreate{}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		color.Red.Println("绑定组织失败")
+	}
+	userContext, exist := c.Get("user")
+	if !exist {
+		color.Danger.Println("失败了")
+	}
+	//查询用户组及该组的功能权限
+	user, ok := userContext.(models.QyUser)
+	if !ok {
+
+		color.Danger.Println("断言失败")
+	}
+	uid := user.Uid
+	data := map[string]interface {
+	}{"name": req.Name, "description": req.Description}
+	models.OrganizeCreate(uid, data)
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":  200,
+		"message": "保存成功",
+	})
+
 }

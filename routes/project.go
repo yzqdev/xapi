@@ -60,7 +60,7 @@ func projectRouter(router *gin.Engine) {
 	projectRouter := router.Group("/project", middleware.JwtHandler())
 	{
 		//保存项目
-		projectRouter.POST("/info", requests.ProjectVerify(), controllers.ProjectSave)
+		projectRouter.POST("/info", controllers.ProjectSave)
 		//项目环境
 		projectRouter.POST("/env/:proid", requests.ProjectEnv(), controllers.ProjectEnvSave)
 		//项目切换
@@ -76,7 +76,8 @@ func projectRouter(router *gin.Engine) {
 		//退出组织
 		organizeRouter.POST("/quit/:oid", controllers.OrganizeQuit)
 		//编辑组织信息
-		organizeRouter.POST("/detail/:oid", controllers.OrganizeSave)
+		organizeRouter.POST("/detail/:oid", controllers.OrganizeUpate)
+		organizeRouter.POST("/create", controllers.OrganizeCreate)
 	}
 	userRouter := router.Group("/users", middleware.JwtHandler())
 	{

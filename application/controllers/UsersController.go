@@ -88,14 +88,14 @@ func FetchLogin(c *gin.Context) {
 			result.Code = http.StatusOK
 			c.JSON(result.Code, result)
 		} else {
-			result.Message = "登录失败"
+			result.Message = "登录失败，请重新登陆"
 			result.Code = http.StatusOK
 			c.JSON(result.Code, gin.H{
 				"result": result,
 			})
 		}
 	} else {
-		result.Message = "登录失败"
+		result.Message = "密码不一样"
 		result.Code = http.StatusOK
 		c.JSON(result.Code, gin.H{
 			"result": result,
@@ -103,7 +103,12 @@ func FetchLogin(c *gin.Context) {
 	}
 }
 
-//注册api
+// @Summary 注册api
+// @Description 描述信息
+// @Tags accounts
+// @Accept  json
+// @Produce  json
+// @Router /register [post]
 func AjaxRegister(c *gin.Context) {
 
 	u := &ReqReg{}

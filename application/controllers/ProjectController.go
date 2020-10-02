@@ -12,16 +12,31 @@ import (
 	"xapimanager/config"
 )
 
+// @Summary 项目列表
+// @Description 描述信息
+// @Tags project
+// @Accept  json
+// @Produce  json
+// @Router /project/list [get]
 func ProjectList(c *gin.Context) {
 	//获取用户信息
 	//var data string
 	//var err error
 	var projects []models.QyProject
-	userInfo, _ := c.Get("puser")
-	color.Danger.Println(userInfo, "list获取")
 
-	uid := userInfo.(map[string]interface{})["uid"].(int)
-	oid := userInfo.(map[string]interface{})["oid"].(int)
+	userContext, exist := c.Get("user")
+	if !exist {
+		color.Danger.Println("失败了")
+	}
+	//查询用户组及该组的功能权限
+	user, ok := userContext.(models.QyUser)
+	if !ok {
+
+		color.Danger.Println("断言失败")
+	}
+	uid := user.Uid
+
+	oid := user.Uid
 	color.Danger.Println(oid, uid, "尼玛")
 	//	Cache := models.CacheConnect()
 	//	key := "qy_user_project_list#" + strconv.Itoa(uid)
@@ -115,7 +130,12 @@ func ProjectCreate(c *gin.Context) {
 	})
 }
 
-//保存项目
+// @Summary 保存项目
+// @Description 描述信息
+// @Tags project
+// @Accept  json
+// @Produce  json
+// @Router /project/info [post]
 func ProjectSave(c *gin.Context) {
 
 	var gids []string
@@ -180,7 +200,7 @@ func ProjectModify(c *gin.Context) {
 	//查询项目下的权限组
 	group := models.GetProjectGroupAuth(proid)
 
-	c.HTML(http.StatusOK, "project_info.html", gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"website": Services.GetWebsite(),
 		"project": project,
 		"group":   group,
