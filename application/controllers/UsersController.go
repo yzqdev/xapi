@@ -360,7 +360,12 @@ func UsersSave(c *gin.Context) {
 	})
 }
 
-//个人中心
+// @Summary 个人中心
+// @Description 描述信息
+// @Tags accounts
+// @Accept  json
+// @Produce  json
+// @Router /person [post]
 func UserPerson(c *gin.Context) {
 
 	session := sessions.Default(c)
@@ -369,14 +374,20 @@ func UserPerson(c *gin.Context) {
 	uid := userInfo.(map[string]interface{})["uid"].(int)
 
 	info := models.GetUserInfo(uid)
-	c.HTML(http.StatusOK, "users_person.html", gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"website":  Services.GetWebsite(),
 		"userinfo": info,
 		"avatar":   session.Get("avatar"),
 	})
 }
 
-//个人资料修改
+// @Summary 个人资料修改
+// @Description 描述信息
+// @Tags accounts
+// @Accept  json
+// @Param account body models.UserInfo true "用户验证"
+// @Produce  json
+// @Router /person/store [post]
 func UserPersonStore(c *gin.Context) {
 
 	//获取用户信息
@@ -415,13 +426,20 @@ func UserPersonStore(c *gin.Context) {
 	}
 }
 
-//个人资料检查,检查时只会一次传一个字段
+// @Summary 个人资料检查,检查时只会一次传一个字段
+// @Description 资料检查
+// @Tags accounts
+// @Accept  json
+// @Param account body models.UserInfo true "用户验证"
+// @Produce  json
+// @Router /person/check [post]
 func UserPersonCheck(c *gin.Context) {
 
 	flag := true
 	data := map[string]interface{}{}
 	//获取用户信息
 	userInfo, _ := c.Get("user")
+	color.Red.Println(userInfo)
 	uid := userInfo.(map[string]interface{})["uid"].(int)
 	info := models.GetUserInfo(uid)
 
@@ -441,6 +459,12 @@ func UserPersonCheck(c *gin.Context) {
 }
 
 //退出登录
+// @Summary 退出登录
+// @Description 描述信息
+// @Tags accounts
+// @Accept  json
+// @Produce  json
+// @Router /logout [get]
 func Logout(c *gin.Context) {
 
 	session := sessions.Default(c)

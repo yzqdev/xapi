@@ -2,6 +2,7 @@ package requests
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/gookit/color"
 	"gopkg.in/go-playground/validator.v9"
 	"net/http"
 )
@@ -23,6 +24,7 @@ func HelpVerify() gin.HandlerFunc {
 		errB := validate.Struct(&data)
 
 		if errA != nil || errB != nil {
+			color.Red.Println("青祁隧道蝌蚪宽杜父鱼")
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"status":  5010,
 				"message": "请求参数不合法",

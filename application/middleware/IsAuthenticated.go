@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/gookit/color"
 	"net/http"
 	"xapimanager/application/models"
 )
@@ -22,11 +23,12 @@ func Auth() gin.HandlerFunc {
 			})
 		}
 
+		color.Red.Println(auth, "用户token")
 		// 校验token
 		qyUser, err := parseToken(auth)
 
-username:=qyUser.Username
-uid:=qyUser.Uid
+		username := qyUser.Username
+		uid := qyUser.Uid
 		if err != nil {
 			c.Abort()
 			result.Message = err.Error()

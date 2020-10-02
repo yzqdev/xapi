@@ -18,8 +18,6 @@ var identityKey = "id"
 func projectRouter(router *gin.Engine) {
 	// the jwt middleware
 
-
-
 	basicRouter := router.Group("")
 	{
 		basicRouter.POST("/userlogin", controllers.FetchLogin)
@@ -124,14 +122,14 @@ func projectRouter(router *gin.Engine) {
 		//获取未读消息数
 		messageRouter.GET("/unread", controllers.GetUnreadMessage)
 	}
-	helpRouter := router.Group("/help", middleware.Auth())
+	helpRouter := router.Group("/help", middleware.JwtHandler())
 	{
 		//帮助中心
-		helpRouter.GET("/", controllers.AjaxHelpList)
+		helpRouter.POST("/list", controllers.AjaxHelpList)
 		//帮助中心操作
-		helpRouter.POST("/operate", controllers.HelpOperate)
+		helpRouter.POST("/operate", controllers.HelpDelete)
 		//帮助中心文章保存
-		helpRouter.POST("/store", requests.HelpVerify(), controllers.HelpStore)
+		helpRouter.POST("/store", controllers.HelpStore)
 	}
 	uploadRouter := router.Group("/uploads", middleware.Auth())
 	{

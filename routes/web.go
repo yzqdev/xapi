@@ -9,17 +9,14 @@ import (
 
 func webRouter(router *gin.Engine) {
 
-
-
-
 	basicRouter := router.Group("")
 	{
 		//页面路由
 		basicRouter.GET("/", middleware.Auth(), controllers.Indexpage)
 		basicRouter.GET("/main", middleware.Auth(), controllers.Indexpage)
-		basicRouter.GET("/login",controllers.Login)
+		basicRouter.GET("/login", controllers.Login)
 		basicRouter.GET("/register", controllers.Register)
-		basicRouter.GET("/getIndex", middleware.JwtHandler(),  controllers.Index)
+		basicRouter.GET("/getIndex", middleware.JwtHandler(), controllers.Index)
 		//manager 主页
 		basicRouter.GET("/manager/:proid", middleware.Auth(), controllers.Manager)
 		//mock 测试
@@ -65,7 +62,7 @@ func webRouter(router *gin.Engine) {
 	{
 		//项目列表页
 		projectRouter.GET("", controllers.ProjectListPage)
-		projectRouter.GET("/list",middleware.JwtHandler(), controllers.ProjectList)
+		projectRouter.GET("/list", middleware.JwtHandler(), controllers.ProjectList)
 		//创建项目
 		projectRouter.GET("/create", controllers.ProjectCreate)
 		//项目修改
@@ -130,7 +127,7 @@ func webRouter(router *gin.Engine) {
 		messageRouter.GET("/detail/:mid", controllers.MessageDetail)
 
 	}
-	helpRouter := router.Group("/help", middleware.Auth())
+	helpRouter := router.Group("/help", middleware.JwtHandler())
 	{
 		//帮助中心
 		helpRouter.GET("/list", controllers.HelpList)

@@ -27,6 +27,7 @@ func Indexpage(c *gin.Context) {
 	//获取用户信息
 	userInfo, _ := c.Get("user")
 	//查询用户组及该组的功能权限
+	color.Cyan.Println(userInfo, "mainpage用户")
 	uid := userInfo.(map[string]interface{})["uid"].(int)
 	gid := models.GetUserGroup(uid)
 
@@ -76,13 +77,14 @@ func Index(c *gin.Context) {
 	user, ok := userContext.(models.QyUser) //这个是类型推断,判断接口是什么类型
 	color.Danger.Println(user, "getIndex获取用户信息")
 	if ok {
-		color.Danger.Println("是按比例")
+		color.Danger.Println("成功获取用户信息")
 		color.Danger.Println(ok)
 	} else {
 		color.Danger.Println("断言失败")
 	}
-	color.Danger.Println(user.Username, "获取用")
+	color.Danger.Println(user.Username, "获取username")
 	gid := models.GetUserGroup(user.Uid)
+	color.Red.Print(gid, "这是gid")
 	var menu []models.Allmenu
 	if gid == 1 {
 		menu = models.GetMenu(1, 0)

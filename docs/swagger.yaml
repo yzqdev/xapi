@@ -17,30 +17,25 @@ definitions:
         example: 请求信息
         type: string
     type: object
+  models.UserInfo:
+    properties:
+      email:
+        type: string
+      intro:
+        type: string
+      phone:
+        type: string
+      status:
+        type: string
+      uid:
+        type: integer
+      username:
+        type: string
+    type: object
 info:
   contact: {}
   license: {}
 paths:
-  /annnnnnnn:
-    get:
-      consumes:
-      - application/json
-      description: 描述信息
-      produces:
-      - application/json
-      summary: 显示网站信息
-      tags:
-      - accounts
-  /configaaaaa:
-    get:
-      consumes:
-      - application/json
-      description: 描述信息
-      produces:
-      - application/json
-      summary: 显示网站信息
-      tags:
-      - accounts
   /dashboard:
     get:
       consumes:
@@ -71,6 +66,35 @@ paths:
       tags:
       - help
       - accounts
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 显示网站信息
+      tags:
+      - help
+  /help/detail/:hid:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 显示网站信息
+      tags:
+      - help
+  /help/operate:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 显示网站信息
+      tags:
+      - accounts
   /json:
     get:
       consumes:
@@ -81,14 +105,58 @@ paths:
       summary: json 格式化
       tags:
       - app
-  /sss:
+  /logout:
     get:
       consumes:
       - application/json
       description: 描述信息
       produces:
       - application/json
-      summary: 显示网站信息
+      summary: 退出登录
+      tags:
+      - accounts
+  /person:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 个人中心
+      tags:
+      - accounts
+  /person/check:
+    post:
+      consumes:
+      - application/json
+      description: 资料检查
+      parameters:
+      - description: 用户验证
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserInfo'
+      produces:
+      - application/json
+      summary: 个人资料检查,检查时只会一次传一个字段
+      tags:
+      - accounts
+  /person/store:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      parameters:
+      - description: 用户验证
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserInfo'
+      produces:
+      - application/json
+      summary: 个人资料修改
       tags:
       - accounts
   /userlogin:

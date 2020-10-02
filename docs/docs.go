@@ -25,36 +25,6 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/annnnnnnn": {
-            "get": {
-                "description": "描述信息",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "accounts"
-                ],
-                "summary": "显示网站信息"
-            }
-        },
-        "/configaaaaa": {
-            "get": {
-                "description": "描述信息",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "accounts"
-                ],
-                "summary": "显示网站信息"
-            }
-        },
         "/dashboard": {
             "get": {
                 "description": "描述信息",
@@ -98,6 +68,49 @@ var doc = `{
                     "help",
                     "accounts"
                 ]
+            },
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "help"
+                ],
+                "summary": "显示网站信息"
+            }
+        },
+        "/help/detail/:hid": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "help"
+                ],
+                "summary": "显示网站信息"
+            }
+        },
+        "/help/operate": {
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "显示网站信息"
             }
         },
         "/json": {
@@ -115,7 +128,7 @@ var doc = `{
                 "summary": "json 格式化"
             }
         },
-        "/sss": {
+        "/logout": {
             "get": {
                 "description": "描述信息",
                 "consumes": [
@@ -127,7 +140,74 @@ var doc = `{
                 "tags": [
                     "accounts"
                 ],
-                "summary": "显示网站信息"
+                "summary": "退出登录"
+            }
+        },
+        "/person": {
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "个人中心"
+            }
+        },
+        "/person/check": {
+            "post": {
+                "description": "资料检查",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "个人资料检查,检查时只会一次传一个字段",
+                "parameters": [
+                    {
+                        "description": "用户验证",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UserInfo"
+                        }
+                    }
+                ]
+            }
+        },
+        "/person/store": {
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "个人资料修改",
+                "parameters": [
+                    {
+                        "description": "用户验证",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UserInfo"
+                        }
+                    }
+                ]
             }
         },
         "/userlogin": {
@@ -190,6 +270,29 @@ var doc = `{
                 "message": {
                     "type": "string",
                     "example": "请求信息"
+                }
+            }
+        },
+        "models.UserInfo": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "intro": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "uid": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
                 }
             }
         }
