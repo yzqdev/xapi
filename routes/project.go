@@ -86,9 +86,11 @@ func projectRouter(router *gin.Engine) {
 		userRouter.POST("/all", controllers.AjaxUserList)
 		userRouter.POST("/list", controllers.UserList)
 		//用户详情
-		userRouter.POST("/detail/:userid", controllers.UsersSave)
+		userRouter.POST("/update/:userid", controllers.UserUpdate)
+		userRouter.POST("/details/:userid", controllers.UserDetail)
 		//个人资料修改
 		userRouter.POST("/person/store", controllers.UserPersonStore)
+		userRouter.GET("/person", controllers.UserPerson)
 		//个人中心数据检查
 		userRouter.POST("/person/check", controllers.UserPersonCheck)
 	}

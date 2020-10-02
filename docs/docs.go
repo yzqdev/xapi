@@ -337,21 +337,6 @@ var doc = `{
                 "summary": "获取项目列表"
             }
         },
-        "/person": {
-            "post": {
-                "description": "描述信息",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "accounts"
-                ],
-                "summary": "个人中心"
-            }
-        },
         "/person/check": {
             "post": {
                 "description": "资料检查",
@@ -464,6 +449,21 @@ var doc = `{
                 "summary": "ajax获取用户列表"
             }
         },
+        "/user/update": {
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "修改用户信息"
+            }
+        },
         "/users/detail/:userid": {
             "get": {
                 "description": "描述信息",
@@ -492,6 +492,21 @@ var doc = `{
                     "accounts"
                 ],
                 "summary": "获取用户列表页（组织成员）"
+            }
+        },
+        "/users/person": {
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "accounts"
+                ],
+                "summary": "个人中心"
             }
         },
         "/website/info": {

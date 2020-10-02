@@ -294,8 +294,14 @@ func UserDetail(c *gin.Context) {
 
 }
 
-//保存用户信息
-func UsersSave(c *gin.Context) {
+//
+// @Summary 修改用户信息
+// @Description 描述信息
+// @Tags accounts
+// @Accept  json
+// @Produce  json
+// @Router /user/update [post]
+func UserUpdate(c *gin.Context) {
 
 	var message string
 	var status int
@@ -335,7 +341,7 @@ func UsersSave(c *gin.Context) {
 // @Tags accounts
 // @Accept  json
 // @Produce  json
-// @Router /person [post]
+// @Router /users/person [post]
 func UserPerson(c *gin.Context) {
 
 	session := sessions.Default(c)

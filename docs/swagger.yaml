@@ -252,16 +252,6 @@ paths:
       summary: 获取项目列表
       tags:
       - accounts
-  /person:
-    post:
-      consumes:
-      - application/json
-      description: 描述信息
-      produces:
-      - application/json
-      summary: 个人中心
-      tags:
-      - accounts
   /person/check:
     post:
       consumes:
@@ -336,6 +326,16 @@ paths:
       summary: ajax获取用户列表
       tags:
       - accounts
+  /user/update:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 修改用户信息
+      tags:
+      - accounts
   /users/detail/:userid:
     get:
       consumes:
@@ -354,6 +354,16 @@ paths:
       produces:
       - application/json
       summary: 获取用户列表页（组织成员）
+      tags:
+      - accounts
+  /users/person:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 个人中心
       tags:
       - accounts
   /website/info:
