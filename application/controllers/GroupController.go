@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/gookit/color"
 	"net/http"
 	"strconv"
 	"strings"
@@ -44,7 +45,19 @@ func GroupInfo(c *gin.Context) {
 	})
 }
 
-//保存权限组
+type CreateGroupReq struct {
+	GroupName   string `json:"groupname"`
+	Description string `json:"description"`
+	Status      int    `json:"status"`
+}
+
+//
+// @Summary 保存权限组
+// @Description 描述信息
+// @Tags group
+// @Accept  json
+// @Produce  json
+// @Router /group/save [post]
 func GroupSave(c *gin.Context) {
 
 	gid, _ := strconv.Atoi(c.PostForm("gid"))
@@ -53,12 +66,25 @@ func GroupSave(c *gin.Context) {
 	var status int
 	models.OperateLog("编辑权限组", 2, c)
 	//获取用户信息
-	userInfo, _ := c.Get("user")
+	userContext, exist := c.Get("user")
+	if !exist {
+		color.Danger.Println("失败了")
+	}
+	//查询用户组及该组的功能权限
+	user, ok := userContext.(models.QyUser) //这个是类型推断,判断接口是什么类型
+	if !ok {
+
+		color.Danger.Println("断言失败")
+	}
+	req := CreateGroupReq{}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		color.Red.Println("绑定失败")
+	}
 	data := map[string]interface{}{
-		"organize":    userInfo.(map[string]interface{})["oid"].(int),
-		"groupname":   c.PostForm("groupname"),
-		"description": c.PostForm("description"),
-		"status":      common.StringToInt(c.PostForm("status")),
+		"organize":    user.Uid,
+		"groupname":   req.GroupName,
+		"description": req.Description,
+		"status":      req.Status,
 	}
 	if gid == 0 {
 		data["rules"] = ""
@@ -79,10 +105,17 @@ func GroupSave(c *gin.Context) {
 			"group_id": optid,
 		},
 	})
+
 }
 
-//权限组操作
-func GroupOperate(c *gin.Context) {
+//
+// @Summary 权限组操作
+// @Description 描述信息
+// @Tags group
+// @Accept  json
+// @Produce  json
+// @Router /group/delete/:id [post]
+func GroupDelete(c *gin.Context) {
 
 	gid, _ := strconv.Atoi(c.Param("gid"))
 	num := models.GetGroupUserNum(gid)
@@ -270,12 +303,21 @@ func GroupdataAuthSave(c *gin.Context) {
 }
 
 //获取权限组
-func AjaxGroup(c *gin.Context) {
+func AjaxGroupList(c *gin.Context) {
 
 	//获取用户信息
-	userInfo, _ := c.Get("user")
+	userContext, exist := c.Get("user")
+	if !exist {
+		color.Danger.Println("失败了")
+	}
+	//查询用户组及该组的功能权限
+	user, ok := userContext.(models.QyUser) //这个是类型推断,判断接口是什么类型
+	if !ok {
+
+		color.Danger.Println("断言失败")
+	}
 	//获取组织下的权限组
-	group := models.GetOrganizeGroup(userInfo.(map[string]interface{})["oid"].(int))
+	group := models.GetOrganizeGroup(user.Uid)
 
 	c.JSON(http.StatusOK, gin.H{
 		"status":  200,

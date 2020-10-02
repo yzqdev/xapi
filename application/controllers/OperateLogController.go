@@ -1,22 +1,13 @@
 package controllers
 
 import (
-	"xapimanager/application/Services"
-	"xapimanager/application/common"
-	"xapimanager/application/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 	"time"
+	"xapimanager/application/common"
+	"xapimanager/application/models"
 )
-
-//操作日志页面
-func OperateLog(c *gin.Context) {
-
-	c.HTML(http.StatusOK, "operate_log.html", gin.H{
-		"website": Services.GetWebsite(),
-	})
-}
 
 //操作日志数据
 func AjaxOperateLog(c *gin.Context) {

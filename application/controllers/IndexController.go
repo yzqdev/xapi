@@ -12,43 +12,6 @@ import (
 	_ "xapimanager/application/utils"
 )
 
-func Indexpage(c *gin.Context) {
-
-	//日志记录示例
-	//data := map[string]interface{}{
-	//	"filename": "routes",
-	//	"size":     10,
-	//	"username": c.PostForm("username"),
-	//	"passwd":   c.PostForm("passwd"),
-	//	"token":    c.Request.Header.Get("Authorization"),
-	//}
-	//token := c.Request.Header.Get("Authorization")
-	//utils.Log.WithFields(data).Info("路由文件记录")
-	//获取用户信息
-	userInfo, _ := c.Get("user")
-	//查询用户组及该组的功能权限
-	color.Cyan.Println(userInfo, "mainpage用户")
-	uid := userInfo.(map[string]interface{})["uid"].(int)
-	gid := models.GetUserGroup(uid)
-
-	var menu []models.Allmenu
-	if gid == 1 {
-		menu = models.GetMenu(1, 0)
-	} else {
-		rules := []string{"1", "2", "3", "4", "5", "7", "8", "9", "10", "14", "15", "16", "17", "18"}
-		menu = models.GetManagerMenu(1, 0, rules)
-	}
-	session := sessions.Default(c)
-	c.HTML(http.StatusOK, "index.html", gin.H{
-		"website": Services.GetWebsite(),
-		"menu":    menu,
-		"userinfo": map[string]interface{}{
-			"username": session.Get("username"),
-			"avatar":   session.Get("avatar"),
-		},
-	})
-}
-
 // @Summary 获取首页信息
 // @Description 描述信息
 // @Tags index
@@ -58,17 +21,6 @@ func Indexpage(c *gin.Context) {
 // @Router /getIndex [get]
 func Index(c *gin.Context) {
 
-	//日志记录示例
-	//data := map[string]interface{}{
-	//	"filename": "routes",
-	//	"size":     10,
-	//	"username": c.PostForm("username"),
-	//	"passwd":   c.PostForm("passwd"),
-	//	"token":    c.Request.Header.Get("Authorization"),
-	//}
-	//token := c.Request.Header.Get("Authorization")
-	//utils.Log.WithFields(data).Info("路由文件记录")
-	//获取用户信息
 	userContext, exist := c.Get("user")
 	if !exist {
 		color.Danger.Println("失败了")
@@ -105,21 +57,36 @@ func Index(c *gin.Context) {
 
 }
 
+// @Summary 显示首页manage
+// @Description 描述信息
+// @Tags index
+// @Accept  json
+// @Produce  json
+// @Router /manager/:proid [get]
 func Manager(c *gin.Context) {
 
 	proid, _ := strconv.Atoi(c.Param("proid"))
 	env := models.GetProjectValidEnv(proid, "asc")
 
 	//获取用户信息
-	userInfo, _ := c.Get("user")
+	userContext, exist := c.Get("user")
+	if !exist {
+		color.Danger.Println("失败了")
+	}
 	//查询用户组及该组的功能权限
-	uid := userInfo.(map[string]interface{})["uid"]
-	group := Services.GetProjectGroup(uid.(int), proid)
+	user, ok := userContext.(models.QyUser) //这个是类型推断,判断接口是什么类型
+	color.Danger.Println(user, "getIndex获取用户信息")
+	if !ok {
+
+		color.Danger.Println("断言失败")
+	}
+	uid := user.Uid
+	group := Services.GetProjectGroup(uid, proid)
 	rules := strings.Split(group.Rules, ",")
 	menu := models.GetManagerMenu(2, 0, rules)
 
 	//用户当前环境
-	cenv := models.GetCurrentEnv(uid.(int), proid)
+	cenv := models.GetCurrentEnv(uid, proid)
 	currentEnv := map[int]string{
 		0: "请选择环境",
 	}
@@ -131,7 +98,7 @@ func Manager(c *gin.Context) {
 	}
 	session := sessions.Default(c)
 
-	c.HTML(http.StatusOK, "index_api.html", gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"website":    Services.GetWebsite(),
 		"apimenu":    menu,
 		"projectEnv": env,

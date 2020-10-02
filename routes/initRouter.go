@@ -61,7 +61,7 @@ func InitRouter() *gin.Engine {
 	})
 
 	//加载路由文件
-	webRouter(router)
+	//webRouter(router)
 	projectRouter(router)
 
 	return router

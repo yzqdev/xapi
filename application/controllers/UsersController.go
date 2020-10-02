@@ -30,13 +30,6 @@ type NewJwtClaims struct {
 	jwt.StandardClaims
 }
 
-func Login(c *gin.Context) {
-
-	c.HTML(http.StatusOK, "login.html", gin.H{
-		"website": Services.GetWebsite(),
-	})
-}
-
 // @Summary 登陆
 // @Description 描述信息
 // @Tags accounts
@@ -44,9 +37,8 @@ func Login(c *gin.Context) {
 // @Accept  json
 // @Param account body ReqLogin true "login"
 // @Produce  json
-// @Router /userlogin [post]
+// @Router /login [post]
 func FetchLogin(c *gin.Context) {
-	color.Red.Print("qqq")
 	user := &ReqLogin{}
 	result := &models.Result{
 		Code:    200,
@@ -109,77 +101,6 @@ func FetchLogin(c *gin.Context) {
 			"result": result,
 		})
 	}
-}
-
-//ajax 登录
-func LoginPage(c *gin.Context) {
-
-	var avatar string
-	var loginJson ReqLogin
-	if err := c.ShouldBindJSON(&loginJson); err != nil {
-		// 返回错误信息
-		// gin.H封装了生成json数据的工具
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	session := sessions.Default(c)
-	info := loginJson.Username
-	pass := loginJson.Password
-
-	userinfo := models.LoginUserInfo(info)
-
-	if userinfo.Uid > 0 {
-		salt := userinfo.Salt
-
-		if common.MD5(pass+common.MD5(salt)) == userinfo.Password {
-
-			if len(userinfo.Avatar) > 1 {
-				avatar = userinfo.Avatar
-			} else {
-				avatar = "/assets/img/avatar.png"
-			}
-			color.Danger.Println(userinfo.Uid, userinfo.Username, "session 设置user")
-			session.Set("uid", userinfo.Uid)
-			session.Set("username", userinfo.Username)
-			session.Set("avatar", avatar)
-
-			session.Save()
-			c.JSON(http.StatusOK, gin.H{
-				"status":  200,
-				"message": "登录成功",
-			})
-		} else {
-			c.JSON(http.StatusOK, gin.H{
-				"status":  2011,
-				"message": "用户名或密码错误，请确认后输入",
-			})
-		}
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"status":  2010,
-			"message": "用户信息不存在",
-		})
-	}
-
-}
-
-//注册
-func Register(c *gin.Context) {
-
-	var identify string
-	session := sessions.Default(c)
-	//已登录用户要求时直接弹框
-	invite := c.Query("invite")
-	if session.Get("uid") != nil && len(invite) > 0 {
-		identify = invite
-	} else {
-		identify = "0"
-	}
-	c.HTML(http.StatusOK, "register.html", gin.H{
-		"website": Services.GetWebsite(),
-		"org":     models.GetOrganizeOne(identify),
-		"invite":  invite,
-	})
 }
 
 //注册api
@@ -270,20 +191,46 @@ func UserList(c *gin.Context) {
 	})
 }
 
-//ajax获取用户列表
+type UserListReq struct {
+	Keyword    string `json:"keyword"`
+	UserGroup  int    `json:"user_group"`
+	UserStatus int    `json:"user_status"`
+	Page       int    `json:"page"`
+}
+
+//
+// @Summary ajax获取用户列表
+// @Description 描述信息
+// @Tags accounts
+// @Accept  json
+// @Produce  json
+// @Router /user/all [post]
 func AjaxUserList(c *gin.Context) {
 
 	//参数信息
-	keyword := c.Query("keyword")
-	userGroup, _ := strconv.Atoi(c.Query("userGroup"))
-	userStatus, _ := strconv.Atoi(c.Query("userStatus"))
-	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
+	req := UserListReq{}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		color.Red.Println("绑定userlist失败")
+	}
+	keyword := req.Keyword
+	userGroup := req.UserGroup
+	userStatus := req.UserStatus
+	page := req.Page
 	limit := 20
 	start := (page - 1) * limit
 
 	//用户自己的组织信息
-	userInfo, _ := c.Get("user")
-	uid := userInfo.(map[string]interface{})["oid"].(int)
+	userContext, exist := c.Get("user")
+	if !exist {
+		color.Danger.Println("失败了")
+	}
+	//查询用户组及该组的功能权限
+	user, ok := userContext.(models.QyUser)
+	if !ok {
+
+		color.Danger.Println("断言失败")
+	}
+	uid := user.Uid
 
 	//查询数据
 	result := models.GetOrganizeUsers(uid, keyword, userStatus, userGroup, start, limit)
@@ -311,10 +258,8 @@ func UserDetail(c *gin.Context) {
 	}
 	//查询用户组及该组的功能权限
 	user, ok := userContext.(models.QyUser)
-	if ok {
-		color.Danger.Println("成功获取用户信息")
-		color.Danger.Println(ok)
-	} else {
+	if !ok {
+
 		color.Danger.Println("断言失败")
 	}
 	oid := user.Uid
@@ -396,10 +341,8 @@ func UserPerson(c *gin.Context) {
 	}
 	//查询用户组及该组的功能权限
 	user, ok := userContext.(models.QyUser)
-	if ok {
-		color.Danger.Println("成功获取用户信息")
-		color.Danger.Println(ok)
-	} else {
+	if !ok {
+
 		color.Danger.Println("断言失败")
 	}
 	uid := user.Uid

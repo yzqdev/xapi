@@ -55,8 +55,8 @@ var doc = `{
                 "responses": {}
             }
         },
-        "/help": {
-            "get": {
+        "/group/delete/:id": {
+            "post": {
                 "description": "描述信息",
                 "consumes": [
                     "application/json"
@@ -65,10 +65,27 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "help",
-                    "accounts"
-                ]
-            },
+                    "group"
+                ],
+                "summary": "权限组操作"
+            }
+        },
+        "/group/save": {
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "group"
+                ],
+                "summary": "保存权限组"
+            }
+        },
+        "/help": {
             "post": {
                 "description": "描述信息",
                 "consumes": [
@@ -136,8 +153,8 @@ var doc = `{
                 }
             }
         },
-        "/json": {
-            "get": {
+        "/login": {
+            "post": {
                 "description": "描述信息",
                 "consumes": [
                     "application/json"
@@ -146,9 +163,28 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "app"
+                    "accounts"
                 ],
-                "summary": "json 格式化"
+                "summary": "登陆",
+                "parameters": [
+                    {
+                        "description": "login",
+                        "name": "account",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ReqLogin"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Result"
+                        }
+                    }
+                }
             }
         },
         "/logout": {
@@ -164,6 +200,81 @@ var doc = `{
                     "accounts"
                 ],
                 "summary": "退出登录"
+            }
+        },
+        "/manager/:proid": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "index"
+                ],
+                "summary": "显示首页manage"
+            }
+        },
+        "/message/detail": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "message"
+                ],
+                "summary": "消息详情"
+            }
+        },
+        "/message/list": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "message"
+                ],
+                "summary": "消息列表 Api"
+            }
+        },
+        "/message/operate": {
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "message"
+                ],
+                "summary": "更新已读和删除，"
+            }
+        },
+        "/message/unread": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "message"
+                ],
+                "summary": "获取未读消息数"
             }
         },
         "/organize/detail/:oid": {
@@ -278,7 +389,7 @@ var doc = `{
                 ]
             }
         },
-        "/userlogin": {
+        "/user/all": {
             "post": {
                 "description": "描述信息",
                 "consumes": [
@@ -290,26 +401,7 @@ var doc = `{
                 "tags": [
                     "accounts"
                 ],
-                "summary": "登陆",
-                "parameters": [
-                    {
-                        "description": "login",
-                        "name": "account",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/controllers.ReqLogin"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Result"
-                        }
-                    }
-                }
+                "summary": "ajax获取用户列表"
             }
         },
         "/users/detail/:userid": {
@@ -340,6 +432,36 @@ var doc = `{
                     "accounts"
                 ],
                 "summary": "获取用户列表页（组织成员）"
+            }
+        },
+        "/website/info": {
+            "post": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "website"
+                ],
+                "summary": "更新网站信息"
+            }
+        },
+        "/website/web": {
+            "get": {
+                "description": "描述信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "website"
+                ],
+                "summary": "获取网站设置页"
             }
         }
     },

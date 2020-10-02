@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gookit/color"
 	"html/template"
@@ -12,20 +11,6 @@ import (
 	"xapimanager/application/common"
 	"xapimanager/application/models"
 )
-
-//帮助中心页
-// @Tags help
-// @Summary
-// @Description 描述信息
-// @Tags accounts
-// @Accept  json
-// @Produce  json
-// @Router /help  [get]
-func HelpList(c *gin.Context) {
-	c.HTML(http.StatusOK, "help_list.html", gin.H{
-		"website": Services.GetWebsite(),
-	})
-}
 
 type helpListReq struct {
 	Page int `json:"page"`
@@ -47,10 +32,8 @@ func AjaxHelpList(c *gin.Context) {
 	}
 	//查询用户组及该组的功能权限
 	user, ok := userContext.(models.QyUser)
-	if ok {
-		color.Danger.Println("成功获取用户信息")
-		color.Danger.Println(ok)
-	} else {
+	if !ok {
+
 		color.Danger.Println("断言失败")
 	}
 	oid := user.Uid
@@ -137,7 +120,6 @@ func HelpDetail(c *gin.Context) {
 // @Produce  json
 // @Router /help/operate [post]
 func HelpDelete(c *gin.Context) {
-	fmt.Println("hhh")
 	//用户自己的组织信息
 	userContext, exist := c.Get("user")
 	if !exist {
@@ -145,10 +127,8 @@ func HelpDelete(c *gin.Context) {
 	}
 	//查询用户组及该组的功能权限
 	user, ok := userContext.(models.QyUser)
-	if ok {
-		color.Danger.Println("成功获取用户信息")
-		color.Danger.Println(ok)
-	} else {
+	if !ok {
+
 		color.Danger.Println("断言失败")
 	}
 	oid := user.Uid
@@ -183,10 +163,8 @@ func HelpInfo(c *gin.Context) {
 	}
 	//查询用户组及该组的功能权限
 	user, ok := userContext.(models.QyUser)
-	if ok {
-		color.Danger.Println("成功获取用户信息")
-		color.Danger.Println(ok)
-	} else {
+	if !ok {
+
 		color.Danger.Println("断言失败")
 	}
 	oid := user.Uid

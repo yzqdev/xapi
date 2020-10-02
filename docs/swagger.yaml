@@ -65,16 +65,27 @@ paths:
       summary: 获取首页信息
       tags:
       - index
-  /help:
-    get:
+  /group/delete/:id:
+    post:
       consumes:
       - application/json
       description: 描述信息
       produces:
       - application/json
+      summary: 权限组操作
       tags:
-      - help
-      - accounts
+      - group
+  /group/save:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 保存权限组
+      tags:
+      - group
+  /help:
     post:
       consumes:
       - application/json
@@ -119,16 +130,28 @@ paths:
       summary: 新增帮助保存
       tags:
       - accounts
-  /json:
-    get:
+  /login:
+    post:
       consumes:
       - application/json
       description: 描述信息
+      parameters:
+      - description: login
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.ReqLogin'
       produces:
       - application/json
-      summary: json 格式化
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Result'
+      summary: 登陆
       tags:
-      - app
+      - accounts
   /logout:
     get:
       consumes:
@@ -139,6 +162,56 @@ paths:
       summary: 退出登录
       tags:
       - accounts
+  /manager/:proid:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 显示首页manage
+      tags:
+      - index
+  /message/detail:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 消息详情
+      tags:
+      - message
+  /message/list:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 消息列表 Api
+      tags:
+      - message
+  /message/operate:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 更新已读和删除，
+      tags:
+      - message
+  /message/unread:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 获取未读消息数
+      tags:
+      - message
   /organize/detail/:oid:
     get:
       consumes:
@@ -213,26 +286,14 @@ paths:
       summary: 个人资料修改
       tags:
       - accounts
-  /userlogin:
+  /user/all:
     post:
       consumes:
       - application/json
       description: 描述信息
-      parameters:
-      - description: login
-        in: body
-        name: account
-        required: true
-        schema:
-          $ref: '#/definitions/controllers.ReqLogin'
       produces:
       - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Result'
-      summary: 登陆
+      summary: ajax获取用户列表
       tags:
       - accounts
   /users/detail/:userid:
@@ -255,4 +316,24 @@ paths:
       summary: 获取用户列表页（组织成员）
       tags:
       - accounts
+  /website/info:
+    post:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 更新网站信息
+      tags:
+      - website
+  /website/web:
+    get:
+      consumes:
+      - application/json
+      description: 描述信息
+      produces:
+      - application/json
+      summary: 获取网站设置页
+      tags:
+      - website
 swagger: "2.0"
