@@ -43,7 +43,6 @@ definitions:
     type: object
 info:
   contact: {}
-  license: {}
 paths:
   /dashboard:
     get:
