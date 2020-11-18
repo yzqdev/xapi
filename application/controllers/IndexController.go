@@ -27,14 +27,11 @@ func Index(c *gin.Context) {
 	}
 	//查询用户组及该组的功能权限
 	user, ok := userContext.(models.QyUser) //这个是类型推断,判断接口是什么类型
-	color.Danger.Println(user, "getIndex获取用户信息")
 	if !ok {
 
 		color.Danger.Println("断言失败")
 	}
-	color.Danger.Println(user.Username, "获取username")
 	gid := models.GetUserGroup(user.Uid)
-	color.Red.Print(gid, "这是gid")
 	var menu []models.Allmenu
 	if gid == 1 {
 		menu = models.GetMenu(1, 0)

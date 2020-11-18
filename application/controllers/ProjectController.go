@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gookit/color"
 	"net/http"
@@ -12,6 +13,12 @@ import (
 	"xapimanager/config"
 )
 
+func ProjectAll(c *gin.Context) {
+	fmt.Println("进入项目")
+	projects := models.ProjectList()
+	c.JSON(http.StatusOK, projects)
+}
+
 // @Summary 项目列表
 // @Description 描述信息
 // @Tags project
@@ -19,6 +26,7 @@ import (
 // @Produce  json
 // @Router /project/list [get]
 func ProjectList(c *gin.Context) {
+	color.Red.Println("项目列表")
 	//获取用户信息
 	//var data string
 	//var err error
@@ -37,7 +45,6 @@ func ProjectList(c *gin.Context) {
 	uid := user.Uid
 
 	oid := user.Uid
-	color.Danger.Println(oid, uid, "尼玛")
 	//	Cache := models.CacheConnect()
 	//	key := "qy_user_project_list#" + strconv.Itoa(uid)
 	//color.Danger.Println(userInfo,"用户")
@@ -61,6 +68,7 @@ func ProjectList(c *gin.Context) {
 	//		}
 	//
 	//	}
+	projects = models.ProjectList()
 
 	//检查用户是否创建权限组
 	authNum := models.GetOrganizeGroup(oid)

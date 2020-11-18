@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+	"github.com/gookit/color"
 	"time"
 	"xapimanager/application/common"
 )
@@ -59,6 +61,17 @@ func GetGroupProject(groupIds []int) (result []string) {
 	}
 
 	return
+}
+
+func ProjectList() (projects []QyProject) {
+	defer Db.Close()
+	Db = Connect()
+
+	var data []QyProject
+	_ = Db.Hander.Find(&data)
+	color.Red.Println("获取project")
+	fmt.Println(data)
+	return data
 }
 
 /**
