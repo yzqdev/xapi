@@ -45,7 +45,7 @@ func InitRouter() *gin.Engine {
 	router.Use(gin.Logger())
 	projectRouter(router)
 	router.NoRoute(func(c *gin.Context) {
-		c.HTML(http.StatusOK, "404.html", gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"status":  404,
 			"message": "找不到你要的内容",
 		})

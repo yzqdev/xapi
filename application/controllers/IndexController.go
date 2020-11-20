@@ -31,6 +31,7 @@ func Index(c *gin.Context) {
 
 		color.Danger.Println("断言失败")
 	}
+	color.Red.Println(c.Request.Host)
 	gid := models.GetUserGroup(user.Uid)
 	var menu []models.Allmenu
 	if gid == 1 {

@@ -86,7 +86,7 @@ func FormatTime(timestamp int, status int) (date string) {
 
 // 通过map主键唯一的特性过滤重复元素
 func RemoveRepByMap(slc []int) []int {
-	result := []int{}
+	var result []int
 	tempMap := map[int]byte{} // 存放不重复主键
 	for _, e := range slc {
 		l := len(tempMap)
@@ -177,7 +177,7 @@ func MD5(text string) string {
 func GetRandomString(l int) string {
 	str := "0123456789abcdefghijklmnopqrstuvwxyz"
 	bytes := []byte(str)
-	result := []byte{}
+	var result []byte
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	for i := 0; i < l; i++ {
 		result = append(result, bytes[r.Intn(len(bytes))])
@@ -228,7 +228,7 @@ func ReplaceImage(src string) string {
 	newstr := strings.Replace(src, "/tmp/", "/normal/", -1)
 	dir := path.Dir(newstr)
 
-	CreateDir("storage" + dir)
+	_, _ = CreateDir("storage" + dir)
 
 	_, err := CopyFile("storage"+newstr, "storage"+src)
 	if err != nil {
