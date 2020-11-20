@@ -47,7 +47,7 @@ func OrganizeList(c *gin.Context) {
 	//查询用户自己的团队信息
 	self := models.GetUserOrganize(uid)
 	if self.Id == 0 {
-		models.OrganizeJoin(uid, 1, 1)
+		_ = models.OrganizeJoin(uid, 1, 1)
 	}
 
 	organize := models.GetOrganize(uid)

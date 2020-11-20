@@ -55,7 +55,10 @@ func FetchLogin(c *gin.Context) {
 	}
 	sqlU := models.QueryByUsername(user.Username)
 	salt := sqlU.Salt
-
+	color.Red.Println(user.Username)
+	color.Red.Println(user.Password)
+	color.Red.Println("登陆接口进入")
+	color.Cyan.Println(sqlU.Password)
 	if sqlU.Password == common.MD5(user.Password+salt) {
 		expiresTime := time.Now().Unix() + int64(60*60*24)
 		//claims := jwt.StandardClaims{
@@ -73,7 +76,7 @@ func FetchLogin(c *gin.Context) {
 			ExpiresAt: expiresTime,       // 失效时间
 			Id:        "id",              // 编号
 			IssuedAt:  time.Now().Unix(), // 签发时间
-			Issuer:    " sqlU.Username",  // 签发人
+			Issuer:    "sqlU.Username",   // 签发人
 			NotBefore: time.Now().Unix(), // 生效时间
 			Subject:   "login",           // 主题
 		}

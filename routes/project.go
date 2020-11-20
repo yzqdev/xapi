@@ -136,7 +136,7 @@ func projectRouter(router *gin.Engine) {
 	helpRouter := router.Group("/help", middleware.JwtHandler())
 	{
 		//帮助中心
-		helpRouter.POST("/list", controllers.AjaxHelpList)
+		helpRouter.GET("/list", controllers.AjaxHelpList)
 		//帮助中心操作
 		helpRouter.POST("/operate", controllers.HelpDelete)
 		//帮助中心文章保存
