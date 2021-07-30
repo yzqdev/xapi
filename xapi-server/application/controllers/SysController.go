@@ -8,7 +8,7 @@ import (
 	"xapimanager/application/models"
 )
 
-// @Summary 获取网站设置页
+// Website @Summary 获取网站设置页
 // @Description 描述信息
 // @Tags website
 // @Accept  json
@@ -31,7 +31,7 @@ type SiteInfo struct {
 	Copyright   string `json:"copyright"`
 }
 
-// @Summary 更新网站信息
+// WebsiteInfo @Summary 更新网站信息
 // @Description 描述信息
 // @Tags website
 // @Accept  json

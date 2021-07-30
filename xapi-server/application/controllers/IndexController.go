@@ -12,7 +12,7 @@ import (
 	_ "xapimanager/application/utils"
 )
 
-// @Summary 获取首页信息
+// Index @Summary 获取首页信息
 // @Description 描述信息
 // @Tags index
 // @Accept  json
@@ -53,7 +53,7 @@ func Index(c *gin.Context) {
 
 }
 
-// @Summary 显示首页manage
+// Manager @Summary 显示首页manage
 // @Description 描述信息
 // @Tags index
 // @Accept  json
