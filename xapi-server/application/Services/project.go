@@ -8,7 +8,7 @@ import (
 	"xapimanager/config"
 )
 
-//获取用户在指定项目的权限组
+// GetProjectGroup 获取用户在指定项目的权限组
 func GetProjectGroup(uid int, proid int) (group models.AuthGroup) {
 
 	var data string
@@ -36,7 +36,7 @@ func GetProjectGroup(uid int, proid int) (group models.AuthGroup) {
 	return
 }
 
-//获取用户所有的项目
+// GetUserProject 获取用户所有的项目
 func GetUserProject(uid int) (projects []models.QyProject) {
 
 	//获取用户信息

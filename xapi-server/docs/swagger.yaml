@@ -60,7 +60,6 @@ paths:
       description: 描述信息
       produces:
       - application/json
-      responses: {}
       summary: 获取首页信息
       tags:
       - index

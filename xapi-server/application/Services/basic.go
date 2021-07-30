@@ -7,10 +7,9 @@ import (
 	"xapimanager/config"
 )
 
-/**
- * 获得站点信息
- * @result 站点信息
- */
+// GetWebsite 获得站点信息
+// @result 站点信息
+
 func GetWebsite() (site map[string]string) {
 
 	var data string
