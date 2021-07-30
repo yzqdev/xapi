@@ -34,7 +34,6 @@ type PermissionGroup struct {
 //根据标识获取组织信息
 func GetOrganizeInfo(identify string) (organize []QyOrganize) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Where("identify = ?", identify).Find(&organize)
 
@@ -45,7 +44,6 @@ func GetOrganizeInfo(identify string) (organize []QyOrganize) {
 //获取单个组织信息
 func GetOrganizeOne(identify string) (organize QyOrganize) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Where("identify = ?", identify).Find(&organize)
 
@@ -56,7 +54,6 @@ func GetOrganizeOne(identify string) (organize QyOrganize) {
 //根据id获取组织信息
 func GetOrganizeDetail(id int) (organize []QyOrganize) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Where("id = ?", id).Find(&organize)
 
@@ -67,7 +64,6 @@ func GetOrganizeDetail(id int) (organize []QyOrganize) {
 //获取用户自己的组织
 func GetUserOrganize(uid int) (organize QyOrganize) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Where("leader = ?", uid).Find(&organize)
 
@@ -77,7 +73,6 @@ func GetUserOrganize(uid int) (organize QyOrganize) {
 //获取用户自己组织的权限组
 func GetUserPermissionGroup() (group []PermissionGroup) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_auth_group as g").
 		Joins("join qy_organize as o on g.organize = o.id").
@@ -90,7 +85,6 @@ func GetUserPermissionGroup() (group []PermissionGroup) {
 
 func OrganizeCreate(uid int, data map[string]interface{}) (orgId int) {
 
-	defer Db.Close()
 	Db = Connect()
 	ctime := time.Now().Unix()
 	org := QyOrganize{
@@ -110,9 +104,8 @@ func OrganizeCreate(uid int, data map[string]interface{}) (orgId int) {
 //加入团队
 func OrganizeJoin(uid int, organize int, status int) (err error) {
 
-	defer Db.Close()
 	Db = Connect()
-	var num int
+	var num int64
 	//查询用户是否在该组织
 	Db.Hander.Table("qy_user_organize").
 		Where(map[string]interface{}{"uid": uid, "organize": organize}).
@@ -136,7 +129,6 @@ func OrganizeJoin(uid int, organize int, status int) (err error) {
 //退出组织
 func OrganizeQuit(uid int, organize int) (err error) {
 
-	defer Db.Close()
 	Db = Connect()
 	err = Db.Hander.Where("uid = ? and organize =?", uid, organize).Delete(QyUserOrganize{}).Error
 	if err != nil {
@@ -148,7 +140,6 @@ func OrganizeQuit(uid int, organize int) (err error) {
 //修改组织信息
 func OrganizeSave(organizeId int, data interface{}) (err error) {
 
-	defer Db.Close()
 	Db = Connect()
 	var Qyorg QyOrganize
 	err = Db.Hander.Model(&Qyorg).Where("id=?", organizeId).Updates(data).Error
@@ -163,7 +154,6 @@ func OrganizeSave(organizeId int, data interface{}) (err error) {
 //修改用户组织
 func UpdateUserOrganize(uid int, data map[string]interface{}) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	err := Db.Hander.Table("qy_user_organize").Where("uid = ?", uid).Updates(data).Error
 	if err != nil {
@@ -176,7 +166,6 @@ func UpdateUserOrganize(uid int, data map[string]interface{}) bool {
 //获取用户信息
 func GetOrganizeUserInfo(oid int, uid int) (result UserInfo) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_user as u").
 		Joins("left join qy_user_organize as o on u.uid=o.uid").

@@ -36,7 +36,6 @@ type AllClassify struct {
  */
 func GetClassify(proid int, pid int, scope []string) (classifys []AllClassify) {
 
-	defer Db.Close()
 	Db = Connect()
 	var xClassify []XClassify
 	var temp AllClassify
@@ -68,7 +67,6 @@ func GetClassify(proid int, pid int, scope []string) (classifys []AllClassify) {
  */
 func GetSubClassify(proid int, classify int) (subclassify []QyClassify) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_classify").
 		Where("proid=? and pid = ? and status=1", proid, classify).
@@ -84,7 +82,6 @@ func GetSubClassify(proid int, classify int) (subclassify []QyClassify) {
  */
 func GetSubClassifyIds(proid int, classify int) (result []int) {
 
-	defer Db.Close()
 	Db = Connect()
 	var subclassify []QyClassify
 	Db.Hander.Table("qy_classify").
@@ -100,7 +97,6 @@ func GetSubClassifyIds(proid int, classify int) (result []int) {
 //获取分类信息
 func GetClassifyInfo(proid int, classify int) (result QyClassify) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_classify").
 		Where("proid=? and id = ? and status=1", proid, classify).
@@ -119,7 +115,6 @@ func GetClassifyInfo(proid int, classify int) (result QyClassify) {
  */
 func CategorySave(proid int, cateId int, uid int, pid int, data map[string]interface{}) (bool, int) {
 
-	defer Db.Close()
 	Db = Connect()
 	if cateId > 0 {
 		err := Db.Hander.Table("qy_classify").
@@ -155,7 +150,6 @@ func CategorySave(proid int, cateId int, uid int, pid int, data map[string]inter
 //更新分类数据
 func UpdateClassifyInfo(proid int, cateId int, data map[string]interface{}) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	err := Db.Hander.Table("qy_classify").
 		Where("id = ? and proid=? ", cateId, proid).

@@ -79,9 +79,8 @@ var method = map[int]string{
  */
 func GetApilist(con map[string]interface{}, start int, limit int, status []string, auth []string) (result map[string]interface{}) {
 
-	defer Db.Close()
 	Db = Connect()
-	var totalCount int
+	var totalCount int64
 	var apilist []Apilistinfo
 	var listDetail = map[int][]map[string]interface{}{}
 	var listInfo = map[int]map[string]interface{}{}
@@ -164,9 +163,8 @@ func GetApilist(con map[string]interface{}, start int, limit int, status []strin
 //Api 审核
 func ApiAuditOpearate(did int, data map[string]interface{}) bool {
 
-	defer Db.Close()
 	Db = Connect()
-	var count int
+	var count int64
 	Db.Hander.Table("qy_audit").
 		Where("did = ?", did).
 		Count(&count)
@@ -201,7 +199,6 @@ func ApiAuditOpearate(did int, data map[string]interface{}) bool {
 // 更新Api详情 状态
 func UpdateAuditStatus(id int, status int) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	if status == 1 {
 		status = 1
@@ -220,7 +217,6 @@ func UpdateAuditStatus(id int, status int) bool {
 // 获取Api信息
 func GetApiInfo(did int) (data QyApiDetail) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_apidetail").
 		Where("id = ?", did).
@@ -232,7 +228,6 @@ func GetApiInfo(did int) (data QyApiDetail) {
 //多条件下获取Api详情
 func GetApiDetail(data map[string]interface{}) (detail QyApiDetail) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_apidetail").
 		Where(data).
@@ -244,7 +239,6 @@ func GetApiDetail(data map[string]interface{}) (detail QyApiDetail) {
 //获取项目下Apilist 最大值
 func GetMaxApilist(proid int) (count int) {
 
-	defer Db.Close()
 	Db = Connect()
 	type ListApi struct {
 		Listid int
@@ -260,7 +254,6 @@ func GetMaxApilist(proid int) (count int) {
 // 获取Api审核信息
 func GetApiAuditInfo(did int) (data QyAudit) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_audit").
 		Where("did = ?", did).
@@ -279,7 +272,6 @@ func GetApiAuditInfo(did int) (data QyAudit) {
  */
 func ApiDetailStore(id int, proid int, envid int, data map[string]interface{}) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	if id > 0 {
 		err := Db.Hander.Table("qy_apidetail").
@@ -335,7 +327,7 @@ func ApiDetailStore(id int, proid int, envid int, data map[string]interface{}) b
  *@param bool
  */
 func UpdateApiInfo(did int, proid int, data map[string]interface{}) bool {
-	defer Db.Close()
+
 	Db = Connect()
 	err := Db.Hander.Table("qy_apidetail").
 		Where("id = ? and proid = ?", did, proid).

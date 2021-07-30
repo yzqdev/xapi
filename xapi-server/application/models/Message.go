@@ -20,7 +20,6 @@ type UserMessage struct {
 //发送消息
 func SendMessage(data map[string]interface{}) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	time := time.Now().Unix()
 	info := &QyMessage{
@@ -43,9 +42,8 @@ func SendMessage(data map[string]interface{}) bool {
 //获取消息列表
 func GetMessageList(data map[string]interface{}, start int, limit int) (result map[string]interface{}) {
 
-	defer Db.Close()
 	Db = Connect()
-	var count int
+	var count int64
 	var message []UserMessage
 	obj := Db.Hander.Table("qy_message as m").
 		Joins("join qy_user as u on u.uid = m.sender").
@@ -64,7 +62,6 @@ func GetMessageList(data map[string]interface{}, start int, limit int) (result m
 //消息详情
 func GetMessageDetail(uid int, mid int) (message UserMessage) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_message as m").
 		Joins("join qy_user as u on u.uid = m.sender").
@@ -78,7 +75,6 @@ func GetMessageDetail(uid int, mid int) (message UserMessage) {
 //更新为已读
 func ReadUpdate(receiver int, ids []string) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	err := Db.Hander.Table("qy_message").
 		Where("receiver =? and id in (?)", receiver, ids).
@@ -92,7 +88,6 @@ func ReadUpdate(receiver int, ids []string) bool {
 //批量删除
 func DeleteMessage(receiver int, ids []string) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	err := Db.Hander.Table("qy_message").
 		Where("receiver =? and id in (?)", receiver, ids).
@@ -104,9 +99,8 @@ func DeleteMessage(receiver int, ids []string) bool {
 }
 
 //获取未读消息
-func GetUnreadMessage(receiver int) (count int) {
+func GetUnreadMessage(receiver int) (count int64) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_message").
 		Where("receiver =? and isread = ?", receiver, 2).

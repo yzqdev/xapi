@@ -51,7 +51,6 @@ type QyUserEnv struct {
  */
 func GetGroupProject(groupIds []int) (result []string) {
 
-	defer Db.Close()
 	Db = Connect()
 	var authData []QyAuthData
 	Db.Hander.Where("groupid in (?) and type=?", groupIds, 1).Find(&authData)
@@ -64,7 +63,7 @@ func GetGroupProject(groupIds []int) (result []string) {
 }
 
 func ProjectList() (projects []QyProject) {
-	defer Db.Close()
+
 	Db = Connect()
 
 	var data []QyProject
@@ -82,7 +81,6 @@ func ProjectList() (projects []QyProject) {
  */
 func GetUserProject(organizeIds []int, proids []string) (projects []QyProject) {
 
-	defer Db.Close()
 	Db = Connect()
 	var data []QyProject
 	Db.Hander.
@@ -108,7 +106,6 @@ func GetUserProject(organizeIds []int, proids []string) (projects []QyProject) {
 //获取组织下的所有项目
 func GerOrganizeProject(oid int) (projects []QyProject) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.
 		Where("organize=? and status = ?", oid, 1).Find(&projects)
@@ -119,7 +116,6 @@ func GerOrganizeProject(oid int) (projects []QyProject) {
 //保存项目
 func ProjectSave(proid int, data map[string]interface{}) (bool, int) {
 
-	defer Db.Close()
 	Db = Connect()
 	var project QyProject
 	if proid > 0 {
@@ -149,7 +145,6 @@ func ProjectSave(proid int, data map[string]interface{}) (bool, int) {
 //查询项目信息
 func GetProjectInfo(proid int) (result QyProject) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Where("id = ?", proid).Find(&result)
 	return
@@ -158,7 +153,6 @@ func GetProjectInfo(proid int) (result QyProject) {
 //查询项目下的权限组
 func GetProjectGroupAuth(proid int) (group []ProjectGroup) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_auth_data as a").
 		Joins("join qy_auth_group as g on g.id = a.groupid").
@@ -171,7 +165,6 @@ func GetProjectGroupAuth(proid int) (group []ProjectGroup) {
 //获取项目下的所有环境
 func GetProjectEnv(proid int) (env []QyApienv) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Where("proid = ?", proid).Order("sort asc").Find(&env)
 
@@ -185,7 +178,6 @@ func GetProjectEnv(proid int) (env []QyApienv) {
  */
 func GetProjectValidEnv(proid int, sort string) (env []QyApienv) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Where("proid = ? and status = 1", proid).Order("sort " + sort).Find(&env)
 
@@ -195,7 +187,6 @@ func GetProjectValidEnv(proid int, sort string) (env []QyApienv) {
 //获取项目下的最低等级环境
 func GetProjectLowEnv(proid int) (env QyApienv) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Where("proid = ? and status = 1", proid).
 		Order("sort desc").Limit(1).Find(&env)
@@ -206,7 +197,6 @@ func GetProjectLowEnv(proid int) (env QyApienv) {
 //保存项目环境
 func ProjectEnvSave(envid int, data map[string]interface{}) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	if envid > 0 {
 		//修改环境
@@ -234,9 +224,8 @@ func ProjectEnvSave(envid int, data map[string]interface{}) bool {
 //环境切换
 func ProjectEnvChange(uid int, proid int, envid int) bool {
 
-	defer Db.Close()
 	Db = Connect()
-	var count int
+	var count int64
 	Db.Hander.Table("qy_user_env").
 		Where("uid = ? and proid =? ", uid, proid).
 		Count(&count)
@@ -265,7 +254,6 @@ func ProjectEnvChange(uid int, proid int, envid int) bool {
 //获取用户当前环境
 func GetCurrentEnv(uid int, proid int) (data QyUserEnv) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_user_env").
 		Where("uid = ? and proid =? ", uid, proid).
@@ -276,7 +264,6 @@ func GetCurrentEnv(uid int, proid int) (data QyUserEnv) {
 //获取当前环境信息
 func GetUserDomain(uid int, proid int) (info QyApienv) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_user_env as u").
 		Joins("join qy_apienv as a on u.envid = a.id").

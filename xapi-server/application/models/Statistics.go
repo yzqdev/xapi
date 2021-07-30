@@ -12,7 +12,6 @@ type QyArea struct {
 
 func GetAreaData() (area []QyArea) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_area").
 		Where("pid !=? ", 0).

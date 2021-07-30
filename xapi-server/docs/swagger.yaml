@@ -60,7 +60,6 @@ paths:
       description: 描述信息
       produces:
       - application/json
-      summary: 获取首页信息
       tags:
       - index
   /group/delete/:id:
@@ -147,7 +146,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.Result'
-      summary: 登陆
       tags:
       - accounts
   /logout:
@@ -167,7 +165,6 @@ paths:
       description: 描述信息
       produces:
       - application/json
-      summary: 显示首页manage
       tags:
       - index
   /message/detail:
@@ -301,7 +298,6 @@ paths:
       description: 描述信息
       produces:
       - application/json
-      summary: 项目列表
       tags:
       - project
   /register:
@@ -311,7 +307,6 @@ paths:
       description: 描述信息
       produces:
       - application/json
-      summary: 注册api
       tags:
       - accounts
   /user/all:
@@ -371,7 +366,6 @@ paths:
       description: 描述信息
       produces:
       - application/json
-      summary: 更新网站信息
       tags:
       - website
   /website/web:
@@ -381,7 +375,6 @@ paths:
       description: 描述信息
       produces:
       - application/json
-      summary: 获取网站设置页
       tags:
       - website
 swagger: "2.0"

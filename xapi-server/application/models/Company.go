@@ -22,9 +22,8 @@ type QySecret struct {
  */
 func CompanyList(proid int, company string, start int, limit int) (result map[string]interface{}) {
 
-	defer Db.Close()
 	Db = Connect()
-	var count int
+	var count int64
 	var secret []QySecret
 
 	obj := Db.Hander.Table("qy_secret").Where("proid =? and status in (?)", proid, []int{1, 2})
@@ -47,7 +46,6 @@ func CompanyList(proid int, company string, start int, limit int) (result map[st
  */
 func GetCompany(id int) (result QySecret) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_secret").Where("status in (?)", []int{1, 2}).
 		Where("id = ?", id).Find(&result)
@@ -61,7 +59,6 @@ func GetCompany(id int) (result QySecret) {
  */
 func CompanySave(id int, data map[string]interface{}) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	if id > 0 {
 		err := Db.Hander.Table("qy_secret").
@@ -95,7 +92,7 @@ func CompanySave(id int, data map[string]interface{}) bool {
  * param  proid 项目id
  */
 func CompanyOperate(id int, proid int) bool {
-	defer Db.Close()
+
 	Db = Connect()
 	if id > 0 {
 		err := Db.Hander.Table("qy_secret").

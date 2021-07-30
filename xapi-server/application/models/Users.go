@@ -65,7 +65,6 @@ type QyEmail struct {
 //获取用户所在的所有组织
 func GetOrganize(uid int) (organize []UserOrganize) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_user_organize as u").
 		Joins("join qy_organize as o on u.organize = o.id").
@@ -90,7 +89,6 @@ func GetOrganizeIds(uid int) (Ids []int) {
 //获取用户组
 func GetGroup(uid int) (group []UserGroup) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_auth_access as a").
 		Joins("join qy_auth_group as g on a.group_id = g.id").
@@ -115,7 +113,6 @@ func GetGroupIds(uid int) (Ids []int) {
 //获取组织下的用户列表
 func GetOrganizeUsers(oid int, keyword string, status int, gid int, start int, limit int) (result map[string]interface{}) {
 
-	defer Db.Close()
 	Db = Connect()
 	var count int
 	var users []OrganizeUsers
@@ -160,7 +157,6 @@ func GetOrganizeUsers(oid int, keyword string, status int, gid int, start int, l
 //获取用户信息
 func GetUserInfo(uid int) (result UserInfo) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_user as u").
 		Where("u.uid = ?", uid).Find(&result)
@@ -169,7 +165,7 @@ func GetUserInfo(uid int) (result UserInfo) {
 }
 
 func QueryByUsername(username string) (result QyUser) {
-	defer Db.Close()
+
 	Db = Connect()
 	Db.Hander.Where("username = ?", username).First(&result)
 	return
@@ -179,7 +175,6 @@ func QueryByUsername(username string) (result QyUser) {
 //通过获取用户信息,多条件查询
 func GetUserDetail(data map[string]interface{}) (result QyUser) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_user").Where(data).Find(&result)
 
@@ -189,7 +184,6 @@ func GetUserDetail(data map[string]interface{}) (result QyUser) {
 //用户检查
 func GetUserCheck(uid int, username string, phone string, email string) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	var count int
 	obj := Db.Hander.Table("qy_user").
@@ -210,7 +204,6 @@ func GetUserCheck(uid int, username string, phone string, email string) bool {
 //获取用户在当前组织下的角色
 func GetOrganizeRole(oid int, uid int) (rule UserRole) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_auth_access as a").
 		Joins("join qy_auth_group as g on a.group_id = g.id").
@@ -224,7 +217,6 @@ func GetOrganizeRole(oid int, uid int) (rule UserRole) {
 //添加用户
 func UserSave(data map[string]interface{}) (insertId int) {
 
-	defer Db.Close()
 	Db = Connect()
 	ctime := time.Now().Unix()
 	info := &QyUser{
@@ -249,7 +241,6 @@ func UserSave(data map[string]interface{}) (insertId int) {
 //更新用户信息
 func UpdateUser(uid int, data map[string]interface{}) (result bool) {
 
-	defer Db.Close()
 	Db = Connect()
 	err := Db.Hander.Table("qy_user").Where("uid = ?", uid).Updates(data).Error
 	if err != nil {
@@ -261,7 +252,6 @@ func UpdateUser(uid int, data map[string]interface{}) (result bool) {
 //更新用户权限组
 func UpdateUserGroup(uid int, group_id int) (result bool) {
 
-	defer Db.Close()
 	Db = Connect()
 	var count int
 	//Db.Hander.Table("qy_auth_access").Where("uid = ?", uid).Count(&count)
@@ -284,7 +274,6 @@ func UpdateUserGroup(uid int, group_id int) (result bool) {
 //批量获取用户信息
 func BatchUsers(userIds []int) (result map[int]UserInfo) {
 
-	defer Db.Close()
 	Db = Connect()
 	var users []UserInfo
 	result = make(map[int]UserInfo)
@@ -299,7 +288,6 @@ func BatchUsers(userIds []int) (result map[int]UserInfo) {
 //登录用户信息
 func LoginUserInfo(info string) (user QyUser) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_user").
 		Where("username = ? or phone = ? or email= ?", info, info, info).
@@ -310,7 +298,6 @@ func LoginUserInfo(info string) (user QyUser) {
 //发送邮件记录
 func EmailRecord(data map[string]interface{}) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	info := &QyEmail{
 		0,

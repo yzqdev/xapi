@@ -14,7 +14,6 @@ type QySite struct {
  */
 func GetWebsite() (result map[string]string) {
 
-	defer Db.Close()
 	Db = Connect()
 	var site []QySite
 	result = make(map[string]string)
@@ -33,7 +32,6 @@ func GetWebsite() (result map[string]string) {
  */
 func WebsiteSave(key string, value string) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	if err := Db.Hander.Table("qy_site").Where("`key` =?", key).Update("value", value).Error; err != nil {
 		return false

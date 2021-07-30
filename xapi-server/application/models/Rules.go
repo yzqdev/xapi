@@ -34,7 +34,7 @@ type AuthData struct {
 
 //获取功能节点权限
 func GetFeatureAuth() (auth []QyAuthOperate) {
-	defer Db.Close()
+
 	Db = Connect()
 	Db.Hander.Find(&auth)
 	return
@@ -42,7 +42,7 @@ func GetFeatureAuth() (auth []QyAuthOperate) {
 
 //保存项目数据权限(根据权限组选择多个项目)
 func ProjectDataSave(gid int, str []string) bool {
-	defer Db.Close()
+
 	Db = Connect()
 	if len(str) > 0 {
 		//插入时先删除历史数据
@@ -59,7 +59,6 @@ func ProjectDataSave(gid int, str []string) bool {
 //保存项目数据权限(根据项目选择多个权限组)
 func ProjectGroupSave(proid int, gids []string) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	var auth AuthData
 	time := time.Now().Unix()
@@ -83,7 +82,7 @@ func ProjectGroupSave(proid int, gids []string) bool {
 
 //保存接口分类数据权限
 func ClassifyDataSave(gid int, data AuthData) bool {
-	defer Db.Close()
+
 	Db = Connect()
 	//插入时先删除历史数据
 	Db.Hander.Table("qy_auth_data").Where("groupid =? and type=2", gid).Delete(struct{}{})
@@ -97,7 +96,6 @@ func ClassifyDataSave(gid int, data AuthData) bool {
 //新增Api分类时保存用户组的分类数据权限
 func NewClassifyDataSave(gid int, classify string) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	var count int
 	var authData AuthData
@@ -134,7 +132,6 @@ func NewClassifyDataSave(gid int, classify string) bool {
 //获取用户菜单权限
 func GetUserMenuAuth(ids []string) (rules []QyAuthRule) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_auth_rule").
 		Where("id in (?) and status=1 and isdel=2", ids).
@@ -145,7 +142,6 @@ func GetUserMenuAuth(ids []string) (rules []QyAuthRule) {
 //获取用户功能节点权限
 func GetUserOperateAuth(ids []string) (operate []QyAuthOperate) {
 
-	defer Db.Close()
 	Db = Connect()
 	obj := Db.Hander.Table("qy_auth_operate").
 		Where("status=?", 1)
@@ -161,7 +157,6 @@ func GetUserOperateAuth(ids []string) (operate []QyAuthOperate) {
 //获取用户数据权限
 func GetUserDataAuth(gid int, xtype []int) (auth []AuthData) {
 
-	defer Db.Close()
 	Db = Connect()
 	//插入时先删除历史数据
 	Db.Hander.Table("qy_auth_data").
