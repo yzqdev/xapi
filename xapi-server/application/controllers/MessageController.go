@@ -13,7 +13,7 @@ import (
 
 var limit = 20
 
-//
+// GetAjaxMessageList
 // @Summary 消息列表 Api
 // @Description 描述信息
 // @Tags message

@@ -30,7 +30,7 @@ type NewJwtClaims struct {
 	jwt.StandardClaims
 }
 
-// @Summary 登陆
+// FetchLogin @Summary 登陆
 // @Description 描述信息
 // @Tags accounts
 // @Success 200 {object} models.Result
@@ -106,7 +106,7 @@ func FetchLogin(c *gin.Context) {
 	}
 }
 
-// @Summary 注册api
+// AjaxRegister @Summary 注册api
 // @Description 描述信息
 // @Tags accounts
 // @Accept  json

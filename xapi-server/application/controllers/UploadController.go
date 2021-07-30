@@ -1,16 +1,16 @@
 package controllers
 
 import (
-	"xapimanager/application/common"
-	"xapimanager/config"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+	"xapimanager/application/common"
+	"xapimanager/config"
 )
 
-//图片上传
+// UploadImage 图片上传
 func UploadImage(c *gin.Context) {
 	file, _ := c.FormFile("file")
 	// 保存文件
