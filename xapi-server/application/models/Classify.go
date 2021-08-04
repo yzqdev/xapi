@@ -137,11 +137,11 @@ func CategorySave(proid int, cateId int, uid int, pid int, data map[string]inter
 			strconv.Itoa(uid),
 			1,
 		}
-		obj := Db.Hander.Table("qy_classify").Create(info).Value
+		Db.Hander.Table("qy_classify").Create(&info)
 
-		cateId = obj.(*QyClassify).Id
+		//cateId = obj.(*QyClassify).Id
 
-		return true, cateId
+		return true, info.Id
 
 	}
 

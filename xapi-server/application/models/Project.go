@@ -134,11 +134,11 @@ func ProjectSave(proid int, data map[string]interface{}) (bool, int) {
 			1,
 			int(time),
 		}
-		obj := Db.Hander.Create(&project).Value
+		Db.Hander.Create(&project)
 
-		insertId := obj.(*QyProject).Id
+		//insertId := obj.(*QyProject).Id
 
-		return true, insertId
+		return true, project.Id
 	}
 }
 

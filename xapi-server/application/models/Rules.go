@@ -97,7 +97,7 @@ func ClassifyDataSave(gid int, data AuthData) bool {
 func NewClassifyDataSave(gid int, classify string) bool {
 
 	Db = Connect()
-	var count int
+	var count int64
 	var authData AuthData
 	var record string
 	obj := Db.Hander.Table("qy_auth_data").

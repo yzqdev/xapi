@@ -59,11 +59,11 @@ func GroupSave(gid int, data map[string]interface{}) (result int) {
 			data["rules"].(string),
 			data["operate"].(string),
 		}
-		obj := Db.Hander.Table("qy_auth_group").Create(info).Value
+		Db.Hander.Table("qy_auth_group").Create(info)
 
-		insertId := obj.(*AuthGroup).Id
+		//insertId := obj.(*AuthGroup).Id
 
-		return insertId
+		return info.Id
 	}
 
 }

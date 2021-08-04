@@ -51,7 +51,7 @@ func GetOrganizeOne(identify string) (organize QyOrganize) {
 
 }
 
-//根据id获取组织信息
+// GetOrganizeDetail 根据id获取组织信息
 func GetOrganizeDetail(id int) (organize []QyOrganize) {
 
 	Db = Connect()
@@ -96,8 +96,9 @@ func OrganizeCreate(uid int, data map[string]interface{}) (orgId int) {
 		data["description"].(string),
 		int(ctime),
 	}
-	organize := Db.Hander.Create(&org).Value
-	return organize.(*QyOrganize).Id
+	_ = Db.Hander.Create(&org)
+	//return organize.(*QyOrganize).Id
+	return org.Id
 
 }
 

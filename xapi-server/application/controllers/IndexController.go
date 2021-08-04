@@ -43,6 +43,7 @@ func Index(c *gin.Context) {
 	data := map[string]interface{}{
 		"website": Services.GetWebsite(),
 		"menu":    menu,
+		"user":    user,
 		"userinfo": map[string]interface{}{
 			"username": user.Username,
 			"avatar":   user.Avatar,

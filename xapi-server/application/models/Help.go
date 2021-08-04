@@ -22,7 +22,7 @@ type UserHelp struct {
 func GetHelpList(data map[string]interface{}, start int, limit int) (result map[string]interface{}) {
 
 	Db = Connect()
-	var count int
+	var count int64
 	var help []UserHelp
 	obj := Db.Hander.Table("qy_help as h").
 		Joins("join qy_user as u on u.uid = h.author").

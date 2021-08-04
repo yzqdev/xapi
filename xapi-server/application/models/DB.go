@@ -22,7 +22,7 @@ type cfg struct {
 	prefix string
 }
 
-//连接mysql
+// Connect 连接mysql
 func Connect() (Dbase *DB) {
 	//创建连接
 	Dbase = Singleton()
@@ -54,7 +54,7 @@ func Singleton() *DB {
 	}
 }
 
-//mysql 连接
+// Open mysql 连接
 func (db *DB) Open() error {
 
 	//sysc := config.GetGlobal()

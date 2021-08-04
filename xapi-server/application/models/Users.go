@@ -114,7 +114,7 @@ func GetGroupIds(uid int) (Ids []int) {
 func GetOrganizeUsers(oid int, keyword string, status int, gid int, start int, limit int) (result map[string]interface{}) {
 
 	Db = Connect()
-	var count int
+	var count int64
 	var users []OrganizeUsers
 
 	info := Db.Hander.Table("qy_user_organize as uo").
@@ -167,7 +167,7 @@ func GetUserInfo(uid int) (result UserInfo) {
 func QueryByUsername(username string) (result QyUser) {
 
 	Db = Connect()
-	Db.Hander.Where("username = ?", username).First(&result)
+	Db.Hander.Table("qy_user").Where("username = ?", username).First(&result)
 	return
 
 }
@@ -185,7 +185,7 @@ func GetUserDetail(data map[string]interface{}) (result QyUser) {
 func GetUserCheck(uid int, username string, phone string, email string) bool {
 
 	Db = Connect()
-	var count int
+	var count int64
 	obj := Db.Hander.Table("qy_user").
 		Where("username = ? or phone = ? or email= ?", username, phone, email).
 		Where("status in (?)", []string{"1", "2"})
@@ -219,7 +219,7 @@ func UserSave(data map[string]interface{}) (insertId int) {
 
 	Db = Connect()
 	ctime := time.Now().Unix()
-	info := &QyUser{
+	info := QyUser{
 		0,
 		data["username"].(string),
 		data["email"].(string),
@@ -231,10 +231,10 @@ func UserSave(data map[string]interface{}) (insertId int) {
 		1,
 		int(ctime),
 	}
-	obj := Db.Hander.Table("qy_user").Create(info).Value
-	insertId = obj.(*QyUser).Uid
+	Db.Hander.Table("qy_user").Create(&info)
+	//insertId = obj.(*QyUser).Uid
 
-	return
+	return info.Uid
 
 }
 

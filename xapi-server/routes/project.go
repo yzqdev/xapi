@@ -23,7 +23,7 @@ func projectRouter(router *gin.Engine) {
 		basicRouter.POST("/login", controllers.FetchLogin)
 
 		basicRouter.GET("/logout", controllers.Logout)
-		basicRouter.POST("/register", controllers.AjaxRegister)
+		basicRouter.POST("/reg", controllers.AjaxRegister)
 		basicRouter.GET("/getIndex", middleware.JwtHandler(), controllers.Index)
 		//manager 主页
 		basicRouter.GET("/manager/:proid", middleware.JwtHandler(), controllers.Manager)
