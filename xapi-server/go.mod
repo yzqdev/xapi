@@ -11,7 +11,6 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/gookit/color v1.5.0
-	github.com/jinzhu/gorm v1.9.16
 	github.com/lestrrat/go-file-rotatelogs v0.0.0-20180223000712-d3151e2a480f
 	github.com/mozillazg/go-pinyin v0.19.0
 	github.com/pkg/errors v0.9.1
@@ -21,6 +20,8 @@ require (
 	github.com/swaggo/gin-swagger v1.4.0
 	github.com/swaggo/swag v1.7.9
 	gopkg.in/go-playground/validator.v9 v9.31.0
+	gorm.io/driver/mysql v1.2.3
+	gorm.io/gorm v1.22.5
 )
 
 require (
@@ -36,7 +37,7 @@ require (
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
-	github.com/go-sql-driver/mysql v1.5.0 // indirect
+	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang-jwt/jwt/v4 v4.2.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/gorilla/context v1.1.1 // indirect
@@ -44,6 +45,7 @@ require (
 	github.com/gorilla/sessions v1.2.0 // indirect
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.9 // indirect
