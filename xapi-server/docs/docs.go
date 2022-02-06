@@ -50,8 +50,7 @@ var doc = `{
                 "tags": [
                     "index"
                 ],
-                "summary": "获取首页信息",
-                "responses": {}
+                "summary": "获取首页信息"
             }
         },
         "/group/delete/:id": {

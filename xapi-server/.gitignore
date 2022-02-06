@@ -2,7 +2,7 @@
 /public/storage
 /public/hot
 /storage/*.key
-/.idea
+
 Homestead.json
 Homestead.yaml
 .env
@@ -11,3 +11,5 @@ Homestead.yaml
 *.exe
 tmp
 *.log*
+.idea
+go.sum
