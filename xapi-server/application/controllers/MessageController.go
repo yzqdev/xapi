@@ -13,7 +13,7 @@ import (
 
 var limit = 20
 
-//
+// GetAjaxMessageList
 // @Summary 消息列表 Api
 // @Description 描述信息
 // @Tags message
@@ -186,6 +186,6 @@ func GetUnreadMessage(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"status":  200,
 		"message": "成功",
-		"data":    map[string]int{"count": count},
+		"data":    map[string]int64{"count": count},
 	})
 }

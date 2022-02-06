@@ -19,7 +19,7 @@ func ProjectAll(c *gin.Context) {
 	c.JSON(http.StatusOK, projects)
 }
 
-// @Summary 项目列表
+// ProjectList @Summary 项目列表
 // @Description 描述信息
 // @Tags project
 // @Accept  json

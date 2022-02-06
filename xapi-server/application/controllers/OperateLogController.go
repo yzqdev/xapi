@@ -9,7 +9,7 @@ import (
 	"xapimanager/application/models"
 )
 
-//操作日志数据
+// AjaxOperateLog 操作日志数据
 func AjaxOperateLog(c *gin.Context) {
 
 	var userIds []int

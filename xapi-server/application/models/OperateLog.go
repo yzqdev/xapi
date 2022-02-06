@@ -18,7 +18,6 @@ type QyLog struct {
 //保存操作日志
 func OperateLog(object string, longtype int, c *gin.Context) bool {
 
-	defer Db.Close()
 	Db = Connect()
 	//获取用户信息
 	req := c.Request
@@ -50,9 +49,8 @@ func OperateLog(object string, longtype int, c *gin.Context) bool {
 //获取分页操作日志
 func GetOperateLog(oid int, start int, limit int) (result map[string]interface{}) {
 
-	defer Db.Close()
 	Db = Connect()
-	var count int
+	var count int64
 	var log []QyLog
 
 	info := Db.Hander.Table("qy_log").

@@ -16,7 +16,7 @@ type helpListReq struct {
 	Page int `json:"page"`
 }
 
-//帮组中心Api
+// AjaxHelpList 帮组中心Api
 // @Summary 显示网站信息
 // @Description 描述信息
 // @Tags help

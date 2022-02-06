@@ -18,7 +18,6 @@ type QyAuthAccess struct {
 //获取用户信息
 func GetGroupInfo(gid int) (result AuthGroup) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_auth_group").Where("id = ?", gid).Find(&result)
 
@@ -28,7 +27,6 @@ func GetGroupInfo(gid int) (result AuthGroup) {
 //获取用户权限组id
 func GetUserGroup(uid int) (gid int) {
 
-	defer Db.Close()
 	Db = Connect()
 	var authAccess QyAuthAccess
 	Db.Hander.Table("qy_auth_access").
@@ -43,7 +41,6 @@ func GetUserGroup(uid int) (gid int) {
 //权限组保存
 func GroupSave(gid int, data map[string]interface{}) (result int) {
 
-	defer Db.Close()
 	Db = Connect()
 	if gid > 0 {
 		err := Db.Hander.Table("qy_auth_group").Where("id = ?", gid).Updates(data).Error
@@ -62,18 +59,18 @@ func GroupSave(gid int, data map[string]interface{}) (result int) {
 			data["rules"].(string),
 			data["operate"].(string),
 		}
-		obj := Db.Hander.Table("qy_auth_group").Create(info).Value
+		Db.Hander.Table("qy_auth_group").Create(info)
 
-		insertId := obj.(*AuthGroup).Id
+		//insertId := obj.(*AuthGroup).Id
 
-		return insertId
+		return info.Id
 	}
 
 }
 
 //更新权限组
 func GroupFeatureUpdate(gid int, data map[string]interface{}) (result bool) {
-	defer Db.Close()
+
 	Db = Connect()
 	if gid > 0 {
 		err := Db.Hander.Table("qy_auth_group").Where("id = ?", gid).Updates(data).Error
@@ -88,7 +85,6 @@ func GroupFeatureUpdate(gid int, data map[string]interface{}) (result bool) {
 //获取组织下的权限组
 func GetOrganizeGroup(oid int) (group []AuthGroup) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_auth_group").
 		Where("organize=?", oid).
@@ -98,9 +94,8 @@ func GetOrganizeGroup(oid int) (group []AuthGroup) {
 }
 
 //获取组织下的权限组数量
-func GetOrganizeGroupCount(oid int) (count int) {
+func GetOrganizeGroupCount(oid int) (count int64) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_auth_group").
 		Where("organize=?", oid).
@@ -112,7 +107,6 @@ func GetOrganizeGroupCount(oid int) (count int) {
 //权限组操作
 func GroupOperate(otype int, gid int) (result bool) {
 
-	defer Db.Close()
 	Db = Connect()
 	switch {
 	case otype == 1:
@@ -125,9 +119,8 @@ func GroupOperate(otype int, gid int) (result bool) {
 }
 
 //查询权限组下是否有用户
-func GetGroupUserNum(gid int) (count int) {
+func GetGroupUserNum(gid int) (count int64) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_auth_access").
 		Where("group_id=?", gid).
@@ -138,7 +131,6 @@ func GetGroupUserNum(gid int) (count int) {
 //查询权限组项目及分类权限
 func GetGroupDataAuth(gid int) (data []QyAuthData) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_auth_data").
 		Where("groupid=? and type in (1,2)", gid).
@@ -149,7 +141,6 @@ func GetGroupDataAuth(gid int) (data []QyAuthData) {
 //获取用户在指定项目的权限组
 func GetProjectGroup(uid int, proid int) (group AuthGroup) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_auth_group as g").
 		Joins("join qy_project as p on g.organize = p.organize").

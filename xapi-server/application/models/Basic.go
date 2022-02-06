@@ -15,7 +15,6 @@ type Allmenu struct {
  */
 func GetMenu(identify int, pid int) (menu []Allmenu) {
 
-	defer Db.Close()
 	Db = Connect()
 	var authRule []QyAuthRule
 	var temp Allmenu
@@ -43,7 +42,6 @@ func GetMenu(identify int, pid int) (menu []Allmenu) {
  */
 func GetManagerMenu(identify int, pid int, rules []string) (menu []Allmenu) {
 
-	defer Db.Close()
 	Db = Connect()
 	var authRule []QyAuthRule
 	var temp Allmenu

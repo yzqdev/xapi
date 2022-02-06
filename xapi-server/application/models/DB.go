@@ -2,9 +2,9 @@ package models
 
 import (
 	"fmt"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"time"
+	"gorm.io/driver/mysql"
+	_ "gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"xapimanager/application/utils"
 	"xapimanager/config"
 )
@@ -22,7 +22,7 @@ type cfg struct {
 	prefix string
 }
 
-//连接mysql
+// Connect 连接mysql
 func Connect() (Dbase *DB) {
 	//创建连接
 	Dbase = Singleton()
@@ -37,7 +37,7 @@ func Connect() (Dbase *DB) {
 	return
 }
 
-//创建单例模式
+// Singleton 创建单例模式
 func Singleton() *DB {
 
 	sysc := config.GetGlobal()
@@ -54,31 +54,32 @@ func Singleton() *DB {
 	}
 }
 
-//mysql 连接
+// Open mysql 连接
 func (db *DB) Open() error {
 
-	sysc := config.GetGlobal()
+	//sysc := config.GetGlobal()
 	connect := fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		db.user, db.pass, db.host, db.port, db.dbname)
-	obj, err := gorm.Open("mysql", connect)
+	obj, err := gorm.Open(mysql.Open(connect), &gorm.Config{})
+
 	if err != nil {
 		return err
 	}
 	//转换名称时不加s
-	obj.SingularTable(true)
+	//obj.SingularTable(true)
 	//打印详细日志 //TODO 调试完成后需删除
-	obj.LogMode(sysc.DbLogMode)
+	//obj.LogMode(sysc.DbLogMode)
 	//设置连接池
-	obj.DB().SetConnMaxLifetime(time.Second * time.Duration(sysc.DbConnMaxLifetime))
-	obj.DB().SetMaxIdleConns(sysc.DbMaxIdleConns)
-	obj.DB().SetMaxOpenConns(sysc.DbMaxOpenConns)
+	//obj.DB().SetConnMaxLifetime(time.Second * time.Duration(sysc.DbConnMaxLifetime))
+	//obj.DB().SetMaxIdleConns(sysc.DbMaxIdleConns)
+	//obj.DB().SetMaxOpenConns(sysc.DbMaxOpenConns)
 	db.Hander = obj
 	return nil
 }
 
 //mysql 关闭连接
-func (db *DB) Close() {
-	if db != nil && db.Hander != nil {
-		_ = db.Hander.Close()
-	}
-}
+//func (db *DB) Close() {
+//	if db != nil && db.Hander != nil {
+//		_ = db.Hander.Close()
+//	}
+//}

@@ -12,7 +12,7 @@ import (
 	_ "xapimanager/application/utils"
 )
 
-// @Summary 获取首页信息
+// Index @Summary 获取首页信息
 // @Description 描述信息
 // @Tags index
 // @Accept  json
@@ -43,6 +43,7 @@ func Index(c *gin.Context) {
 	data := map[string]interface{}{
 		"website": Services.GetWebsite(),
 		"menu":    menu,
+		"user":    user,
 		"userinfo": map[string]interface{}{
 			"username": user.Username,
 			"avatar":   user.Avatar,
@@ -53,7 +54,7 @@ func Index(c *gin.Context) {
 
 }
 
-// @Summary 显示首页manage
+// Manager @Summary 显示首页manage
 // @Description 描述信息
 // @Tags index
 // @Accept  json

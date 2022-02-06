@@ -9,7 +9,7 @@ import (
 	"xapimanager/config"
 )
 
-//获取用户权限并保存在cache中
+// GetUserAuth 获取用户权限并保存在cache中
 func GetUserAuth(uid int, proid int) (userAuth map[string][]string) {
 
 	var data string

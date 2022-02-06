@@ -21,9 +21,8 @@ type UserHelp struct {
 //获取帮助中心列表
 func GetHelpList(data map[string]interface{}, start int, limit int) (result map[string]interface{}) {
 
-	defer Db.Close()
 	Db = Connect()
-	var count int
+	var count int64
 	var help []UserHelp
 	obj := Db.Hander.Table("qy_help as h").
 		Joins("join qy_user as u on u.uid = h.author").
@@ -42,7 +41,6 @@ func GetHelpList(data map[string]interface{}, start int, limit int) (result map[
 //帮助详情
 func GetHelpDetail(organize int, hid int) (help UserHelp) {
 
-	defer Db.Close()
 	Db = Connect()
 	Db.Hander.Table("qy_help as h").
 		Joins("join qy_user as u on u.uid = h.author").
@@ -55,7 +53,7 @@ func GetHelpDetail(organize int, hid int) (help UserHelp) {
 
 //删除帮助中心
 func DeleteHelp(organize int, hid int) bool {
-	defer Db.Close()
+
 	Db = Connect()
 	err := Db.Hander.Table("qy_help").
 		Where("organize = ? and id= ?", organize, hid).
@@ -69,7 +67,7 @@ func DeleteHelp(organize int, hid int) bool {
 
 //帮助中心保存
 func HelpStore(organize int, hid int, data map[string]interface{}) bool {
-	defer Db.Close()
+
 	Db = Connect()
 	if hid > 0 {
 		delete(data, "author")
