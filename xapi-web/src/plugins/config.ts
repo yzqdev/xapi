@@ -1,7 +1,7 @@
 export function getApiUrl(str?:any) {
 
-        const devArr = ['test.researchstar.cn', 'localhost', 'yzq.xiaomy.net']
-        const apiArr = ['www.researchstar.cn']
+        const devArr = ['http://localhost:6900', 'localhost', 'yzq.xiaomy.net']
+        const apiArr = ['http://localhost:6900']
         let localUrl = '192.168.'
         let isDev =
             devArr.includes(document.domain) || document.domain.includes(localUrl)
@@ -10,11 +10,11 @@ export function getApiUrl(str?:any) {
 
         if (str === 'socket') {
             if (isDev) {
-                return 'wss://dev.researchstar.cn/dobell-research/ws'
+                return 'wss://localhost:6900/ws'
             }
 
             if (isProd) {
-                return 'wss://api.researchstar.cn/dobell-research/ws'
+                return 'wss://localhost:6900/ws'
             }
         }
 

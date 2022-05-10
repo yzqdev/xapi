@@ -23,7 +23,7 @@ style="height: 100vh;"
                     <span>{{ item.Title }}</span>
                   </template>
                   <template v-for="subItem in item.Child">
-                    <el-submenu
+                    <el-sub-menu
                       v-if="subItem.Child"
                       :index="subItem.Id"
                       :key="subItem.Id"
@@ -36,7 +36,7 @@ style="height: 100vh;"
                       >
                         <span>{{ threeItem.Title }}</span>
                       </el-menu-item>
-                    </el-submenu>
+                    </el-sub-menu>
                     <el-menu-item
                       v-else
                       :index="subItem.Path"

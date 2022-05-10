@@ -29,6 +29,6 @@ export default defineConfig({
         // minify: false,
     },
     server: {
-        port: 2800
+        port: 3800
     }
 });
