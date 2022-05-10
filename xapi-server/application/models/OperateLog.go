@@ -7,12 +7,12 @@ import (
 )
 
 type QyLog struct {
-	Organize int
-	Object   string
-	Logtype  int
-	Operator int
-	Desc     string
-	Addtime  int
+	Organize int    `json:"organize"`
+	Object   string `json:"object"`
+	Logtype  int    `json:"logtype"`
+	Operator int    `json:"operator"`
+	Desc     string `json:"desc"`
+	Addtime  int    `json:"addtime"`
 }
 
 //保存操作日志

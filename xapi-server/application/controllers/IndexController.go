@@ -34,6 +34,8 @@ func Index(c *gin.Context) {
 	color.Red.Println(c.Request.Host)
 	gid := models.GetUserGroup(user.Uid)
 	var menu []models.Allmenu
+	color.Redln("当前用户权限")
+	color.Redln(gid)
 	if gid == 1 {
 		menu = models.GetMenu(1, 0)
 	} else {

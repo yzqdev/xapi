@@ -1,10 +1,12 @@
 package models
 
+import "github.com/gookit/color"
+
 var Db *DB
 
 type Allmenu struct {
 	QyAuthRule
-	Child []Allmenu
+	Child []Allmenu `json:"child"`
 }
 
 /**
@@ -19,7 +21,7 @@ func GetMenu(identify int, pid int) (menu []Allmenu) {
 	var authRule []QyAuthRule
 	var temp Allmenu
 
-	Db.Hander.Where("identify=? and pid = ? and status=1 and isdel=2", identify, pid).Order("sort asc").Find(&authRule)
+	Db.Hander.Table("qy_auth_rule").Where("identify=? and pid = ? and status=1 and isdel=2", identify, pid).Order("sort asc").Find(&authRule)
 
 	if len(authRule) > 0 {
 		for _, value := range authRule {
@@ -28,7 +30,7 @@ func GetMenu(identify int, pid int) (menu []Allmenu) {
 			menu = append(menu, temp)
 		}
 	}
-
+	color.Cyanln(menu)
 	return
 
 }

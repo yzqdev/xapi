@@ -57,15 +57,15 @@ func projectRouter(router *gin.Engine) {
 		//企业密钥操作
 		apiRouter.POST("/company/operate", manager.CompanyOperate)
 	}
-	projectRouter := router.Group("/project")
+	projRouter := router.Group("/project")
 	{
 		//保存项目
-		projectRouter.POST("/info", controllers.ProjectSave)
+		projRouter.POST("/info", controllers.ProjectSave)
 		//项目环境
-		projectRouter.POST("/env/:proid", requests.ProjectEnv(), controllers.ProjectEnvSave)
+		projRouter.POST("/env/:proid", requests.ProjectEnv(), controllers.ProjectEnvSave)
 		//项目切换
-		projectRouter.POST("/envchange", controllers.ProjectEnvChange)
-		projectRouter.GET("/all", controllers.ProjectList)
+		projRouter.POST("/envchange", controllers.ProjectEnvChange)
+		projRouter.GET("/all", controllers.ProjectList)
 	}
 	//json路由
 	organizeRouter := router.Group("/organize", middleware.JwtHandler())

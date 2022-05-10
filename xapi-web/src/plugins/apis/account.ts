@@ -1,7 +1,7 @@
 import http from "@/plugins/FetchApi";
 
 export const reg = (data: any) => {
-  return http.post("/register", data);
+  return http.post("/reg", data);
 };
 export const getIndex = () => {
   return http.get("/getIndex");

@@ -49,8 +49,7 @@ var doc = `{
                 ],
                 "tags": [
                     "index"
-                ],
-                "summary": "获取首页信息"
+                ]
             }
         },
         "/group/delete/:id": {
@@ -163,7 +162,6 @@ var doc = `{
                 "tags": [
                     "accounts"
                 ],
-                "summary": "登陆",
                 "parameters": [
                     {
                         "description": "login",
@@ -211,8 +209,7 @@ var doc = `{
                 ],
                 "tags": [
                     "index"
-                ],
-                "summary": "显示首页manage"
+                ]
             }
         },
         "/message/detail": {
@@ -413,8 +410,7 @@ var doc = `{
                 ],
                 "tags": [
                     "project"
-                ],
-                "summary": "项目列表"
+                ]
             }
         },
         "/register": {
@@ -428,8 +424,7 @@ var doc = `{
                 ],
                 "tags": [
                     "accounts"
-                ],
-                "summary": "注册api"
+                ]
             }
         },
         "/user/all": {
@@ -518,8 +513,7 @@ var doc = `{
                 ],
                 "tags": [
                     "website"
-                ],
-                "summary": "更新网站信息"
+                ]
             }
         },
         "/website/web": {
@@ -533,8 +527,7 @@ var doc = `{
                 ],
                 "tags": [
                     "website"
-                ],
-                "summary": "获取网站设置页"
+                ]
             }
         }
     },

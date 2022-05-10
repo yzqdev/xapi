@@ -7,15 +7,16 @@ import (
 )
 
 type QyAuthRule struct {
-	Id       int `gorm:"primary_key"`
-	Identify int
-	Pid      int
-	Path     string
-	Title    string
-	Icon     string
-	Status   int
-	Sort     int
-	Isdel    int
+	Id int `json:"id" gorm:"primary_key"`
+
+	Identify int    `json:"identify"`
+	Pid      int    `json:"pid"`
+	Path     string `json:"path"`
+	Title    string `json:"title"`
+	Icon     string `json:"icon"`
+	Status   int    `json:"status"`
+	Sort     int    `json:"sort"`
+	Isdel    int    `json:"isdel"`
 }
 type QyAuthOperate struct {
 	Id       int

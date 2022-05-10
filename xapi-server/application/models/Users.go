@@ -6,16 +6,17 @@ import (
 )
 
 type QyUser struct {
-	Uid      int `gorm:"primary_key"`
-	Username string
-	Email    string
-	Avatar   string
-	Phone    string
-	Intro    string
-	Password string
-	Salt     string
-	Isadmin  int
-	Ctime    int
+	Uid      int    `json:"uid" gorm:"primary_key"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+	Avatar   string `json:"avatar"`
+	Phone    string `json:"phone"`
+	Intro    string `json:"intro"`
+	Password string `json:"password"`
+	Salt     string `json:"salt"`
+	Isadmin  int    `json:"isadmin"`
+
+	Ctime int `json:"ctime"`
 }
 type UserGroup struct {
 	Uid       int

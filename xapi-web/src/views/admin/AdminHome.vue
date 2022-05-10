@@ -13,43 +13,43 @@ style="height: 100vh;"
             mode="vertical"
           >
             <template v-for="item in menus">
-              <template v-if="item.Child">
+              <template v-if="item.child">
                 <el-menu-item-group
-                  :index="item.Id"
-                  :key="item.Id"
-                  v-if="item.Status"
+                  :index="item.id"
+                  :key="item.id"
+                  v-if="item.status"
                 >
-                  <template slot="title">
-                    <span>{{ item.Title }}</span>
+                  <template #title >
+                    <span>{{ item.title }}</span>
                   </template>
-                  <template v-for="subItem in item.Child">
+                  <template v-for="subItem in item.child">
                     <el-sub-menu
-                      v-if="subItem.Child"
-                      :index="subItem.Id"
-                      :key="subItem.Id"
+                      v-if="subItem.child"
+                      :index="subItem.id"
+                      :key="subItem.id"
                     >
-                      <template slot="title">{{ subItem.Title }}</template>
+                      <template #title >{{ subItem.title }}</template>
                       <el-menu-item
-                        v-for="(threeItem, i) in subItem.Child"
-                        :key="threeItem.Id"
-                        :index="threeItem.Path"
+                        v-for="(threeItem, i) in subItem.child"
+                        :key="threeItem.id"
+                        :index="threeItem.path"
                       >
-                        <span>{{ threeItem.Title }}</span>
+                        <span>{{ threeItem.title }}</span>
                       </el-menu-item>
                     </el-sub-menu>
                     <el-menu-item
                       v-else
-                      :index="subItem.Path"
-                      :key="subItem.Id"
+                      :index="subItem.path"
+                      :key="subItem.id"
                     >
-                      <span slot="title">{{ subItem.Title }} </span>
+                      <template  #title>{{ subItem.title }} </template>
                     </el-menu-item>
                   </template>
                 </el-menu-item-group>
               </template>
               <template v-else>
-                <el-menu-item :index="item.Path" :key="item.Id">
-                  <span slot="title">{{ item.Title }}</span>
+                <el-menu-item :index="item.path" :key="item.id">
+                  <template #title>{{ item.title }}</template>
                 </el-menu-item>
               </template>
             </template>

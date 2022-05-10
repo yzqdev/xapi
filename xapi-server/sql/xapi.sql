@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : local
  Source Server Type    : MySQL
- Source Server Version : 50720
+ Source Server Version : 80023
  Source Host           : localhost:3306
  Source Schema         : qiyu
 
  Target Server Type    : MySQL
- Target Server Version : 50720
+ Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 19/05/2019 18:41:21
+ Date: 11/05/2022 00:06:57
 */
 
 SET NAMES utf8mb4;
@@ -21,81 +21,82 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for qy_apidetail
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_apidetail`;
-CREATE TABLE `qy_apidetail` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '接口id',
-  `listid` int(11) NOT NULL COMMENT '列表id，同一个Api的多个版本，listid相同',
-  `proid` int(11) NOT NULL COMMENT '项目id',
-  `envid` int(11) NOT NULL COMMENT '环境id',
-  `apiname` varchar(200) NOT NULL COMMENT 'api名称',
-  `subclassify` int(11) NOT NULL COMMENT '子分类id',
-  `version` varchar(20) NOT NULL COMMENT '版本',
-  `uri` varchar(200) NOT NULL COMMENT '接口URI部分',
-  `gateway` varchar(200) NOT NULL COMMENT 'gateway地址',
-  `local` varchar(200) NOT NULL COMMENT 'localapi本地开发地址',
-  `network` tinyint(1) NOT NULL DEFAULT '1' COMMENT '网络访问(1内网,2外网)',
-  `authentication` tinyint(1) NOT NULL DEFAULT '0' COMMENT '认证方式(1session认证,2key/secret认证)',
-  `description` text NOT NULL COMMENT '接口描述',
-  `author` int(11) NOT NULL COMMENT '开发者',
-  `editor` varchar(100) DEFAULT NULL COMMENT '编辑人',
-  `method` tinyint(1) DEFAULT '1' COMMENT '请求方法(1GET,2POST,3PUT,4DELETE)',
-  `requesttype` tinyint(1) DEFAULT NULL COMMENT '请求类型(1json,2xml,3form,4raw)',
-  `responsetype` tinyint(1) DEFAULT '1' COMMENT '响应类型(1json,2xml,3jsonp,4html)',
-  `header` longtext COMMENT 'header参数',
-  `request` longtext COMMENT '请求参数',
-  `response` longtext COMMENT '响应参数',
-  `statuscode` longtext COMMENT '状态码',
-  `successgoback` text COMMENT '成功示例',
-  `failgoback` text COMMENT '失败示例',
-  `status` tinyint(2) NOT NULL DEFAULT '2' COMMENT '状态(1已审核,2待审核,3.废弃,4已删除,5已拒绝)',
-  `mtime` int(11) DEFAULT NULL COMMENT '修改时间',
-  `ctime` int(11) DEFAULT NULL COMMENT '添加时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_apidetail`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '接口id',
+  `listid` int NOT NULL COMMENT '列表id，同一个Api的多个版本，listid相同',
+  `proid` int NOT NULL COMMENT '项目id',
+  `envid` int NOT NULL COMMENT '环境id',
+  `apiname` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'api名称',
+  `subclassify` int NOT NULL COMMENT '子分类id',
+  `version` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '版本',
+  `uri` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '接口URI部分',
+  `gateway` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'gateway地址',
+  `local` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'localapi本地开发地址',
+  `network` tinyint(1) NOT NULL DEFAULT 1 COMMENT '网络访问(1内网,2外网)',
+  `authentication` tinyint(1) NOT NULL DEFAULT 0 COMMENT '认证方式(1session认证,2key/secret认证)',
+  `description` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '接口描述',
+  `author` int NOT NULL COMMENT '开发者',
+  `editor` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编辑人',
+  `method` tinyint(1) NULL DEFAULT 1 COMMENT '请求方法(1GET,2POST,3PUT,4DELETE)',
+  `requesttype` tinyint(1) NULL DEFAULT NULL COMMENT '请求类型(1json,2xml,3form,4raw)',
+  `responsetype` tinyint(1) NULL DEFAULT 1 COMMENT '响应类型(1json,2xml,3jsonp,4html)',
+  `header` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT 'header参数',
+  `request` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '请求参数',
+  `response` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '响应参数',
+  `statuscode` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '状态码',
+  `successgoback` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '成功示例',
+  `failgoback` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '失败示例',
+  `status` tinyint NOT NULL DEFAULT 2 COMMENT '状态(1已审核,2待审核,3.废弃,4已删除,5已拒绝)',
+  `mtime` int NULL DEFAULT NULL COMMENT '修改时间',
+  `ctime` int NULL DEFAULT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qy_apidetail
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qy_apienv
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_apienv`;
-CREATE TABLE `qy_apienv` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `proid` int(11) NOT NULL COMMENT '项目id',
-  `envname` varchar(60) DEFAULT NULL COMMENT '环境名称',
-  `domain` varchar(200) NOT NULL COMMENT '环境域名',
-  `sort` tinyint(4) NOT NULL COMMENT '排序',
-  `status` tinyint(11) DEFAULT '1' COMMENT '状态(1已启用,2已禁用)',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_apienv`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `proid` int NOT NULL COMMENT '项目id',
+  `envname` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '环境名称',
+  `domain` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '环境域名',
+  `sort` tinyint NOT NULL COMMENT '排序',
+  `status` tinyint NULL DEFAULT 1 COMMENT '状态(1已启用,2已禁用)',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qy_apienv
 -- ----------------------------
-BEGIN;
 INSERT INTO `qy_apienv` VALUES (1, 1, '线上环境', 'http://api.smaty.net', 0, 1);
 INSERT INTO `qy_apienv` VALUES (2, 1, '预发布环境', 'http://api.pre.smaty.net', 1, 1);
 INSERT INTO `qy_apienv` VALUES (3, 1, '集成环境', 'http://api.sit.smaty.net', 2, 1);
 INSERT INTO `qy_apienv` VALUES (4, 1, '测试环境', 'http://api.test.smaty.net', 3, 1);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for qy_area
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_area`;
-CREATE TABLE `qy_area` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `area_id` int(11) NOT NULL COMMENT '地区id',
-  `area_name` varchar(255) NOT NULL COMMENT '地区名称',
-  `pid` int(11) NOT NULL DEFAULT '0' COMMENT '父级地区ID',
-  `longitude` double(9,6) DEFAULT NULL COMMENT '经度',
-  `latitude` double(9,6) DEFAULT NULL COMMENT '纬度',
-  `sort` int(11) NOT NULL COMMENT '排序值',
-  PRIMARY KEY (`id`,`area_id`),
-  KEY `pid` (`pid`)
-) ENGINE=InnoDB AUTO_INCREMENT=790 DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_area`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `area_id` int NOT NULL COMMENT '地区id',
+  `area_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '地区名称',
+  `pid` int NOT NULL DEFAULT 0 COMMENT '父级地区ID',
+  `longitude` double(9, 6) NULL DEFAULT NULL COMMENT '经度',
+  `latitude` double(9, 6) NULL DEFAULT NULL COMMENT '纬度',
+  `sort` int NOT NULL COMMENT '排序值',
+  PRIMARY KEY (`id`, `area_id`) USING BTREE,
+  INDEX `pid`(`pid` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 789 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qy_area
 -- ----------------------------
-BEGIN;
 INSERT INTO `qy_area` VALUES (1, 110000, '北京市', 0, 116.460000, 39.920000, 0);
 INSERT INTO `qy_area` VALUES (2, 110100, '北京市', 110000, 116.460000, 39.920000, 1);
 INSERT INTO `qy_area` VALUES (3, 120000, '天津市', 0, 117.200000, 39.130000, 2);
@@ -885,97 +886,100 @@ INSERT INTO `qy_area` VALUES (786, 820001, '澳门', 820000, 0.000000, 0.000000,
 INSERT INTO `qy_area` VALUES (787, 820002, '澳门', 820001, 0.000000, 0.000000, 786);
 INSERT INTO `qy_area` VALUES (788, 910005, '中山市', 442000, 113.380000, 22.520000, 787);
 INSERT INTO `qy_area` VALUES (789, 910006, '东莞市', 441900, 113.750000, 23.040000, 788);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for qy_audit
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_audit`;
-CREATE TABLE `qy_audit` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `auditor` int(11) DEFAULT NULL COMMENT '审核人uid',
-  `did` int(11) DEFAULT NULL COMMENT 'Api详情Id',
-  `status` tinyint(2) DEFAULT NULL COMMENT '审核状态(1通过,2拒绝)',
-  `isdel` tinyint(1) DEFAULT NULL COMMENT '是否删除(1已删除,2未删除)',
-  `remark` varchar(600) DEFAULT NULL COMMENT '审核备注',
-  `ctime` int(11) DEFAULT NULL COMMENT '审核时间',
-  PRIMARY KEY (`id`),
-  KEY `did` (`did`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_audit`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `auditor` int NULL DEFAULT NULL COMMENT '审核人uid',
+  `did` int NULL DEFAULT NULL COMMENT 'Api详情Id',
+  `status` tinyint NULL DEFAULT NULL COMMENT '审核状态(1通过,2拒绝)',
+  `isdel` tinyint(1) NULL DEFAULT NULL COMMENT '是否删除(1已删除,2未删除)',
+  `remark` varchar(600) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '审核备注',
+  `ctime` int NULL DEFAULT NULL COMMENT '审核时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `did`(`did` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qy_audit
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qy_auth_access
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_auth_access`;
-CREATE TABLE `qy_auth_access` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `uid` mediumint(8) unsigned NOT NULL COMMENT '用户id',
-  `group_id` mediumint(8) unsigned NOT NULL COMMENT '组id',
-  PRIMARY KEY (`id`),
-  KEY `group_id` (`group_id`),
-  KEY `uid` (`uid`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_auth_access`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `uid` mediumint UNSIGNED NOT NULL COMMENT '用户id',
+  `group_id` mediumint UNSIGNED NOT NULL COMMENT '组id',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `group_id`(`group_id` ASC) USING BTREE,
+  INDEX `uid`(`uid` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qy_auth_access
 -- ----------------------------
-BEGIN;
 INSERT INTO `qy_auth_access` VALUES (1, 1, 1);
-COMMIT;
+INSERT INTO `qy_auth_access` VALUES (2, 2, 1);
 
 -- ----------------------------
 -- Table structure for qy_auth_data
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_auth_data`;
-CREATE TABLE `qy_auth_data` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `groupid` int(11) DEFAULT NULL COMMENT '组id',
-  `type` tinyint(2) DEFAULT NULL COMMENT '类型(1项目选择,2分类选择,3用户选择,4企业密钥)',
-  `record` text COMMENT '类型对应的记录',
-  `ctime` int(11) DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_auth_data`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `groupid` int NULL DEFAULT NULL COMMENT '组id',
+  `type` tinyint NULL DEFAULT NULL COMMENT '类型(1项目选择,2分类选择,3用户选择,4企业密钥)',
+  `record` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '类型对应的记录',
+  `ctime` int NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qy_auth_data
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qy_auth_group
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_auth_group`;
-CREATE TABLE `qy_auth_group` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `organize` int(11) NOT NULL COMMENT '组织id',
-  `groupname` varchar(100) NOT NULL DEFAULT '' COMMENT '组名称',
-  `description` varchar(300) NOT NULL COMMENT '组权限描述',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态(1已启用,2已禁用)',
-  `rules` varchar(255) NOT NULL DEFAULT '' COMMENT '规则',
-  `operate` varchar(100) NOT NULL COMMENT '操作',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_auth_group`  (
+  `id` mediumint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `organize` int NOT NULL COMMENT '组织id',
+  `groupname` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '组名称',
+  `description` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '组权限描述',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态(1已启用,2已禁用)',
+  `rules` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '规则',
+  `operate` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '操作',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qy_auth_group
 -- ----------------------------
-BEGIN;
 INSERT INTO `qy_auth_group` VALUES (1, 1, '超级管理员', '管理整个团队、Api操作等', 1, '21,22,23,26,27,28,24,29,30,25,31,32,33,35,34,37,38', '11,12,13,14,9,5,7,3,4');
-COMMIT;
 
 -- ----------------------------
 -- Table structure for qy_auth_operate
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_auth_operate`;
-CREATE TABLE `qy_auth_operate` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) DEFAULT NULL COMMENT '名称',
-  `identify` varchar(100) DEFAULT NULL COMMENT '标识',
-  `rid` int(11) DEFAULT NULL COMMENT '对应auth_rule的id',
-  `path` varchar(100) DEFAULT NULL COMMENT 'api 路由地址',
-  `status` tinyint(1) DEFAULT '1' COMMENT '状态(1可用,2不可用)',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_auth_operate`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `identify` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标识',
+  `rid` int NULL DEFAULT NULL COMMENT '对应auth_rule的id',
+  `path` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'api 路由地址',
+  `status` tinyint(1) NULL DEFAULT 1 COMMENT '状态(1可用,2不可用)',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qy_auth_operate
 -- ----------------------------
-BEGIN;
 INSERT INTO `qy_auth_operate` VALUES (1, '添加版本', 'addVersion', 26, '/Api/info', 1);
 INSERT INTO `qy_auth_operate` VALUES (2, '废弃Api', 'discardApi', 26, '/Api/discard', 1);
 INSERT INTO `qy_auth_operate` VALUES (3, '密钥创建/编辑', 'modifyCompany', 31, '/company/store', 1);
@@ -987,42 +991,40 @@ INSERT INTO `qy_auth_operate` VALUES (11, 'Api保存', 'apiStore', 27, '/Api/sto
 INSERT INTO `qy_auth_operate` VALUES (12, 'Api发布', 'publishApi', 27, '/Api/publish', 1);
 INSERT INTO `qy_auth_operate` VALUES (13, 'Api编辑', 'modifyApi', 27, '/Api/info', 1);
 INSERT INTO `qy_auth_operate` VALUES (14, 'Api删除', 'delApi', 27, '/Api/operate', 1);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for qy_auth_rule
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_auth_rule`;
-CREATE TABLE `qy_auth_rule` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `identify` tinyint(2) NOT NULL COMMENT '标识(1主控制台,2接口平台)',
-  `pid` int(11) NOT NULL COMMENT '父级id',
-  `path` varchar(80) NOT NULL DEFAULT '' COMMENT '路径',
-  `title` varchar(20) NOT NULL DEFAULT '' COMMENT '名称',
-  `icon` varchar(100) DEFAULT NULL COMMENT 'icon图标',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态(0隐藏,1显示)',
-  `sort` int(11) NOT NULL COMMENT '排序',
-  `isdel` tinyint(1) DEFAULT '2' COMMENT '是否删除(1已删除,2未删除)',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_auth_rule`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `identify` tinyint NOT NULL COMMENT '标识(1主控制台,2接口平台)',
+  `pid` int NOT NULL COMMENT '父级id',
+  `path` varchar(80) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '路径',
+  `title` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '名称',
+  `icon` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'icon图标',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '状态(0隐藏,1显示)',
+  `sort` int NOT NULL COMMENT '排序',
+  `isdel` tinyint(1) NULL DEFAULT 2 COMMENT '是否删除(1已删除,2未删除)',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qy_auth_rule
 -- ----------------------------
-BEGIN;
 INSERT INTO `qy_auth_rule` VALUES (1, 1, 0, '', '导航栏', NULL, 1, 1, 2);
 INSERT INTO `qy_auth_rule` VALUES (2, 1, 0, '', '用户', NULL, 1, 2, 2);
 INSERT INTO `qy_auth_rule` VALUES (3, 1, 0, '', '设置', NULL, 1, 3, 2);
 INSERT INTO `qy_auth_rule` VALUES (4, 1, 1, '/project', '所有项目', 'fa fa-th-large text-info', 1, 1, 2);
-INSERT INTO `qy_auth_rule` VALUES (5, 1, 1, '/apps', '应用管理', 'fa fa-tasks text-green', 1, 2, 2);
+INSERT INTO `qy_auth_rule` VALUES (5, 1, 1, '/admin/apps', '应用管理', 'fa fa-tasks text-green', 1, 2, 2);
 INSERT INTO `qy_auth_rule` VALUES (6, 1, 2, '', '用户管理', 'fa fa-group text-warning', 1, 1, 2);
 INSERT INTO `qy_auth_rule` VALUES (7, 1, 2, '', '消息通知', 'fa fa-envelope text-info', 1, 2, 2);
 INSERT INTO `qy_auth_rule` VALUES (8, 1, 2, '', '帮助中心', 'fa fa-question-circle text-muted', 1, 3, 2);
-INSERT INTO `qy_auth_rule` VALUES (9, 1, 3, '/log', '操作日志', 'fa fa-tags text-muted', 1, 1, 2);
+INSERT INTO `qy_auth_rule` VALUES (9, 1, 3, '/admin/log', '操作日志', 'fa fa-tags text-muted', 1, 1, 2);
 INSERT INTO `qy_auth_rule` VALUES (10, 1, 3, '', '系统设置', 'fa fa-gears text-navy', 2, 2, 2);
-INSERT INTO `qy_auth_rule` VALUES (11, 1, 6, '/organize', '团队信息', NULL, 2, 1, 2);
-INSERT INTO `qy_auth_rule` VALUES (12, 1, 6, '/users', '团队成员', NULL, 1, 2, 2);
-INSERT INTO `qy_auth_rule` VALUES (13, 1, 6, '/group', '权限管理', NULL, 1, 3, 2);
+INSERT INTO `qy_auth_rule` VALUES (11, 1, 6, '/admin/organize', '团队信息', NULL, 2, 1, 2);
+INSERT INTO `qy_auth_rule` VALUES (12, 1, 6, '/admin/users', '团队成员', NULL, 1, 2, 2);
+INSERT INTO `qy_auth_rule` VALUES (13, 1, 6, '/admin/group', '权限管理', NULL, 1, 3, 2);
 INSERT INTO `qy_auth_rule` VALUES (14, 1, 7, '/message/list', '消息列表', NULL, 1, 1, 2);
 INSERT INTO `qy_auth_rule` VALUES (15, 1, 7, '', '发送消息', NULL, 2, 2, 2);
 INSERT INTO `qy_auth_rule` VALUES (16, 1, 8, '/help/list', '帮助列表', NULL, 1, 1, 2);
@@ -1046,270 +1048,290 @@ INSERT INTO `qy_auth_rule` VALUES (33, 2, 20, '', '消息通知', 'fa fa-envelop
 INSERT INTO `qy_auth_rule` VALUES (34, 2, 20, '', '帮助中心', 'fa fa-question-circle text-muted', 1, 3, 2);
 INSERT INTO `qy_auth_rule` VALUES (35, 2, 33, '/message/list', '消息列表', NULL, 1, 1, 2);
 INSERT INTO `qy_auth_rule` VALUES (36, 2, 33, '', '发送消息', NULL, 2, 2, 2);
-INSERT INTO `qy_auth_rule` VALUES (37, 2, 34, '/help/list', '帮助列表', NULL, 1, 1, 2);
-INSERT INTO `qy_auth_rule` VALUES (38, 2, 34, '/help/info', '新增帮助', NULL, 1, 2, 2);
+INSERT INTO `qy_auth_rule` VALUES (37, 2, 34, '/admin/help/list', '帮助列表', NULL, 1, 1, 2);
+INSERT INTO `qy_auth_rule` VALUES (38, 2, 34, '/admin/help/info', '新增帮助', NULL, 1, 2, 2);
 INSERT INTO `qy_auth_rule` VALUES (39, 2, 20, '', '用户权限', 'fa fa-group text-warning', 2, 1, 2);
-INSERT INTO `qy_auth_rule` VALUES (40, 2, 39, '/users', '用户列表', NULL, 2, 1, 2);
-INSERT INTO `qy_auth_rule` VALUES (41, 2, 39, '/group', '权限管理', NULL, 2, 2, 2);
-COMMIT;
+INSERT INTO `qy_auth_rule` VALUES (40, 2, 39, '/admin/users', '用户列表', NULL, 2, 1, 2);
+INSERT INTO `qy_auth_rule` VALUES (41, 2, 39, '/admin/group', '权限管理', NULL, 2, 2, 2);
 
 -- ----------------------------
 -- Table structure for qy_classify
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_classify`;
-CREATE TABLE `qy_classify` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '分类id',
-  `proid` int(11) NOT NULL DEFAULT '1' COMMENT '项目id',
-  `classifyname` varchar(100) DEFAULT NULL COMMENT '分类名称',
-  `pid` int(11) DEFAULT '0' COMMENT '父级id',
-  `description` text COMMENT '分类描述',
-  `addtime` int(11) DEFAULT NULL COMMENT '添加时间',
-  `creator` int(11) DEFAULT NULL COMMENT '添加人',
-  `leader` varchar(300) DEFAULT NULL COMMENT '负责人',
-  `status` tinyint(2) DEFAULT '1' COMMENT '分类状态(1正常,2删除)',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_classify`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '分类id',
+  `proid` int NOT NULL DEFAULT 1 COMMENT '项目id',
+  `classifyname` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '分类名称',
+  `pid` int NULL DEFAULT 0 COMMENT '父级id',
+  `description` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '分类描述',
+  `addtime` int NULL DEFAULT NULL COMMENT '添加时间',
+  `creator` int NULL DEFAULT NULL COMMENT '添加人',
+  `leader` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '负责人',
+  `status` tinyint NULL DEFAULT 1 COMMENT '分类状态(1正常,2删除)',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qy_classify
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qy_debug
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_debug`;
-CREATE TABLE `qy_debug` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `uid` int(11) NOT NULL COMMENT '用户uid',
-  `type` tinyint(1) DEFAULT '1' COMMENT '请求方式(1GET,2POST,3PUT,4DELETE)',
-  `apiurl` varchar(200) DEFAULT NULL COMMENT '接口url',
-  `param` varchar(500) DEFAULT NULL COMMENT '接口参数',
-  `header` varchar(500) DEFAULT NULL COMMENT 'header头',
-  `addtime` int(11) DEFAULT NULL COMMENT '添加时间',
-  PRIMARY KEY (`id`),
-  KEY `uid` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_debug`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `uid` int NOT NULL COMMENT '用户uid',
+  `type` tinyint(1) NULL DEFAULT 1 COMMENT '请求方式(1GET,2POST,3PUT,4DELETE)',
+  `apiurl` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接口url',
+  `param` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '接口参数',
+  `header` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'header头',
+  `addtime` int NULL DEFAULT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `uid`(`uid` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qy_debug
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qy_email
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_email`;
-CREATE TABLE `qy_email` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `from` varchar(100) NOT NULL COMMENT '发件人邮箱',
-  `toaddress` varchar(100) NOT NULL COMMENT '收件人邮箱',
-  `toname` varchar(100) NOT NULL COMMENT '收件人姓名',
-  `subject` varchar(200) NOT NULL COMMENT '主题',
-  `content` text NOT NULL COMMENT '内容',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '发送状态(1成功,2失败)',
-  `reason` varchar(500) DEFAULT NULL COMMENT '失败原因',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_email`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `from` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '发件人邮箱',
+  `toaddress` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '收件人邮箱',
+  `toname` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '收件人姓名',
+  `subject` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主题',
+  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '发送状态(1成功,2失败)',
+  `reason` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '失败原因',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qy_email
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qy_extend
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_extend`;
-CREATE TABLE `qy_extend` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(60) DEFAULT NULL COMMENT '应用名称',
-  `producer` varchar(300) DEFAULT NULL COMMENT '出品方',
-  `down` int(11) DEFAULT '0' COMMENT '下载次数',
-  `des` varchar(600) DEFAULT NULL COMMENT '键值描述',
-  `execute` text COMMENT '执行脚本',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_extend`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '应用名称',
+  `producer` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出品方',
+  `down` int NULL DEFAULT 0 COMMENT '下载次数',
+  `des` varchar(600) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '键值描述',
+  `execute` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '执行脚本',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qy_extend
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qy_help
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_help`;
-CREATE TABLE `qy_help` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organize` int(11) NOT NULL COMMENT '组织id',
-  `author` int(11) DEFAULT NULL COMMENT '发布人',
-  `title` varchar(100) NOT NULL COMMENT '标题',
-  `content` text COMMENT '内容',
-  `status` tinyint(1) DEFAULT '1' COMMENT '状态(1正常,2删除)',
-  `ctime` int(11) DEFAULT NULL COMMENT '发布时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_help`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `organize` int NOT NULL COMMENT '组织id',
+  `author` int NULL DEFAULT NULL COMMENT '发布人',
+  `title` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
+  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
+  `status` tinyint(1) NULL DEFAULT 1 COMMENT '状态(1正常,2删除)',
+  `ctime` int NULL DEFAULT NULL COMMENT '发布时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qy_help
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qy_log
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_log`;
-CREATE TABLE `qy_log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organize` int(11) DEFAULT '0' COMMENT '组织id',
-  `object` varchar(100) DEFAULT NULL COMMENT '操作对象',
-  `logtype` int(11) DEFAULT NULL COMMENT '类型(1添加.2修改,3删除)',
-  `operator` int(11) DEFAULT NULL COMMENT '操作人用户id',
-  `desc` text COMMENT '操作描述',
-  `addtime` int(11) DEFAULT NULL COMMENT '添加时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_log`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `organize` int NULL DEFAULT 0 COMMENT '组织id',
+  `object` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作对象',
+  `logtype` int NULL DEFAULT NULL COMMENT '类型(1添加.2修改,3删除)',
+  `operator` int NULL DEFAULT NULL COMMENT '操作人用户id',
+  `desc` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '操作描述',
+  `addtime` int NULL DEFAULT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qy_log
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qy_message
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_message`;
-CREATE TABLE `qy_message` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sender` int(11) DEFAULT NULL COMMENT '发件人uid',
-  `receiver` int(11) DEFAULT NULL COMMENT '收件人uid',
-  `pid` int(11) DEFAULT '0' COMMENT '父id',
-  `subject` varchar(100) DEFAULT NULL COMMENT '消息主题',
-  `content` varchar(900) DEFAULT NULL COMMENT '消息内容',
-  `sendtime` int(11) DEFAULT NULL COMMENT '发件时间',
-  `isread` tinyint(1) DEFAULT '2' COMMENT '状态(1已读,2未读)',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_message`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `sender` int NULL DEFAULT NULL COMMENT '发件人uid',
+  `receiver` int NULL DEFAULT NULL COMMENT '收件人uid',
+  `pid` int NULL DEFAULT 0 COMMENT '父id',
+  `subject` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消息主题',
+  `content` varchar(900) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消息内容',
+  `sendtime` int NULL DEFAULT NULL COMMENT '发件时间',
+  `isread` tinyint(1) NULL DEFAULT 2 COMMENT '状态(1已读,2未读)',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qy_message
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qy_organize
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_organize`;
-CREATE TABLE `qy_organize` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '组织id',
-  `leader` int(10) NOT NULL DEFAULT '0' COMMENT ' 组织负责人',
-  `name` varchar(100) DEFAULT '0' COMMENT '组织名称',
-  `identify` varchar(32) NOT NULL COMMENT '组织标识',
-  `icon` varchar(100) DEFAULT NULL COMMENT '组织icon',
-  `desc` varchar(300) DEFAULT NULL COMMENT '组织描述',
-  `ctime` int(10) DEFAULT NULL COMMENT '添加时间',
-  PRIMARY KEY (`id`),
-  KEY `identify` (`identify`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_organize`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '组织id',
+  `leader` int NOT NULL DEFAULT 0 COMMENT ' 组织负责人',
+  `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '组织名称',
+  `identify` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '组织标识',
+  `icon` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '组织icon',
+  `desc` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '组织描述',
+  `ctime` int NULL DEFAULT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `identify`(`identify` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qy_organize
 -- ----------------------------
-BEGIN;
 INSERT INTO `qy_organize` VALUES (1, 1, '梦之队', '9d1bf3db0b9e4d6e1af98f35f1b075a7', '', '我就是我，不一样的烟火！', 1557672748);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for qy_project
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_project`;
-CREATE TABLE `qy_project` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `organize` int(11) NOT NULL COMMENT '组织id',
-  `proname` varchar(50) DEFAULT NULL COMMENT '项目名称',
-  `desc` text COMMENT '项目描述',
-  `attribute` tinyint(1) DEFAULT NULL COMMENT '项目属性(1公有,2私有)',
-  `status` tinyint(1) DEFAULT '1' COMMENT '状态(1正常,2弃用)',
-  `ctime` int(11) DEFAULT NULL COMMENT '添加时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_project`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `organize` int NOT NULL COMMENT '组织id',
+  `proname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '项目名称',
+  `desc` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '项目描述',
+  `attribute` tinyint(1) NULL DEFAULT NULL COMMENT '项目属性(1公有,2私有)',
+  `status` tinyint(1) NULL DEFAULT 1 COMMENT '状态(1正常,2弃用)',
+  `ctime` int NULL DEFAULT NULL COMMENT '添加时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qy_project
 -- ----------------------------
-BEGIN;
 INSERT INTO `qy_project` VALUES (1, 1, '默认项目', '默认项目', 1, 1, 1558017861);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for qy_secret
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_secret`;
-CREATE TABLE `qy_secret` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `proid` int(11) DEFAULT NULL COMMENT '项目id',
-  `company` varchar(100) DEFAULT NULL COMMENT '公司名称',
-  `appid` varchar(100) DEFAULT NULL COMMENT '应用id',
-  `appsecret` varchar(100) NOT NULL COMMENT '应用密钥',
-  `status` tinyint(1) DEFAULT '1' COMMENT '状态(1正常,2冻结,3删除)',
-  `ctime` int(11) DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `apiSecret` (`appsecret`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_secret`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `proid` int NULL DEFAULT NULL COMMENT '项目id',
+  `company` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公司名称',
+  `appid` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '应用id',
+  `appsecret` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '应用密钥',
+  `status` tinyint(1) NULL DEFAULT 1 COMMENT '状态(1正常,2冻结,3删除)',
+  `ctime` int NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `apiSecret`(`appsecret` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of qy_secret
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for qy_site
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_site`;
-CREATE TABLE `qy_site` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `key` varchar(60) DEFAULT NULL COMMENT '键',
-  `value` varchar(300) DEFAULT NULL COMMENT '值',
-  `type` tinyint(2) DEFAULT '0' COMMENT '类型',
-  `des` varchar(600) DEFAULT NULL COMMENT '键值描述',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_site`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `key` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '键',
+  `value` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '值',
+  `type` tinyint NULL DEFAULT 0 COMMENT '类型',
+  `des` varchar(600) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '键值描述',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qy_site
 -- ----------------------------
-BEGIN;
 INSERT INTO `qy_site` VALUES (1, 'sitename', 'xApi Manager - 哆啦接口管理平台', 0, NULL);
 INSERT INTO `qy_site` VALUES (2, 'title', 'xApi Manager', 0, NULL);
 INSERT INTO `qy_site` VALUES (3, 'keywords', 'xApi Manager，哆啦接口管理平台', 0, NULL);
 INSERT INTO `qy_site` VALUES (4, 'description', 'XAPI MANAGER -专业实用的开源接口管理平台，为程序开发者提供一个灵活，方便，快捷的API管理工具，让API管理变的更加清晰、明朗', 0, NULL);
 INSERT INTO `qy_site` VALUES (5, 'copyright', 'Copyright  © 2019', 0, NULL);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for qy_user
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_user`;
-CREATE TABLE `qy_user` (
-  `uid` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户id',
-  `username` varchar(50) NOT NULL COMMENT '用户名',
-  `email` varchar(100) NOT NULL COMMENT '用户邮箱',
-  `avatar` longtext COMMENT '用户头像',
-  `phone` varchar(11) NOT NULL COMMENT '手机号',
-  `intro` text COMMENT '简介',
-  `password` varchar(32) NOT NULL COMMENT '用户密码',
-  `salt` varchar(6) NOT NULL COMMENT '用户随机码',
-  `isadmin` tinyint(1) DEFAULT '2' COMMENT '是否是管理员(1是,2否)',
-  `ctime` int(10) DEFAULT NULL COMMENT '添加时间',
-  PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_user`  (
+  `uid` int NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
+  `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户邮箱',
+  `avatar` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '用户头像',
+  `phone` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '手机号',
+  `intro` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '简介',
+  `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户密码',
+  `salt` varchar(6) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户随机码',
+  `isadmin` tinyint(1) NULL DEFAULT 2 COMMENT '是否是管理员(1是,2否)',
+  `ctime` int NULL DEFAULT NULL COMMENT '添加时间',
+  PRIMARY KEY (`uid`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qy_user
 -- ----------------------------
-BEGIN;
 INSERT INTO `qy_user` VALUES (1, 'admin', 'admin@admin.com', '', '18600000000', '', 'ff868b37c069480bc7a26d101ae191d9', 'a5ck', 1, 1557672748);
-COMMIT;
+INSERT INTO `qy_user` VALUES (2, 'yzq', 'yzqdev@qq.com', '', '18845645678', '', '37c6a5abbf9b69b2fbaf7115128febe1', 'u2ip', 1, 1652196997);
 
 -- ----------------------------
 -- Table structure for qy_user_env
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_user_env`;
-CREATE TABLE `qy_user_env` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户id',
-  `uid` int(11) NOT NULL DEFAULT '0' COMMENT '用户id',
-  `proid` int(11) NOT NULL COMMENT '项目id',
-  `envid` int(11) NOT NULL DEFAULT '0' COMMENT '环境id',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `qy_user_env`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `uid` int NOT NULL DEFAULT 0 COMMENT '用户id',
+  `proid` int NOT NULL COMMENT '项目id',
+  `envid` int NOT NULL DEFAULT 0 COMMENT '环境id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qy_user_env
 -- ----------------------------
-BEGIN;
 INSERT INTO `qy_user_env` VALUES (1, 1, 1, 4);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for qy_user_organize
 -- ----------------------------
 DROP TABLE IF EXISTS `qy_user_organize`;
-CREATE TABLE `qy_user_organize` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NOT NULL COMMENT '用户id',
-  `organize` int(11) DEFAULT '0' COMMENT '组织id',
-  `ctime` int(10) DEFAULT NULL COMMENT '添加时间',
-  `status` tinyint(11) DEFAULT NULL COMMENT '用户在组织中的状态(1已激活,2待激活,3失效)',
+CREATE TABLE `qy_user_organize`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `uid` int NOT NULL COMMENT '用户id',
+  `organize` int NULL DEFAULT 0 COMMENT '组织id',
+  `ctime` int NULL DEFAULT NULL COMMENT '添加时间',
+  `status` tinyint NULL DEFAULT NULL COMMENT '用户在组织中的状态(1已激活,2待激活,3失效)',
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `uid` (`uid`,`organize`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  UNIQUE INDEX `uid`(`uid` ASC, `organize` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of qy_user_organize
 -- ----------------------------
-BEGIN;
 INSERT INTO `qy_user_organize` VALUES (1, 1, 1, 1557672748, 1);
-COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

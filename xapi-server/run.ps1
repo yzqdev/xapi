@@ -1,3 +1,3 @@
 swag init
 
-air
+air -d

@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     redirect: "/admin",
   },
-  { path: "/register", name: "Register", component: Register },
+  { path: "/reg", name: "Reg", component: Register },
   { path: "/login", name: "Login", component: Login },
   {
     path: "/admin",
@@ -29,14 +29,14 @@ const routes: Array<RouteRecordRaw> = [
     component: AdminHome,
     children: [
       { path: "/", name: "AdminIndex", component: AdminIndex },
-      { path: "/project", name: "Project", component: Project },
+      { path: "project", name: "Project", component: Project },
       {
-        path: "/apps",
+        path: "apps",
         name: "MyApps",
         component: MyApps,
       },
-      { path: "/unix", name: "UnixTime", component: UnixTime },
-      { path: "/json-format", name: "JsonFormat", component: JsonFormat },
+      { path: "unix", name: "UnixTime", component: UnixTime },
+      { path: "json-format", name: "JsonFormat", component: JsonFormat },
     ],
   },
 ];
