@@ -43,16 +43,12 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 // 课题列表
-import { Component, Vue, Prop } from "vue-property-decorator";
 import { getCapcha, reg } from "@/plugins/apis/account";
+import {computed} from "vue";
 
-@Component({
-  components: {},
-})
-export default class Register extends Vue {
-  form: any = {
+ let form: any = $ref({
     username: "yangzq",
     email: "yzqdev@qq.com",
     password: "123456",
@@ -60,22 +56,22 @@ export default class Register extends Vue {
     phone: "18845645678",
     capthaId: "123",
     captchaCode: "123",
-  };
-  formV = {
+  });
+ let formV = $ref({
     usernameState: false,
     emailState: false,
-  };
-  capId: string = "";
-  created() {}
-  get capImg() {
-    return "/captcha/" + this.capId + ".png";
-  }
-  submitReg() {
-    reg(this.form).then((res) => {
+  });
+  let capId: string =$ref('');
+ let capImg= computed(() => {
+    return "/captcha/" +  capId + ".png"
+  })
+
+  function submitReg() {
+    reg( form).then((res) => {
       console.log(res, "调剂");
     });
   }
-}
+
 </script>
 
 <style lang="scss" scoped>

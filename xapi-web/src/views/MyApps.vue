@@ -15,13 +15,12 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-import { Vue, Component, Prop, Watch } from "vue-property-decorator";
+<script setup lang="ts">
 import UnixTime from "@/components/UnixTime.vue";
-@Component({ components: { UnixTime } })
-export default class MyApps extends Vue {
-  showApps: boolean = true;
-  apps: any[] = [
+import {useRouter} from "vue-router";
+ let  showApps: boolean = $ref(true);
+ let router=useRouter()
+ let apps: any[] = $ref([
     {
       title: "JSON格式化",
       desc: "JSON格式化,压缩",
@@ -37,13 +36,13 @@ export default class MyApps extends Vue {
     },
     { title: "4", desc: "4", path: "", name: "" },
     { title: "", desc: "", path: "", name: "" },
-  ];
-  unixTimeShow: boolean = false;
-  gotoApp(name: string) {
-    this.showApps = false;
-    this.$router.push({ name: name });
+  ]);
+ let unixTimeShow: boolean =  $ref(false);
+ function gotoApp(name: string) {
+    showApps = false;
+     router.push({ name: name });
   }
-}
+
 </script>
 <style lang="scss">
 .about {

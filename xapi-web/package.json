@@ -1,26 +1,35 @@
 {
-  "name": "studygolang-web",
-  "version": "0.1.0",
-  "private": true,
+  "name": "xapi-web",
+  "version": "0.0.1",
   "scripts": {
-    "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "dev": "vite --host",
+    "build": "vite build",
+    "build:ts": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "lint": "prettier --write src/**/*.{vue,js,jsx,ts,tsx,json,html}"
   },
   "dependencies": {
-    "dayjs": "^1.9.6",
-    "element-ui": "^2.14.1",
-    "vue": "^2.6.12",
-    "vue-class-component": "^7.2.6",
-    "vue-property-decorator": "^9.0.2",
-    "vue-router": "^3.4.9",
-    "vuex": "^3.5.1"
+    "@element-plus/icons-vue": "^1.1.4",
+    "@types/lodash": "^4.14.182",
+    "@vitejs/plugin-vue": "^2.3.2",
+    "@vueuse/core": "^8.4.2",
+    "axios": "^0.27.2",
+    "dayjs": "^1.11.2",
+    "element-plus": "2.1.11",
+    "sass": "latest",
+    "md-editor-v3": "^1.11.12",
+    "prettier": "^2.6.2",
+    "qs": "^6.10.3",
+    "typescript": "^4.6.4",
+    "unplugin-auto-import": "^0.7.1",
+    "unplugin-vue-components": "^0.19.3",
+    "vue": "^3.2.33",
+    "vue-cropper": "^1.0.2",
+    "vue-router": "^4.0.15",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-typescript": "~4.5.9",
-    "@vue/cli-service": "~4.5.9",
-    "sass": "^1.29.0",
-    "sass-loader": "^10.1.0",
-    "typescript": "~4.0.5",
-    "vue-template-compiler": "^2.6.12"
+    "@types/node": "^17.0.31",
+    "vite": "^2.9.8"
   }
 }

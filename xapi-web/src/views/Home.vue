@@ -87,21 +87,17 @@
   </div>
 </template>
 
-<script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+<script setup lang="ts">
 import HelloWorld from "@/components/HelloWorld.vue";
-import { friendLinks } from "@/plugins/apis/friends"; // @ is an alias to /src
+import { friendLinks } from "@/plugins/apis/friends";
+import {onBeforeMount, watch} from "vue";
+import {useRoute, useRouter} from "vue-router"; // @ is an alias to /src
 
-@Component({
-  components: {
-    HelloWorld,
-  },
-})
-export default class Home extends Vue {
-  logo: string =
-    "https://s3.pstatp.com/toutiao/xitu_juejin_web/img/logo.a7995ad.svg";
-  peopleNum: number = 1234;
-  items = [
+
+ let  logo: string =$ref("https://s3.pstatp.com/toutiao/xitu_juejin_web/img/logo.a7995ad.svg")
+    ;
+ let  peopleNum: number = $ref(1234);
+ let  items = $ref([
     {
       text: "每日医学",
       href: "#",
@@ -114,8 +110,8 @@ export default class Home extends Vue {
       text: "go实战",
       active: true,
     },
-  ];
-  footerLinks: any[] = [
+  ]);
+ let  footerLinks: any[] = $ref([
     { name: "About", path: "/about", txt: "关于" },
     { name: "FAQ", path: "/faq", txt: "FAQ" },
     { name: "Weekly", path: "/weekly", txt: "晨读" },
@@ -123,39 +119,43 @@ export default class Home extends Vue {
     { name: "Github", path: "/github", txt: "github" },
     { name: "Github", path: "/github", txt: "github" },
     { name: "Github", path: "/github", txt: "github" },
-  ];
-  routesLink: any[] = [
+  ]);
+ let  routesLink: any[] = $ref([
     { name: "Topics", txt: "主题", path: "/topics" },
     { name: "Articles", txt: "文章", path: "/articles" },
 
     { name: "Projects", txt: "项目", path: "/projects" },
     { name: "Resources", txt: "资源", path: "/resources" },
     { name: "Weekly", txt: "Go周刊", path: "/weekly" },
-  ];
-  btns: any[] = [
+  ]);
+ let  btns: any[] = $ref([
     { txt: "发布主题", path: "/topics/new", name: "NewTopic" },
     { txt: "撰写文章", path: "/articles/new", name: "NewArticle" },
     { txt: "分享资源", path: "/resource/new", name: "NewResource" },
-  ];
-  msgNum: number = 3;
-  hasLogin: boolean = false;
-  username: string = "yzqdev";
-  @Watch("$route")
-  watchRoute(newVal: string) {}
-  gotoLink(name: string) {
-    this.$router.push({ name: name });
+  ]);
+let msgNum: number = $ref(3);
+let hasLogin: boolean = $ref(false);
+let username: string = $ref("yzqdev");
+let route=useRoute()
+let router=useRouter()
+watch(route,(val,oldVal) => {
+
+})
+
+ function gotoLink(name: string) {
+     router.push({ name: name });
   }
-  domain: string = "";
-  siteName: string = "";
-  created() {
-    friendLinks().then((res) => {
-      this.domain = res.data[0].url;
-      this.siteName = res.data[0].name;
+ let domain: string = $ref('');
+ let siteName: string = $ref('');
+  onBeforeMount(() => {
+    friendLinks().then((res:any) => {
+       domain = res.data[0].url;
+     siteName = res.data[0].name;
     });
-  }
-  userImg: string =
-    "https://avatars0.githubusercontent.com/u/20037151?v=4&s=80";
-}
+  })
+ let  userImg: string =
+    $ref("https://avatars0.githubusercontent.com/u/20037151?v=4&s=80")
+
 </script>
 
 <style lang="scss" scoped>

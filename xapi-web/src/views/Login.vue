@@ -21,30 +21,35 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 // 课题列表
-import { Vue, Component, Prop, Watch } from "vue-property-decorator";
 import { login } from "@/plugins/apis/account";
-@Component({ components: {} })
-export default class Login extends Vue {
-  form = {
+import {ElMessage} from "element-plus";
+import {useRouter} from "vue-router";
+let router=useRouter()
+ let form = $ref({
     user: "yzq",
     pass: "123456",
-  };
-  submitLogin() {
+  });
+ function submitLogin() {
 
-    login({username:this.form.user,password:this.form.pass}).then((res:any) => {
+    login({username: form.user,password: form.pass}).then((res:any) => {
       if (res.data) {
         console.log(res);
         localStorage.setItem("token", res.data);
-        this.$message.success(res.message);
-        this.$router.push({ name: "AdminIndex" });
+        ElMessage({
+          type:'success',
+          message:res.message
+        })
+         router.push({ name: "AdminIndex" });
       }else {
-        this.$message.error("登陆失败")
+        ElMessage({
+          type:'error',
+          message:'登陆失败'
+        })
       }
     });
   }
-}
 </script>
 
 <style lang="scss" scoped>

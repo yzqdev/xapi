@@ -1,4 +1,4 @@
-# studygolang-web
+# xapi-web
 
 ## Project setup
 ```

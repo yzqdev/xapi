@@ -1,21 +1,17 @@
-import Vue from "vue";
-import App from "./App.vue";
+// import ElementPlus from "element-plus";
+// import "element-plus/dist/index.css";
+import {createApp} from "vue";
 import router from "./router";
-import store from "./store";
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI)
-import http from "@/plugins/FetchApi";
-// Install BootstrapVue
-import dayjs from "dayjs";
-import 'dayjs/locale/zh-cn'
-dayjs.locale('zh-cn')
-Vue.prototype.$dayjs=dayjs
-Vue.prototype.$http = http;
-Vue.config.productionTip = false;
+import App from "./App.vue";
+import "./index.scss";
 
-new Vue({
-  router,
-  store,
-  render: (h) => h(App),
-}).$mount("#app");
+import store from "@/store";
+import dayjs from "dayjs";
+
+const app = createApp(App);
+
+
+app.config.globalProperties.$dayjs = dayjs;
+app.use(router);
+app.use(store);
+app.mount("#app");

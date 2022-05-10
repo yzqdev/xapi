@@ -26,45 +26,44 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 // 课题列表
-import { Component, Vue, Prop } from "vue-property-decorator";
 
-@Component({})
-export default class UnixTime extends Vue {
 
-  form: any = {
+ import dayjs from "dayjs";
+import {onMounted} from "vue";
+
+let form: any = $ref({
     unix: "1618781876",
     common: "",
-  };
-  current: any = this.$dayjs(new Date()).unix();
-  toCommon() {
-    this.form.common = this.$dayjs
-      .unix(this.form.unix)
+  });
+ let  current: any =  $ref(dayjs(new Date()).unix());
+ function toCommon() {
+     form.common =  dayjs
+      .unix( form.unix)
       .format("YYYY-MM-DD HH:mm:ss");
   }
-  resetDate(){
-    this.form = {
+  function  resetDate(){
+     form = {
       unix: "1618781876",
       common: "2021-04-19 05:37:56",
     };
   }
-  clearDate(){
-    this.form.unix=''
-    this.form.common=''
+ function clearDate(){
+    form.unix=''
+     form.common=''
   }
-  toUnix() {
-    this.form.unix=this.$dayjs(this.form.common).unix()
+ function toUnix() {
+     form.unix= dayjs( form.common).unix()
   }
- created() {
-    this.form.common = this.$dayjs
-      .unix(this.form.unix)
-      .format("YYYY-MM-DD HH:mm:ss");
-    setInterval(() => {
-      this.current = this.$dayjs(new Date()).unix();
-    }, 1000);
-  }
-}
+ onMounted(() => {
+   form.common =  dayjs
+       .unix( form.unix)
+       .format("YYYY-MM-DD HH:mm:ss");
+   setInterval(() => {
+     current =  dayjs(new Date()).unix();
+   }, 1000);
+ })
 </script>
 
 <style lang="scss" scoped>

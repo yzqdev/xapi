@@ -84,23 +84,21 @@ style="height: 100vh;"
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 // 课题列表
-import { Component, Vue, Prop } from "vue-property-decorator";
 import { getIndex } from "@/plugins/apis/account";
-
-@Component({
-  components: {},
-})
-export default class AdminHome extends Vue {
-  popList: any[] = [
+import {useRouter} from "vue-router";
+import {onMounted} from "vue";
+import {ElMessage} from "element-plus";
+let router=useRouter()
+ let popList: any[] = $ref([
     { name: "home", txt: "个人首页" },
     { name: "home", txt: "个人资料设置" },
     { name: "Login", txt: "退出" },
-  ];
-  showMenu: boolean = false;
-  showSubMenu: boolean = false;
-  menus: any[] = [
+  ]);
+ let showMenu: boolean = $ref(false);
+ let showSubMenu: boolean = $ref(false);
+ let menus: any[] = $ref([
     {
       txt: "用户管理",
       subMenu: [
@@ -117,25 +115,27 @@ export default class AdminHome extends Vue {
       txt: "抓取管理",
       subMenu: [{ txt: "权限管理" }, { txt: "权限管理" }, { txt: "权限管理" }],
     },
-  ];
-  username: string = "yzq";
-  userImage: string = "";
-  email: string = "yzqdev@outlook.com";
-  website: any = "";
-  gotoRoute(name:string){
-    this.$router.push({name:name})
+  ]) ;
+ let username: string = $ref("yzq");
+ let userImage: string =  $ref('');
+ let email: string = $ref("yzqdev@outlook.com");
+ let website: any = $ref('');
+ function gotoRoute(name:string){
+     router.push({name:name})
   }
-  created() {
+  onMounted(() => {
     getIndex().then((res: any) => {
       console.log(res);
-      this.menus = res.menu;
-      this.website = res.website;
+      menus = res.menu;
+      website = res.website;
       if (res.status == 200) {
-        this.$message.success(res.message);
+         ElMessage({
+           type:'success'
+           ,message:res.message
+         })
       }
     });
-  }
-}
+  })
 </script>
 
 <style lang="scss" scoped>

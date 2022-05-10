@@ -1,5 +1,4 @@
-import Vue from "vue";
-import VueRouter, { RouteConfig } from "vue-router";
+
 import Home from "../views/Home.vue";
 
 import Index from "@/views/Index.vue";
@@ -11,10 +10,10 @@ import MyApps from "@/views/MyApps.vue";
 import UnixTime from "@/components/UnixTime.vue";
 import JsonFormat from "@/components/JsonFormat.vue";
 import Project from "@/components/Project.vue";
+import {createRouter, createWebHistory, RouteRecordRaw} from "vue-router";
 
-Vue.use(VueRouter);
 
-const routes: Array<RouteConfig> = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     redirect: "/admin",
@@ -42,9 +41,8 @@ const routes: Array<RouteConfig> = [
   },
 ];
 
-const router = new VueRouter({
-  mode: "history",
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history:createWebHistory(),
   routes,
 });
 
