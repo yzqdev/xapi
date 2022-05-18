@@ -26,5 +26,7 @@
   "DbConnMaxLifetime": 5,
 
   "user_cache": 600,
-  "sys_cache":  5
+  "sys_cache":  5,
+  "pgsql_name": "xapi",
+  "pgsql_pass": "123456"
 }

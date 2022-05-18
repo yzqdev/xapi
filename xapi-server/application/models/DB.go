@@ -2,8 +2,8 @@ package models
 
 import (
 	"fmt"
-	"gorm.io/driver/mysql"
-	_ "gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
+
 	"gorm.io/gorm"
 	"xapimanager/application/utils"
 	"xapimanager/config"
@@ -57,10 +57,12 @@ func Singleton() *DB {
 // Open mysql 连接
 func (db *DB) Open() error {
 
-	//sysc := config.GetGlobal()
+	g := config.GetGlobal()
 	connect := fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
 		db.user, db.pass, db.host, db.port, db.dbname)
-	obj, err := gorm.Open(mysql.Open(connect), &gorm.Config{})
+	fmt.Print(connect)
+	dsn := "host=localhost user=postgres password=" + g.PgsqlPass + " dbname= " + g.PgsqlName + " port=5432 sslmode=disable TimeZone=Asia/Shanghai"
+	obj, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		return err

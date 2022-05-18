@@ -32,9 +32,10 @@ type Global struct {
 	DbMaxOpenConns    int  `json:"DbMaxOpenConns"`    //最大连接数
 	DbConnMaxLifetime int  `json:"DbConnMaxLifetime"` //mysql超时时间
 
-	UserCache int `json:"user_cache"` //用户缓存，单位s
-	SysCache  int `json:"sys_cache"`  //系统缓存，单位s
-
+	UserCache int    `json:"user_cache"` //用户缓存，单位s
+	SysCache  int    `json:"sys_cache"`  //系统缓存，单位s
+	PgsqlName string `json:"pgsql_name"`
+	PgsqlPass string `json:"pgsql_pass"`
 }
 
 func GetGlobal() *Global {

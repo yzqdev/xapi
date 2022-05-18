@@ -168,7 +168,7 @@ func GetUserInfo(uid int) (result UserInfo) {
 func QueryByUsername(username string) (result QyUser) {
 
 	Db = Connect()
-	Db.Hander.Table("qy_user").Where("username = ?", username).First(&result)
+	Db.Hander.Where("username = ?", username).First(&result)
 	return
 
 }
